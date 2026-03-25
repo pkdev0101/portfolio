@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CS111 Game Development Blog</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #2563eb, #1e40af);
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .subheader {
+      text-align: center;
+      margin-top: 10px;
+      color: #cbd5f5;
+      font-size: 0.9rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #111827;
+      border-radius: 14px;
+    }
+
+    h1, h2, h3 {
+      color: #f9fafb;
+    }
+
+    h2 {
+      margin-top: 40px;
+      border-bottom: 2px solid #374151;
+      padding-bottom: 8px;
+    }
+
+    ul {
+      padding-left: 25px;
+    }
+
+    .code-block {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      padding: 18px;
+      border-radius: 10px;
+      font-family: Consolas, monospace;
+      margin: 15px 0;
+      white-space: pre-wrap;
+    }
+
+    .screenshot {
+      border: 2px dashed #4b5563;
+      padding: 20px;
+      margin-top: 10px;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    .game-link {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .game-link a {
+      background: green;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">CS111 Game Development Blog</div>
+<div class="subheader">Pranay Kamath • Period [X]</div>
+
+<div class="container">
+
+<h1>🎮 Peppa Pig Fighting Game</h1>
+
+<div class="game-link">
+  <a href="https://pkdev0101.github.io/Team_Portfolio//gamify/gpeppaPigv1-1" target="_blank">
+    ▶ Play My Game
+  </a>
+</div>
+
+<h2>📝 Overview</h2>
+<p>
+This project is a JavaScript-based fighting game where the player battles different characters including George, Peppa, and Daddy Pig. The game uses object-oriented programming, APIs, and interactive controls to create a complete experience.
+</p>
+
+<ul>
+<li>Player movement</li>
+<li>Enemy battles</li>
+<li>Score system</li>
+<li>Leaderboard API</li>
+<li>HUD updates</li>
+</ul>
+
+<hr>
+
+<h2>🧠 Object-Oriented Programming (OOP)</h2>
+
+<div class="code-block">
+class Game {
+    constructor(config) {
+        this.config = config;
+        this.playerName = "";
+        this.leaderboard = [];
+    }
+
+    startGame() {
+        console.log("Game Started");
+    }
+
+    endGame() {
+        console.log("Game Over");
+    }
+}
+
+class Player {
+    constructor(name, health, position) {
+        this.name = name;
+        this.health = health;
+        this.position = position;
+    }
+
+    move(direction) {
+        this.position += direction;
+    }
+
+    attack(enemy) {
+        enemy.health -= 10;
+    }
+}
+</div>
+
+<p>
+OOP allows the game to be structured into classes such as Game and Player. Each class has properties and methods, making the code reusable and organized.
+</p>
+
+<div class="screenshot"><img src="images/oop.jpg"/></div>
+
+<hr>
+
+<h2>⚙️ Methods & Functions</h2>
+
+<div class="code-block">
+async saveScore(score) {
+    if (!this.apiBase) return;
+
+    try {
+        const response = await fetch(`${this.apiBase}/leaderboard`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: this.playerName,
+                score: score,
+                levelId: this.config.levelId
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`POST failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Error saving score:", error);
+    }
+}
+</div>
+
+<p>
+Functions allow specific tasks like saving scores. Async functions allow API communication.
+</p>
+
+<hr>
+
+<h2>🔢 Data Types</h2>
+
+<div class="code-block">
+let score = 0;              // number
+let playerName = "Pranay";  // string
+let leaderboard = [];       // array
+let isAlive = true;         // boolean
+</div>
+
+<p>
+Different data types help store and manage different types of information in the game.
+</p>
+
+<hr>
+
+<h2>➕ Operators</h2>
+
+<div class="code-block">
+score += 10;
+health -= 5;
+lives = lives - 1;
+</div>
+
+<p>
+Operators are used to update game values like score and health.
+</p>
+
+<hr>
+
+<h2>🔀 Control Structures</h2>
+
+<div class="code-block">
+if (health <= 0) {
+    console.log("Game Over");
+}
+
+if (!response.ok) {
+    throw new Error("Error saving score");
+}
+</div>
+
+<p>
+Control structures determine how the game reacts to different conditions.
+</p>
+
+<hr>
+
+<h2>🎮 Game Loop</h2>
+
+<div class="code-block">
+function gameLoop() {
+    update();
+    render();
+    requestAnimationFrame(gameLoop);
+}
+</div>
+
+<p>
+The game loop continuously runs the game and updates everything in real time.
+</p>
+
+<hr>
+
+<h2>🌐 API Integration</h2>
+
+<div class="code-block">
+async loadLeaderboard() {
+    const response = await fetch(`${this.apiBase}/leaderboard`);
+    const data = await response.json();
+    this.leaderboard = data;
+}
+</div>
+
+<p>
+APIs allow the game to store and retrieve leaderboard data.
+</p>
+
+<hr>
+
+<h2>⌨️ Input / Output</h2>
+
+<div class="code-block">
+document.addEventListener("keydown", function(event) {
+    if (event.key === "w") {
+        player.move(1);
+    }
+});
+
+this.updateHud("Score Updated");
+</div>
+
+<p>
+Input comes from keyboard actions, and output is displayed through the HUD.
+</p>
+
+<hr>
+
+<h2>🐞 Debugging</h2>
+
+<div class="code-block">
+console.log("Player position:", player.position);
+console.error("Error:", error);
+</div>
+
+<p>
+Debugging helps track and fix issues during development.
+</p>
+
+<hr>
+
+<h2>🧪 Testing</h2>
+<ul>
+<li>Tested movement</li>
+<li>Tested combat</li>
+<li>Tested API calls</li>
+<li>Fixed bugs</li>
+</ul>
+
+<hr>
+
+<h2>📸 Screenshots</h2>
+<div class="screenshot">Insert screenshots</div>
+
+<hr>
+
+<h2>📚 Reflection</h2>
+<ul>
+<li>Learned OOP</li>
+<li>Learned APIs</li>
+<li>Improved debugging</li>
+</ul>
+
+<hr>
+
+<h2>🔗 Future Improvements</h2>
+<ul>
+<li>Add more levels</li>
+<li>Improve AI</li>
+<li>Add animations</li>
+</ul>
+
+</div>
+
+</body>
+</html>
