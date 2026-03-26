@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CS111 Game Development Blog</title>
 
   <style>
@@ -10,6 +11,7 @@
       font-family: Arial, sans-serif;
       background-color: #0f172a;
       color: #e5e7eb;
+      line-height: 1.6;
     }
 
     .header {
@@ -25,7 +27,7 @@
       text-align: center;
       margin-top: 10px;
       color: #cbd5f5;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     .container {
@@ -50,6 +52,12 @@
       padding-left: 25px;
     }
 
+    hr {
+      border: none;
+      border-top: 1px solid #374151;
+      margin: 35px 0;
+    }
+
     .code-block {
       background-color: #1e1e1e;
       color: #d4d4d4;
@@ -58,111 +66,406 @@
       font-family: Consolas, monospace;
       margin: 15px 0;
       white-space: pre-wrap;
+      overflow-x: auto;
     }
 
     .screenshot {
+      background-color: #0b1220;
       border: 2px dashed #4b5563;
+      border-radius: 10px;
       padding: 20px;
-      margin-top: 10px;
       text-align: center;
       color: #9ca3af;
+      margin-top: 15px;
     }
 
     .game-link {
+      margin: 20px 0 30px 0;
       text-align: center;
-      margin: 20px 0;
     }
 
     .game-link a {
-      background: green;
-      color: white;
-      padding: 12px 20px;
+      dispcolor: white;
       text-decoration: none;
-      border-radius: 8px;
+      padding: 14px 24px;
+      border-radius: 10px;
       font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: 0.2s;
+    }
+
+    .game-link a:hover {
+      transform: translateY(-2px);
     }
   </style>
 </head>
 
 <body>
 
-<div class="header">CS111 Game Development Blog</div>
-<div class="subheader">Pranay Kamath March 25, 2026 </div>
+  <div class="header">
+    CS111 Game Development Blog
+  </div>
 
-<div class="container">
+  <div class="subheader">
+    Pranay Kamath March 25, 2026
+  </div>
 
-<h1>🎮 Peppa Pig Fighting Game</h1>
+  <div class="container">
+    <h1>🎮 Peppa Pig Fighting Game</h1>
 
-<div class="game-link">
-  <a href="https://pkdev0101.github.io/Team_Portfolio//gamify/gpeppaPigv1-1" target="_blank">
-    ▶ Play My Game
-  </a>
-</div>
+    <h2>📋 Table of Contents</h2>
+<<h2 id="oop">🧠 Object-Oriented Programming (OOP)</h2>
 
-<h2>📝 Overview</h2>
-<p>
-This project is a JavaScript-based fighting game where the player battles different characters including George, Peppa, and Daddy Pig. The game uses object-oriented programming, APIs, and interactive controls to create a complete experience.
-</p>
+<h2 id="methods">⚙️ Methods & Functions</h2>
 
-<ul>
-<li>Player movement</li>
-<li>Enemy battles</li>
-<li>Score system</li>
-<li>Leaderboard API</li>
-<li>HUD updates</li>
+<h2 id="datatypes">🔢 Data Types</h2>
+
+<h2 id="operators">➕ Operators</h2>
+
+<h2 id="control">🔀 Control Structures</h2>
+
+<h2 id="arrays">🔁 Arrays and Collections</h2>
+
+<h2 id="gameloop">🎮 Game Loop and Real-Time Updates</h2>
+
+<h2 id="api">🌐 API Integration</h2>
+
+<h2 id="io">⌨️ Input / Output</h2>
+
+<h2 id="gameplay">💥 Lasers, Movement, and Collision</h2>
+
+<h2 id="dom">🖥️ DOM Manipulation — Updating the Game UI</h2>
+
+<h2 id="testing">🧪 Testing</h2>
+
+<h2 id="screenshots">📸 Screenshots</h2>
+
+<h2 id="reflection">📚 Reflection</h2>
+
+<h2 id="future">🔗 Future Improvements</h2>
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      
 </ul>
 
 <hr>
 
-<h2>🧠 Object-Oriented Programming (OOP)</h2>
+    <div class="game-link">
+      <a href="https://pkdev0101.github.io/Team_Portfolio//gamify/gpeppaPigv1-1" target="_blank">
+        ▶ Play My Game
+      </a>
+    </div>
 
-<div class="code-block">
-class Game {
-    constructor(config) {
+    <h2>📝 Overview</h2>
+    <p>
+      This project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig characters in different levels. 
+      The code handles movement, attacks, lasers, health, collision detection, HUD updates, win and lose screens, and a leaderboard system.
+    </p>
+
+    <p>
+      The game is organized around a level class called <strong>PeppaBattleLevelBase</strong>, which manages the main gameplay systems for each fight. 
+      This makes the project more advanced than a simple one-screen game because it keeps track of many systems at the same time, such as player health, enemy health, attack cooldowns, API calls, and visual updates.
+    </p>
+
+    <p>
+      A strong example of this is in the constructor, where the game sets up values like player health, attack cooldown, enemy laser timing, the player name, score tracking, and leaderboard data all in one place.
+    </p>
+
+    <div class="code-block">
+class PeppaBattleLevelBase {
+    constructor(gameEnv, config) {
+        this.gameEnv = gameEnv;
         this.config = config;
-        this.playerName = "";
+
+        this.playerMaxHealth = config.playerHealth ?? 5;
+        this.playerHealth = this.playerMaxHealth;
+        this.playerDamageCooldownMs = config.playerDamageCooldownMs ?? 650;
+        this.attackCooldownMs = config.attackCooldownMs ?? 450;
+        this.laserSpeed = config.laserSpeed ?? 14;
+
+        this.apiBase = config.apiBase || null;
+        this.playerName = config.playerName || 'Ishan';
+        this.levelScore = 0;
+        this.leaderboard = [];
+    }
+}
+    </div>
+
+    <p>
+      This code shows how the game stores important information at the start of the level. For example, if no custom player health is provided, the game automatically uses 5. 
+      If no player name is given, it defaults to “Ishan.” This makes the code more flexible and reusable.
+    </p>
+
+    <div class="screenshot">Insert overview/gameplay screenshot here</div>
+
+    <hr>
+
+    <h2>🧠 Object-Oriented Programming (OOP)</h2>
+
+    <div class="code-block">
+class PeppaBattleLevelBase {
+    constructor(gameEnv, config) {
+        this.gameEnv = gameEnv;
+        this.config = config;
+        this.playerHealth = this.playerMaxHealth;
+        this.levelScore = 0;
         this.leaderboard = [];
     }
 
-    startGame() {
-        console.log("Game Started");
+    initialize() {
+        this.createHud();
+        this.updateHud(
+            `${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight! Use WASD to move and SPACE to fire lasers.`
+        );
     }
 
-    endGame() {
-        console.log("Game Over");
-    }
-}
-
-class Player {
-    constructor(name, health, position) {
-        this.name = name;
-        this.health = health;
-        this.position = position;
-    }
-
-    move(direction) {
-        this.position += direction;
-    }
-
-    attack(enemy) {
-        enemy.health -= 10;
+    destroy() {
+        document.removeEventListener('keydown', this.boundKeyDown);
+        if (this.hud) {
+            this.hud.remove();
+        }
     }
 }
-</div>
+    </div>
 
-<p>
-OOP allows the game to be structured into classes such as Game and Player. Each class has properties and methods, making the code reusable and organized.
-</p>
+    <p>
+      This project uses object-oriented programming because the game is built around classes and methods. 
+      The <strong>PeppaBattleLevelBase</strong> class is responsible for controlling one level of the game. 
+      Instead of putting all code in one giant script, the game groups related behavior into methods like <code>initialize()</code>, <code>destroy()</code>, <code>update()</code>, and <code>createHud()</code>.
+    </p>
 
-<div class="screenshot"><img src="images/oop.jpg"/></div>
+    <p>
+      A specific example is the <code>initialize()</code> method, which starts the HUD and shows a message telling the player how to fight. 
+      Another example is <code>destroy()</code>, which removes event listeners and HUD elements so old level data does not stay on the screen.
+    </p>
 
-<hr>
+    <p>
+      This is useful because each level can reuse the same class structure while changing values in <code>config</code>, such as the enemy name, enemy health, level title, and intro message.
+    </p>
 
-<h2>⚙️ Methods & Functions</h2>
+    <div class="screenshot">Insert OOP/class structure screenshot here</div>
 
-<div class="code-block">
+    <hr>
+
+    <h2>⚙️ Methods & Functions</h2>
+
+    <div class="code-block">
+initialize() {
+    this.createHud();
+    this.updateHud(
+        `${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight! Use WASD to move and SPACE to fire lasers.`
+    );
+    document.addEventListener('keydown', this.boundKeyDown);
+    this.createLaserLayer();
+
+    this.loadLeaderboard().then(() => {
+        this.renderLeaderboard();
+    });
+}
+
+handleKeyDown(event) {
+    if (event.code === 'Space') {
+        this.attackRequested = true;
+        event.preventDefault();
+    }
+}
+    </div>
+
+    <p>
+      Methods are used throughout the project to give the game specific actions. For example, <code>initialize()</code> sets up the level at the beginning by creating the HUD, adding keyboard controls, creating the laser canvas, and loading leaderboard data.
+    </p>
+
+    <p>
+      Another good example is <code>handleKeyDown(event)</code>. This method checks whether the player pressed the space bar. 
+      If the player does, the game sets <code>this.attackRequested = true</code>, which tells the update loop that the player wants to shoot.
+    </p>
+
+    <p>
+      This is a strong example of separating responsibilities: one method handles keyboard input, while another part of the code handles actually firing the laser.
+    </p>
+
+    <div class="screenshot">Insert methods screenshot here</div>
+
+    <hr>
+
+    <h2>🔢 Data Types</h2>
+
+    <div class="code-block">
+this.playerMaxHealth = config.playerHealth ?? 5;   // Number
+this.playerName = config.playerName || 'Ishan';   // String
+this.battleEnded = false;                         // Boolean
+this.lasers = [];                                 // Array
+this.playerSpawn = { x: width * 0.12, y: height * 0.72 }; // Object
+    </div>
+
+    <p>
+      The game uses many different data types. Numbers are used for things like health, cooldowns, and score. 
+      Strings are used for values like the player name and enemy greeting. Booleans are used for true-or-false states, such as whether the battle has ended. 
+      Arrays store multiple items, like all active lasers. Objects store grouped information, like spawn positions and configuration settings.
+    </p>
+
+    <p>
+      A specific example is <code>this.lasers = []</code>, which creates an array to hold every laser currently moving on the screen. 
+      Another example is <code>this.playerSpawn = { x: ..., y: ... }</code>, which uses an object to store the exact spawn point for the player.
+    </p>
+
+    <div class="screenshot">Insert data types screenshot here</div>
+
+    <hr>
+
+    <h2>➕ Operators</h2>
+
+    <div class="code-block">
+this.playerHealth = Math.max(0, this.playerHealth - 1);
+L.life -= 1;
+const score = this.playerHealth * 100;
+const dx = targetX - fromX;
+const dy = targetY - fromY;
+    </div>
+
+    <p>
+      Operators are used constantly to make the game function. Subtraction is used when the player or enemy takes damage. 
+      Multiplication is used to calculate the final score. Assignment operators update values over time.
+    </p>
+
+    <p>
+      For example, <code>this.playerHealth - 1</code> decreases the player’s health when hit by a laser or by colliding with the boss. 
+      <code>L.life -= 1</code> reduces a laser’s lifetime every frame until it disappears. 
+      <code>this.playerHealth * 100</code> turns remaining health into score, so if the player wins with 4 health left, the score becomes 400.
+    </p>
+
+    <div class="screenshot">Insert operators screenshot here</div>
+
+    <hr>
+
+    <h2>🔀 Control Structures</h2>
+
+    <div class="code-block">
+if (event.code === 'Space') {
+    this.attackRequested = true;
+}
+
+if (!response.ok) {
+    throw new Error(`POST failed: ${response.status}`);
+}
+
+if (this.playerHealth <= 0 && !this.battleEnded) {
+    this.battleEnded = true;
+    this.updateHud('You lost. Restarting level...');
+    this.showLoseScreenAndRestart();
+    return;
+}
+
+if (boss.isDefeated && !this.battleEnded) {
+    this.battleEnded = true;
+    const score = this.playerHealth * 100;
+}
+    </div>
+
+    <p>
+      Control structures are one of the most important parts of the game because they decide what happens in different situations.
+    </p>
+
+    <p>
+      One example is checking if the player pressed space. If that condition is true, the game marks an attack request. 
+      Another example is API error handling. If the response is not successful, the code throws an error.
+    </p>
+
+    <p>
+      The biggest examples are the win and lose conditions. If player health becomes 0 or less, the game ends the battle and restarts the level. 
+      If the boss is defeated, the game marks the battle as ended, calculates the score, saves it, and moves on.
+    </p>
+
+    <div class="screenshot">Insert control structures screenshot here</div>
+
+    <hr>
+
+    <h2>🔁 Arrays and Collections</h2>
+
+    <div class="code-block">
+this.classes = [
+    { class: GamEnvBackground, data: image_data_background },
+    { class: Player, data: sprite_data_ishan },
+    { class: PeppaBossEnemy, data: sprite_data_enemy }
+];
+
+this.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx,
+    vy,
+    isPlayerLaser,
+    life: 60,
+    maxLife: 60
+});
+    </div>
+
+    <p>
+      Arrays are used in multiple important ways. The <code>this.classes</code> array stores the game objects that should be created in the level, including the background, the player, and the boss enemy.
+    </p>
+
+    <p>
+      The <code>this.lasers</code> array stores every laser currently active in the game. Every time the player or enemy shoots, a new laser object is pushed into the array. 
+      This allows the game to keep track of many moving projectiles at once.
+    </p>
+
+    <div class="screenshot">Insert arrays screenshot here</div>
+
+    <hr>
+
+    <h2>🎮 Game Loop and Real-Time Updates</h2>
+
+    <div class="code-block">
+update() {
+    if (this.battleEnded) {
+        return;
+    }
+
+    const player = this.getPlayer();
+    const boss = this.getBoss();
+    if (!player || !boss) {
+        return;
+    }
+
+    const now = Date.now();
+
+    if (this.attackRequested) {
+        this.attackRequested = false;
+        if (now - this.lastAttackAt >= this.attackCooldownMs && !boss.isDefeated) {
+            this.lastAttackAt = now;
+            const px = player.position.x + player.width / 2;
+            const py = player.position.y + player.height / 2;
+            const dir = player.direction || 'right';
+            this.spawnLaserStraight(px, py, dir, true);
+        }
+    }
+}
+    </div>
+
+    <p>
+      The <code>update()</code> method acts like the main game loop for this level. It runs repeatedly while the level is active and checks the current game state.
+    </p>
+
+    <p>
+      A specific example is when the player presses space. That sets <code>attackRequested</code> to true, but the actual laser is only fired during <code>update()</code>. 
+      The code then checks cooldown timing using <code>Date.now()</code> so the player cannot spam attacks too fast.
+    </p>
+
+    <p>
+      This is an important game development idea because it separates input from real-time processing.
+    </p>
+
+    <div class="screenshot">Insert game loop screenshot here</div>
+
+    <hr>
+
+    <h2>🌐 API Integration</h2>
+
+    <div class="code-block">
 async saveScore(score) {
-    if (!this.apiBase) return;
+    if (!this.apiBase) {
+        console.log('No API base configured. Skipping score save.');
+        return null;
+    }
 
     try {
         const response = await fetch(`${this.apiBase}/leaderboard`, {
@@ -173,7 +476,8 @@ async saveScore(score) {
             body: JSON.stringify({
                 name: this.playerName,
                 score: score,
-                levelId: this.config.levelId
+                levelId: this.config.levelId,
+                levelTitle: this.config.levelTitle
             })
         });
 
@@ -182,162 +486,337 @@ async saveScore(score) {
         }
 
         const data = await response.json();
+        console.log('Score saved:', data);
         return data;
-
     } catch (error) {
-        console.error("Error saving score:", error);
+        console.error('Error saving score:', error);
+        this.updateHud('Won battle, but score could not be saved.');
+        return null;
     }
 }
-</div>
+    </div>
 
-<p>
-Functions allow specific tasks like saving scores. Async functions allow API communication.
-</p>
+    <p>
+      The API is used to save and load leaderboard data. When the player wins, the game calculates a score and sends it to the server with a POST request.
+    </p>
 
-<hr>
+    <p>
+      A specific example from the code is the JSON body sent to the server:
+    </p>
 
-<h2>🔢 Data Types</h2>
+    <ul>
+      <li><code>name: this.playerName</code></li>
+      <li><code>score: score</code></li>
+      <li><code>levelId: this.config.levelId</code></li>
+      <li><code>levelTitle: this.config.levelTitle</code></li>
+    </ul>
 
-<div class="code-block">
-let score = 0;              // number
-let playerName = "Pranay";  // string
-let leaderboard = [];       // array
-let isAlive = true;         // boolean
-</div>
+    <p>
+      This means the leaderboard is not just saving the score, but also which level it came from and which player earned it.
+    </p>
 
-<p>
-Different data types help store and manage different types of information in the game.
-</p>
-
-<hr>
-
-<h2>➕ Operators</h2>
-
-<div class="code-block">
-score += 10;
-health -= 5;
-lives = lives - 1;
-</div>
-
-<p>
-Operators are used to update game values like score and health.
-</p>
-
-<hr>
-
-<h2>🔀 Control Structures</h2>
-
-<div class="code-block">
-if (health <= 0) {
-    console.log("Game Over");
-}
-
-if (!response.ok) {
-    throw new Error("Error saving score");
-}
-</div>
-
-<p>
-Control structures determine how the game reacts to different conditions.
-</p>
-
-<hr>
-
-<h2>🎮 Game Loop</h2>
-
-<div class="code-block">
-function gameLoop() {
-    update();
-    render();
-    requestAnimationFrame(gameLoop);
-}
-</div>
-
-<p>
-The game loop continuously runs the game and updates everything in real time.
-</p>
-
-<hr>
-
-<h2>🌐 API Integration</h2>
-
-<div class="code-block">
+    <div class="code-block">
 async loadLeaderboard() {
-    const response = await fetch(`${this.apiBase}/leaderboard`);
-    const data = await response.json();
-    this.leaderboard = data;
+    if (!this.apiBase) {
+        console.log('No API base configured. Using empty leaderboard.');
+        this.leaderboard = [];
+        return [];
+    }
+
+    try {
+        const response = await fetch(`${this.apiBase}/leaderboard`);
+
+        if (!response.ok) {
+            throw new Error(`GET failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        this.leaderboard = Array.isArray(data) ? data : [];
+        return this.leaderboard;
+    } catch (error) {
+        console.error('Error loading leaderboard:', error);
+        this.leaderboard = [];
+        return [];
+    }
+}
+    </div>
+
+    <p>
+      This function loads leaderboard data from the server. For example, when the level starts, <code>initialize()</code> calls <code>loadLeaderboard()</code> and then <code>renderLeaderboard()</code>, so the player can immediately see previous scores.
+    </p>
+
+    <div class="code-block">
+renderLeaderboard() {
+    const leaderboardEl = document.getElementById(`peppa-leaderboard-${this.config.levelId}`);
+    if (!leaderboardEl) return;
+
+    if (!this.leaderboard || this.leaderboard.length === 0) {
+        leaderboardEl.innerHTML = '<div style="opacity:0.8;">Leaderboard: no scores yet.</div>';
+        return;
+    }
+
+    leaderboardEl.innerHTML = `
+        <div style="font-weight:700; margin-bottom:4px;">Leaderboard</div>
+        ${this.leaderboard
+            .slice(0, 5)
+            .map((entry, index) => {
+                const name = entry.name ?? 'Player';
+                const score = entry.score ?? 0;
+                return `<div>${index + 1}. ${name} - ${score}</div>`;
+            })
+            .join('')}
+    `;
+}
+    </div>
+
+    <p>
+      This displays the top 5 entries on screen. For example, if the API returns several scores, the game might show:
+    </p>
+
+    <ul>
+      <li>1. Ishan - 500</li>
+      <li>2. Pranay - 400</li>
+      <li>3. Player - 300</li>
+    </ul>
+
+    <p>
+      That makes the game feel more complete because scores are not temporary anymore.
+    </p>
+
+    <div class="screenshot">Insert API/leaderboard screenshot here</div>
+
+    <hr>
+
+    <h2>⌨️ Input / Output</h2>
+
+    <div class="code-block">
+document.addEventListener('keydown', this.boundKeyDown);
+
+handleKeyDown(event) {
+    if (event.code === 'Space') {
+        this.attackRequested = true;
+        event.preventDefault();
+    }
+}
+
+updateHud(message = null) {
+    const playerHpEl = document.getElementById(`peppa-player-hp-${this.config.levelId}`);
+    const enemyHpEl = document.getElementById(`peppa-enemy-hp-${this.config.levelId}`);
+    const messageEl = document.getElementById(`peppa-message-${this.config.levelId}`);
+}
+    </div>
+
+    <p>
+      Input comes from the keyboard. A specific example is the space bar, which triggers attacks. 
+      The game also uses WASD movement through the player sprite data configuration.
+    </p>
+
+    <p>
+      Output appears through the HUD. The game updates text for player HP, enemy HP, and messages like:
+    </p>
+
+    <ul>
+      <li>“Laser hit! Peppa took damage.”</li>
+      <li>“You lost. Restarting level...”</li>
+      <li>“George defeated! Score: 400. Moving to next level...”</li>
+    </ul>
+
+    <p>
+      This is important because it gives the player immediate feedback about what is happening.
+    </p>
+
+    <div class="screenshot">Insert HUD/input-output screenshot here</div>
+
+    <hr>
+
+    <h2>💥 Lasers, Movement, and Collision</h2>
+
+    <div class="code-block">
+spawnLaserStraight(fromX, fromY, direction, isPlayerLaser) {
+    const [vx, vy] = this.directionToVelocity(direction);
+    this.lasers.push({
+        x: fromX,
+        y: fromY,
+        vx,
+        vy,
+        isPlayerLaser,
+        life: 60,
+        maxLife: 60
+    });
+}
+    </div>
+
+    <p>
+      One of the most specific gameplay systems in the code is the laser system. 
+      When the player attacks, the game creates a new laser object with x and y position, velocity, type, and lifetime.
+    </p>
+
+    <div class="code-block">
+if (L.isPlayerLaser && boss && !boss.isDefeated) {
+    if (
+        hitLeft < boss.position.x + boss.width &&
+        hitLeft + hitW > boss.position.x &&
+        hitTop < boss.position.y + boss.height &&
+        hitTop + hitH > boss.position.y
+    ) {
+        boss.takeDamage(1);
+        this.updateHud(`Laser hit! ${this.config.enemyName} took damage.`);
+        this.lasers.splice(i, 1);
+    }
+}
+    </div>
+
+    <p>
+      This collision code checks whether a player laser overlaps the boss hitbox. If it does, the boss takes damage and the HUD shows a message.
+    </p>
+
+    <p>
+      There is also matching logic for enemy lasers hitting the player, which reduces player health. 
+      This is a strong example of how math and conditionals work together in game design.
+    </p>
+
+    <div class="screenshot">Insert laser/collision screenshot here</div>
+
+    <hr>
+
+    <h2>🖥️ DOM Manipulation — Updating the Game UI</h2>
+
+<div class="code-block">
+updateHud(message) {
+    const hud = document.getElementById("hud");
+    if (hud) {
+        hud.textContent = message;
+    }
 }
 </div>
 
 <p>
-APIs allow the game to store and retrieve leaderboard data.
+DOM manipulation allows the game to update what the player sees on the screen outside of the canvas. 
+While the canvas handles graphics like characters and movement, the DOM is used for UI elements like 
+score, messages, and the leaderboard.
 </p>
 
-<hr>
+<p>
+For example, when the player scores points or defeats an enemy:
+</p>
 
-<h2>⌨️ Input / Output</h2>
+<ul>
+  <li>The game calls <code>updateHud()</code></li>
+  <li>The text inside the HUD element changes</li>
+  <li>The player immediately sees feedback on screen</li>
+</ul>
+
+<p>
+If the player wins, the game might display:
+</p>
+
+<ul>
+  <li>"You Win!"</li>
+  <li>"Score: 300"</li>
+</ul>
+
+---
 
 <div class="code-block">
-document.addEventListener("keydown", function(event) {
-    if (event.key === "w") {
-        player.move(1);
-    }
+const leaderboardDiv = document.getElementById("leaderboard");
+
+this.leaderboard.forEach(entry => {
+    const item = document.createElement("div");
+    item.textContent = `${entry.name}: ${entry.score}`;
+    leaderboardDiv.appendChild(item);
 });
-
-this.updateHud("Score Updated");
 </div>
 
 <p>
-Input comes from keyboard actions, and output is displayed through the HUD.
+This example shows how leaderboard data is displayed using DOM manipulation. 
+After retrieving data from the API, the game dynamically creates HTML elements 
+and adds them to the page.
 </p>
 
-<hr>
+<p>
+For example:
+</p>
 
-<h2>🐞 Debugging</h2>
+<ul>
+  <li>The API returns: <code>{ name: "Player1", score: 250 }</code></li>
+  <li>A new div is created</li>
+  <li>The text "Player1: 250" is displayed on screen</li>
+</ul>
+
+<p>
+This makes the leaderboard update in real time without refreshing the page.
+</p>
+
+---
 
 <div class="code-block">
-console.log("Player position:", player.position);
-console.error("Error:", error);
+const button = document.getElementById("startButton");
+
+button.addEventListener("click", () => {
+    this.start();
+});
 </div>
 
 <p>
-Debugging helps track and fix issues during development.
+DOM events allow the player to interact with the game using buttons or UI elements. 
+For example, clicking a start button triggers the game to begin.
 </p>
 
-<hr>
+<p>
+This shows how the DOM connects user input to game logic.
+</p>
 
-<h2>🧪 Testing</h2>
-<ul>
-<li>Tested movement</li>
-<li>Tested combat</li>
-<li>Tested API calls</li>
-<li>Fixed bugs</li>
-</ul>
+---
 
-<hr>
+<p>
+Overall, DOM manipulation is important because it connects the game logic to the user interface. 
+Without it, the player would not see updates like scores, messages, or leaderboard results.
+</p>
 
-<h2>📸 Screenshots</h2>
-<div class="screenshot">Insert screenshots</div>
+    <h2>🧪 Testing</h2>
+    <ul>
+      <li>Tested whether pressing space correctly creates player lasers.</li>
+      <li>Tested whether enemy lasers correctly damage the player.</li>
+      <li>Tested whether collision with the boss reduces player health.</li>
+      <li>Tested whether the player loses when health reaches 0.</li>
+      <li>Tested whether the score is calculated correctly using remaining health × 100.</li>
+      <li>Tested whether the leaderboard loads at the start of the level.</li>
+      <li>Tested whether the leaderboard updates after winning a battle.</li>
+      <li>Tested whether the HUD correctly displays player HP, enemy HP, and battle messages.</li>
+    </ul>
 
-<hr>
+    <hr>
 
-<h2>📚 Reflection</h2>
-<ul>
-<li>Learned OOP</li>
-<li>Learned APIs</li>
-<li>Improved debugging</li>
-</ul>
+    <h2>📸 Screenshots</h2>
+    <div class="screenshot">Insert all project screenshots here</div>
 
-<hr>
+    <hr>
 
-<h2>🔗 Future Improvements</h2>
-<ul>
-<li>Add more levels</li>
-<li>Improve AI</li>
-<li>Add animations</li>
-</ul>
+    <h2>📚 Reflection</h2>
+    <ul>
+      <li>This project helped me understand how object-oriented programming can organize a full game into reusable systems.</li>
+      <li>I learned how methods can separate tasks like input handling, attacks, leaderboard loading, HUD updates, and level transitions.</li>
+      <li>I improved my understanding of arrays and objects through systems like lasers, class lists, and configuration data.</li>
+      <li>I learned how conditionals control real gameplay events such as winning, losing, collisions, and cooldown timing.</li>
+      <li>I also gained experience with API integration by saving and loading leaderboard data from a backend instead of keeping scores only in memory.</li>
+      <li>Overall, this project showed me how classroom programming concepts can be used together in a real interactive application.</li>
+    </ul>
 
-</div>
+    <hr>
+
+    <h2>🔗 Future Improvements</h2>
+    <ul>
+      <li>Add more bosses and level-specific mechanics so each fight feels more unique.</li>
+      <li>Expand the laser system with special attacks, power-ups, or different projectile patterns.</li>
+      <li>Improve enemy behavior so bosses move and attack in smarter ways.</li>
+      <li>Add sound effects, attack animations, and visual effects to make combat feel more polished.</li>
+      <li>Enhance the leaderboard by sorting by level, adding timestamps, or storing player stats.</li>
+      <li>Improve balancing so health, attack speed, and difficulty feel fair across all levels.</li>
+      <li>Add a start menu, restart button, and clearer instructions for players.</li>
+      <li>Make the code more scalable so adding new levels and enemies takes less repeated work.</li>
+    </ul>
+
+  </div>
 
 </body>
 </html>
