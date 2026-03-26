@@ -113,36 +113,30 @@
   <div class="container">
     <h1>🎮 Peppa Pig Fighting Game</h1>
 
-    <h2>📋 Table of Contents</h2>
-<<h2 id="oop">🧠 Object-Oriented Programming (OOP)</h2>
+    <div class="toc">
+  <h2>📋 Table of Contents</h2>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#oop">Object-Oriented Programming</a></li>
+    <li><a href="#methods">Methods & Functions</a></li>
+    <li><a href="#datatypes">Data Types</a></li>
+    <li><a href="#operators">Operators</a></li>
+    <li><a href="#control">Control Structures</a></li>
+    <li><a href="#arrays">Arrays and Collections</a></li>
+    <li><a href="#gameloop">Game Loop</a></li>
+    <li><a href="#api">API Integration</a></li>
+    <li><a href="#io">Input / Output</a></li>
+    <li><a href="#gameplay">Gameplay Mechanics</a></li>
+    <li><a href="#dom">DOM Manipulation</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#homework">Homework Connections</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#future">Future Improvements</a></li>
+  </ul>
+</div>
 
-<h2 id="methods">⚙️ Methods & Functions</h2>
-
-<h2 id="datatypes">🔢 Data Types</h2>
-
-<h2 id="operators">➕ Operators</h2>
-
-<h2 id="control">🔀 Control Structures</h2>
-
-<h2 id="arrays">🔁 Arrays and Collections</h2>
-
-<h2 id="gameloop">🎮 Game Loop and Real-Time Updates</h2>
-
-<h2 id="api">🌐 API Integration</h2>
-
-<h2 id="io">⌨️ Input / Output</h2>
-
-<h2 id="gameplay">💥 Lasers, Movement, and Collision</h2>
-
-<h2 id="dom">🖥️ DOM Manipulation — Updating the Game UI</h2>
-
-<h2 id="testing">🧪 Testing</h2>
-
-<h2 id="screenshots">📸 Screenshots</h2>
-
-<h2 id="reflection">📚 Reflection</h2>
-
-<h2 id="future">🔗 Future Improvements</h2>
+<
       background: linear-gradient(90deg, #22c55e, #16a34a);
       
 </ul>
@@ -155,7 +149,8 @@
       </a>
     </div>
 
-    <h2>📝 Overview</h2>
+   <h2 id="overview">📝 Overview</h2>
+
     <p>
       This project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig characters in different levels. 
       The code handles movement, attacks, lasers, health, collision detection, HUD updates, win and lose screens, and a leaderboard system.
@@ -199,7 +194,7 @@ class PeppaBattleLevelBase {
 
     <hr>
 
-    <h2>🧠 Object-Oriented Programming (OOP)</h2>
+<h2 id="oop">🧠 Object-Oriented Programming (OOP)</h2>
 
     <div class="code-block">
 class PeppaBattleLevelBase {
@@ -246,7 +241,7 @@ class PeppaBattleLevelBase {
 
     <hr>
 
-    <h2>⚙️ Methods & Functions</h2>
+<h2 id="methods">⚙️ Methods & Functions</h2>
 
     <div class="code-block">
 initialize() {
@@ -287,7 +282,7 @@ handleKeyDown(event) {
 
     <hr>
 
-    <h2>🔢 Data Types</h2>
+<h2 id="datatypes">🔢 Data Types</h2>
 
     <div class="code-block">
 this.playerMaxHealth = config.playerHealth ?? 5;   // Number
@@ -312,7 +307,7 @@ this.playerSpawn = { x: width * 0.12, y: height * 0.72 }; // Object
 
     <hr>
 
-    <h2>➕ Operators</h2>
+<h2 id="datatypes">🔢 Data Types</h2>
 
     <div class="code-block">
 this.playerHealth = Math.max(0, this.playerHealth - 1);
@@ -337,7 +332,7 @@ const dy = targetY - fromY;
 
     <hr>
 
-    <h2>🔀 Control Structures</h2>
+<h2 id="control">🔀 Control Structures</h2>
 
     <div class="code-block">
 if (event.code === 'Space') {
@@ -379,7 +374,7 @@ if (boss.isDefeated && !this.battleEnded) {
 
     <hr>
 
-    <h2>🔁 Arrays and Collections</h2>
+<h2 id="arrays">🔁 Arrays and Collections</h2>
 
     <div class="code-block">
 this.classes = [
@@ -412,7 +407,7 @@ this.lasers.push({
 
     <hr>
 
-    <h2>🎮 Game Loop and Real-Time Updates</h2>
+<h2 id="gameloop">🎮 Game Loop and Real-Time Updates</h2>
 
     <div class="code-block">
 update() {
@@ -458,7 +453,7 @@ update() {
 
     <hr>
 
-    <h2>🌐 API Integration</h2>
+<h2 id="gameloop">🎮 Game Loop and Real-Time Updates</h2>
 
     <div class="code-block">
 async saveScore(score) {
@@ -587,7 +582,7 @@ renderLeaderboard() {
 
     <hr>
 
-    <h2>⌨️ Input / Output</h2>
+<h2 id="api">🌐 API Integration</h2>
 
     <div class="code-block">
 document.addEventListener('keydown', this.boundKeyDown);
@@ -629,7 +624,7 @@ updateHud(message = null) {
 
     <hr>
 
-    <h2>💥 Lasers, Movement, and Collision</h2>
+<h2 id="gameplay">💥 Gameplay Mechanics (Movement, Lasers, Collision)</h2>
 
     <div class="code-block">
 spawnLaserStraight(fromX, fromY, direction, isPlayerLaser) {
@@ -679,7 +674,7 @@ if (L.isPlayerLaser && boss && !boss.isDefeated) {
 
     <hr>
 
-    <h2>🖥️ DOM Manipulation — Updating the Game UI</h2>
+<h2 id="dom">🖥️ DOM Manipulation — Updating the Game UI</h2>
 
 <div class="code-block">
 updateHud(message) {
@@ -773,7 +768,7 @@ Overall, DOM manipulation is important because it connects the game logic to the
 Without it, the player would not see updates like scores, messages, or leaderboard results.
 </p>
 
-    <h2>🧪 Testing</h2>
+<h2 id="testing">🧪 Testing</h2>
     <ul>
       <li>Tested whether pressing space correctly creates player lasers.</li>
       <li>Tested whether enemy lasers correctly damage the player.</li>
@@ -787,12 +782,12 @@ Without it, the player would not see updates like scores, messages, or leaderboa
 
     <hr>
 
-    <h2>📸 Screenshots</h2>
+    <h2 id="screenshots">📸 Screenshots</h2>
     <div class="screenshot">Insert all project screenshots here</div>
 
     <hr>
 
-    <h2>📚 Reflection</h2>
+    <h2 id="reflection">📚 Reflection</h2>
     <ul>
       <li>This project helped me understand how object-oriented programming can organize a full game into reusable systems.</li>
       <li>I learned how methods can separate tasks like input handling, attacks, leaderboard loading, HUD updates, and level transitions.</li>
@@ -804,7 +799,7 @@ Without it, the player would not see updates like scores, messages, or leaderboa
 
     <hr>
 
-    <h2>🔗 Future Improvements</h2>
+    <h2 id="future">🔗 Future Improvements</h2>
     <ul>
       <li>Add more bosses and level-specific mechanics so each fight feels more unique.</li>
       <li>Expand the laser system with special attacks, power-ups, or different projectile patterns.</li>
@@ -817,6 +812,63 @@ Without it, the player would not see updates like scores, messages, or leaderboa
     </ul>
 
   </div>
+
+  <h2 id="homework">📚 Homework Connections</h2>
+
+<p>
+These assignments connect directly to the concepts used in my game project. Each one helped build the skills needed for features like player movement, health systems, class design, conditionals, and arrays of lasers.
+</p>
+
+<ul>
+  <li>
+    <a href="https://pkdev0101.github.io/student/csse/lessons/variables/homework" target="_blank">
+      Variables Homework
+    </a>
+    — relates to storing values like player health, score, cooldown timers, and positions.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/javascript/boolean-hack" target="_blank">
+      Boolean Homework
+    </a>
+    — connects to game-state flags like <code>battleEnded</code>, <code>isPlayerLaser</code>, and whether the boss is defeated.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-variables/hw" target="_blank">
+      Classes and Variables Homework
+    </a>
+    — supports the class-based structure of the game, where the level and enemy systems store and manage data.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/javascript/functions/tinkerers-hw" target="_blank">
+      Functions Homework
+    </a>
+    — connects to methods like <code>initialize()</code>, <code>updateHud()</code>, <code>spawnLaser()</code>, and <code>saveScore()</code>.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/csse/javascript/constellators/conditionals-hw" target="_blank">
+      Conditionals Homework
+    </a>
+    — relates to win and lose conditions, cooldown checks, and collision-based decisions in the game loop.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-methods/homework" target="_blank">
+      Classes and Methods Homework
+    </a>
+    — connects to object-oriented programming in the project, especially the level class and reusable gameplay methods.
+  </li>
+
+  <li>
+    <a href="https://pkdev0101.github.io/student/javascript/array/homework" target="_blank">
+      Array Homework
+    </a>
+    — relates to arrays like <code>this.lasers</code> and <code>this.classes</code>, which store projectiles and game objects.
+  </li>
+</ul>
 
 </body>
 </html>
