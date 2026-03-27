@@ -180,6 +180,155 @@
       background-color: #111827;
       color: #f8fafc;
     }
+
+    .challenge-card {
+      margin-top: 18px;
+      background: linear-gradient(180deg, #0b2447, #071325);
+      border: 1px solid #2b3d5b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+    }
+
+    .challenge-header {
+      padding: 26px 26px 18px 26px;
+      background: linear-gradient(180deg, #0d2a52, #0a2140);
+      border-bottom: 1px solid #2b3d5b;
+    }
+
+    .challenge-header h3 {
+      margin: 0 0 10px 0;
+      font-size: 2rem;
+      color: #f8fafc;
+    }
+
+    .challenge-header p {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 1.05rem;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 14px 18px;
+      background: #07101d;
+      border-bottom: 1px solid #22314a;
+    }
+
+    .editor-btn, .editor-select {
+      border: 1px solid #35507a;
+      background: #1d4ed8;
+      color: white;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+    }
+
+    .editor-btn:hover, .editor-select:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .editor-btn.secondary {
+      background: #2563eb;
+    }
+
+    .editor-select {
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    .editor-shell {
+      background: #1f1f23;
+      border-bottom: 1px solid #22314a;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      min-height: 390px;
+    }
+
+    .line-numbers {
+      background: #2a2a2f;
+      color: #9ca3af;
+      padding: 16px 8px;
+      text-align: right;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      line-height: 1.8;
+      user-select: none;
+      border-right: 1px solid #3b3b43;
+      white-space: pre;
+    }
+
+    .challenge-editor {
+      width: 100%;
+      min-height: 390px;
+      border: none;
+      resize: vertical;
+      padding: 16px 18px;
+      background: #2b2b30;
+      color: #f8fafc;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      line-height: 1.8;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .editor-status {
+      background: #07101d;
+      color: #cbd5e1;
+      padding: 10px 18px;
+      border-bottom: 1px solid #22314a;
+      font-size: 0.95rem;
+    }
+
+    .output-panel {
+      padding: 18px;
+      background: #040b16;
+    }
+
+    .output-panel h4 {
+      margin: 0 0 12px 0;
+      color: #f8fafc;
+      font-size: 1.75rem;
+    }
+
+    .challenge-output {
+      background: #0b1220;
+      border: 1px solid #22314a;
+      border-radius: 12px;
+      min-height: 120px;
+      padding: 18px;
+      color: #e5e7eb;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .challenge-note {
+      margin-top: 16px;
+      color: #cbd5e1;
+    }
+
+    .challenge-explain {
+      margin-top: 24px;
+      background: rgba(8, 19, 40, 0.85);
+      border: 1px solid #2b3d5b;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .challenge-explain strong {
+      color: #93c5fd;
+    }
+
   </style>
 </head>
 
@@ -208,6 +357,7 @@
         <li><a href="#arrays">Arrays and Collections</a></li>
         <li><a href="#gameloop">Game Loop and Real-Time Updates</a></li>
         <li><a href="#api">API Integration</a></li>
+        <li><a href="#coderunner">Code Runner Challenge</a></li>
         <li><a href="#io">Input / Output</a></li>
         <li><a href="#gameplay">Gameplay Mechanics</a></li>
         <li><a href="#dom">DOM Manipulation</a></li>
@@ -683,6 +833,80 @@ renderLeaderboard() {
       <img src="images/api-leaderboard.png" alt="API and leaderboard screenshot">
     </div>
 
+
+    <hr>
+
+    <h2 id="coderunner">🧪 Code Runner Challenge</h2>
+
+    <p>
+      To make my blog more interactive, I added a Code Runner Challenge section inspired by the style of online coding sandboxes.
+      Instead of only describing API logic, this lets the reader run a small async/await example directly in the page and see the output below the editor.
+    </p>
+
+    <p>
+      The challenge connects directly to my leaderboard system because it mimics the same ideas used in my game:
+      sending JSON data, handling async functions, using <code>try/catch</code>, and printing results when the request succeeds or fails.
+    </p>
+
+    <div class="challenge-card">
+      <div class="challenge-header">
+        <h3>Code Runner Challenge</h3>
+        <p>Experiment with async/await and mock fetch JSON handling. This mimics posting and reading leaderboard data.</p>
+      </div>
+
+      <div class="editor-toolbar">
+        <button class="editor-btn" id="runChallengeBtn">▶ Run</button>
+        <button class="editor-btn secondary" id="resetChallengeBtn">↺ Reset</button>
+        <button class="editor-btn secondary" id="copyChallengeBtn">⧉ Copy</button>
+        <select class="editor-select" id="challengeLanguage">
+          <option selected>JavaScript</option>
+        </select>
+        <select class="editor-select" id="challengeFontSize">
+          <option>12px</option>
+          <option selected>14px</option>
+          <option>16px</option>
+          <option>18px</option>
+        </select>
+      </div>
+
+      <div class="editor-shell">
+        <div class="editor-grid">
+          <div class="line-numbers" id="challengeLines">1</div>
+          <textarea class="challenge-editor" id="challengeEditor" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="editor-status" id="challengeStatus">Lines: 1 &nbsp; Characters: 0</div>
+
+      <div class="output-panel">
+        <h4>Output</h4>
+        <div class="challenge-output" id="challengeOutput">Click "Run" in the code control panel to see output ...</div>
+        <p class="challenge-note">
+          This challenge demonstrates the same concepts as my leaderboard code:
+          JSON.stringify, async/await, mock API responses, console output, and error handling.
+        </p>
+      </div>
+    </div>
+
+    <div class="challenge-explain">
+      <p><strong>Why this belongs in my blog:</strong> My Peppa Pig Fighting Game saves leaderboard scores with an async <code>fetch()</code> call and loads them back into the DOM. This challenge is a smaller, safer version of that same workflow.</p>
+      <p><strong>Connection to the project:</strong> The code below acts like a mock leaderboard request. It shows how I understand posting a score, returning JSON data, and reading it back before displaying results to the user.</p>
+    </div>
+
+    <div class="code-block">
+async saveScore(score) {
+    const response = await fetch(`${this.apiBase}/leaderboard`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: this.playerName,
+            score: score,
+            levelId: this.config.levelId
+        })
+    });
+}
+    </div>
+
     <hr>
 
     <h2 id="io">⌨️ Input / Output</h2>
@@ -1073,6 +1297,107 @@ button.addEventListener("click", () => {
     </ul>
 
   </div>
+
+
+  <script>
+    (function() {
+      const defaultChallengeCode = `async function postScore(player, score) {
+  try {
+    const payload = JSON.stringify({ player, score });
+    console.log('POST payload', payload);
+
+    return {
+      ok: true,
+      data: {
+        player,
+        score,
+        date: '2026-03-24'
+      }
+    };
+  } catch (e) {
+    console.error('postScore error', e.message);
+    return null;
+  }
+}
+
+async function loadLeaderboard() {
+  return [
+    { player: 'Pranay', score: 500 },
+    { player: 'Ishan', score: 400 },
+    { player: 'Player', score: 300 }
+  ];
+}
+
+async function main() {
+  const saved = await postScore('Pranay', 450);
+  console.log('Saved result', saved);
+
+  const board = await loadLeaderboard();
+  console.log('Leaderboard', board);
+}
+
+main();`;
+
+      const editor = document.getElementById('challengeEditor');
+      const output = document.getElementById('challengeOutput');
+      const lines = document.getElementById('challengeLines');
+      const status = document.getElementById('challengeStatus');
+      const runBtn = document.getElementById('runChallengeBtn');
+      const resetBtn = document.getElementById('resetChallengeBtn');
+      const copyBtn = document.getElementById('copyChallengeBtn');
+      const fontSelect = document.getElementById('challengeFontSize');
+
+      if (!editor) return;
+
+      function updateEditorMeta() {
+        const lineCount = editor.value.split('\n').length;
+        const lineText = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
+        lines.textContent = lineText;
+        status.innerHTML = `Lines: ${lineCount} &nbsp; Characters: ${editor.value.length}`;
+      }
+
+      function resetEditor() {
+        editor.value = defaultChallengeCode;
+        output.textContent = 'Click "Run" in the code control panel to see output ...';
+        updateEditorMeta();
+      }
+
+      editor.addEventListener('input', updateEditorMeta);
+      fontSelect.addEventListener('change', () => {
+        editor.style.fontSize = fontSelect.value;
+        lines.style.fontSize = fontSelect.value;
+      });
+
+      runBtn.addEventListener('click', async () => {
+        const logs = [];
+        const fakeConsole = {
+          log: (...args) => logs.push(args.map(v => typeof v === 'string' ? v : JSON.stringify(v, null, 2)).join(' ')),
+          error: (...args) => logs.push('ERROR: ' + args.map(v => typeof v === 'string' ? v : JSON.stringify(v, null, 2)).join(' '))
+        };
+
+        try {
+          const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+          const runner = new AsyncFunction('console', editor.value);
+          await runner(fakeConsole);
+          output.textContent = logs.length ? logs.join('\n') : 'Program finished with no console output.';
+        } catch (err) {
+          output.textContent = 'Runtime error: ' + err.message;
+        }
+      });
+
+      resetBtn.addEventListener('click', resetEditor);
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(editor.value);
+          output.textContent = 'Code copied to clipboard.';
+        } catch (err) {
+          output.textContent = 'Could not copy code: ' + err.message;
+        }
+      });
+
+      resetEditor();
+    })();
+  </script>
 
 </body>
 </html>
