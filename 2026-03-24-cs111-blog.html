@@ -73,6 +73,109 @@
       margin-bottom: 32px;
     }
 
+
+
+    /* ── Hero intro + Play button ── */
+    .hero-panel {
+      background: linear-gradient(135deg, rgba(91,141,238,0.10), rgba(62,207,142,0.06));
+      border: 1px solid rgba(91,141,238,0.28);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: -8px 0 34px;
+      text-align: center;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+    }
+    .hero-kicker {
+      color: var(--text-dim);
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero-summary {
+      max-width: 680px;
+      margin: 0 auto 22px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .play-game-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 220px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2d7df0, #4d97ff);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(45,125,240,0.28);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+    }
+    .play-game-btn:hover {
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(45,125,240,0.36);
+      opacity: 0.95;
+    }
+    .proof-note {
+      margin-top: 16px;
+      color: var(--text-dim);
+      font-size: 0.86rem;
+    }
+    .proof-note code { font-size: 0.78rem; }
+
+    .hero-preview {
+      margin: 22px auto 22px;
+      max-width: 720px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+      text-align: left;
+    }
+    .hero-preview img {
+      width: 100%;
+      display: block;
+    }
+    .hero-preview figcaption {
+      padding: 10px 14px 12px;
+      color: var(--text-dim);
+      font-size: 0.83rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+    .image-path-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 22px;
+    }
+    @media (max-width: 700px) { .image-path-list { grid-template-columns: 1fr; } }
+    .image-path-card {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 0.86rem;
+    }
+    .image-path-card strong { color: var(--text-bright); }
+    .image-path-card code { display: inline-block; margin-top: 5px; }
+
     /* ── Table of Contents ── */
     .toc-block {
       background: var(--surface);
@@ -362,6 +465,88 @@
     .challenge-explain p { margin-bottom: 8px; color: var(--text); }
     .challenge-explain strong { color: var(--accent-blue); }
 
+
+
+    /* ── Feature / proof cards added for multiplayer + localStorage documentation ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 26px;
+    }
+    @media (max-width: 700px) { .feature-grid { grid-template-columns: 1fr; } }
+    .feature-card {
+      background: linear-gradient(135deg, rgba(91,141,238,0.12), rgba(79,196,207,0.05));
+      border: 1px solid rgba(91,141,238,0.28);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .feature-card .feature-title {
+      color: var(--text-bright);
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+    .feature-card p { margin: 0; color: var(--text); font-size: 0.87rem; }
+    .callout {
+      background: rgba(62,207,142,0.07);
+      border: 1px solid rgba(62,207,142,0.25);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 18px 0 24px;
+    }
+    .callout strong { color: var(--accent-green); }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+    @media (max-width: 700px) { .proof-grid { grid-template-columns: 1fr; } }
+    .proof-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .proof-card img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid var(--border);
+      background: #111118;
+    }
+    .proof-card .proof-body { padding: 13px 15px 15px; }
+    .proof-card .proof-title {
+      color: var(--text-bright);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .proof-card p {
+      margin: 0;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 20px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
     /* ── Homework links ── */
     .hw-link {
       display: flex;
@@ -390,6 +575,27 @@
 
     <h1 class="article-title">🎮 Peppa Pig Fighting Game</h1>
 
+    <section class="hero-panel" aria-label="Project introduction">
+      <div class="hero-kicker">Final Project Walkthrough</div>
+      <p class="hero-summary">
+        This blog explains my 3-level Peppa Pig laser boss-fight game, including OOP inheritance, data types,
+        control structures, localStorage, multiplayer mode, collision detection, and API-powered music.
+      </p>
+      <figure class="hero-preview">
+        <img src="images/game-preview.png" alt="Peppa Pig Fighting Game preview screenshot">
+        <figcaption>Main game preview image. Save your screenshot at <code>images/game-preview.png</code>.</figcaption>
+      </figure>
+
+      <div class="hero-actions">
+        <a class="play-game-btn" href="https://pages.opencodingsociety.com/peppa-pig/" target="_blank" rel="noopener noreferrer">
+          ▶ Play the Game
+        </a>
+      </div>
+      <p class="proof-note">
+        Image paths used in this page: <code>images/game-preview.png</code>, <code>images/music-api.png</code>, and the proof screenshots listed near the end.
+      </p>
+    </section>
+
     <nav class="toc-block">
       <div class="toc-title">Table of Contents</div>
       <ol>
@@ -402,6 +608,11 @@
         <li><a href="#arrays">Arrays and Collections</a></li>
         <li><a href="#gameloop">Game Loop &amp; Real-Time Updates</a></li>
         <li><a href="#api">API Integration</a></li>
+        <li><a href="#multiplayer">Multiplayer Mode</a></li>
+        <li><a href="#characters">Character Selection</a></li>
+        <li><a href="#storage">LocalStorage</a></li>
+        <li><a href="#collisions">Collision System</a></li>
+        <li><a href="#proof">Proof Images</a></li>
         <li><a href="#coderunner">Code Runner Challenge</a></li>
         <li><a href="#io">Input / Output</a></li>
         <li><a href="#gameplay">Gameplay Mechanics</a></li>
@@ -421,7 +632,7 @@
         <h2>Overview</h2>
       </div>
       <hr class="rule">
-      <p>This project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig characters in different levels. The code handles movement, attacks, lasers, health, collision detection, HUD updates, win and lose screens, and a leaderboard system.</p>
+      <p>This project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig characters in different levels. The code handles movement, attacks, lasers, health, collision detection, HUD updates, win and lose screens, localStorage, character selection, multiplayer mode, and a leaderboard system.</p>
       <p>The game is organized around a level class called <code>PeppaBattleLevelBase</code>, which manages the main gameplay systems for each fight. This makes the project more advanced than a simple one-screen game because it keeps track of many systems at the same time, such as player health, enemy health, attack cooldowns, API calls, and visual updates.</p>
       <p>A strong example of this is in the constructor, where the game sets up values like player health, attack cooldown, enemy laser timing, the player name, score tracking, and leaderboard data all in one place.</p>
       <div class="code-block"><pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
@@ -666,8 +877,9 @@ L.life -= <span class="num">1</span>;
       <p>The API part of my Peppa Pig Fighting Game uses the iTunes Search API to request real music data from the internet. Instead of hard-coding one song into the game, the code searches for music related to Peppa Pig, receives JSON data, finds a playable preview URL, and uses that preview as background music in the game.</p>
 
       <div class="screenshot">
-        <img src="images/music-api.png" alt="Music API screenshot">
+        <img src="images/music-api.png" alt="Music API screenshot showing the iTunes Search API or music feature working">
       </div>
+      <p class="proof-note">Save your Music API proof screenshot at <code>images/music-api.png</code>. This can show the API code, browser console output, or the music controls working in the game.</p>
 
       <p>This follows the same Web API flow used in class:</p>
       <ul>
@@ -799,6 +1011,279 @@ console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></d
 
     <hr class="section-divider">
 
+
+    <hr class="section-divider">
+
+    <!-- MULTIPLAYER -->
+    <section id="multiplayer">
+      <div class="section-heading">
+        <div class="icon">👥</div>
+        <h2>Multiplayer Mode</h2>
+      </div>
+      <hr class="rule">
+      <h3>2-Player Mode with Separate Controls</h3>
+      <p>The second file adds documentation for local multiplayer. The game can run in <code>singlePlayer</code> or <code>twoPlayer</code> mode. This matters because the game changes how many players are created, what controls are shown, and how attacks are handled.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-title">Player 1 Controls</div>
+          <p>Player 1 uses <code>WASD</code> for movement and <code>SPACE</code> to attack.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Player 2 Controls</div>
+          <p>Player 2 uses the arrow keys for movement and <code>Enter</code> to attack.</p>
+        </div>
+      </div>
+
+      <div class="code-block"><pre>// Game mode: 'singlePlayer' or 'twoPlayer'
+// First check config, then check localStorage, then default to singlePlayer
+this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';</pre></div>
+
+      <p>This line is important because it lets the game remember the selected mode even after the page reloads. If the player chose 2-player mode earlier, <code>localStorage</code> can restore that choice.</p>
+
+      <div class="code-block"><pre>// Player 2 attack with Enter key only in 2-player mode
+if (this.gameMode === 'twoPlayer' &amp;&amp; event.code === 'Enter') {
+    this.player2AttackRequested = true;
+    event.preventDefault();
+}</pre></div>
+
+      <p>The game only listens for Player 2's attack if the mode is actually <code>twoPlayer</code>. This prevents the Enter key from doing unnecessary actions in single-player mode.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- CHARACTER SELECTION -->
+    <section id="characters">
+      <div class="section-heading">
+        <div class="icon">🎭</div>
+        <h2>Character Selection</h2>
+      </div>
+      <hr class="rule">
+      <h3>Saving Player Character Choices</h3>
+      <p>The game also supports character swapping. Before the battle starts, players can choose character images and names. Those choices are saved so the battle level can load the correct player sprites.</p>
+
+      <div class="code-block"><pre>// Read character selections saved by the welcome/character-select screen
+const p1CharImage = localStorage.getItem('peppaPlayer1CharImage') || 'ishan-jha.png';
+const p1CharName  = localStorage.getItem('peppaPlayer1CharName')  || 'Ishan';
+const p2CharImage = localStorage.getItem('peppaPlayer2CharImage') || 'ishan-jha.png';
+const p2CharName  = localStorage.getItem('peppaPlayer2CharName')  || 'Player 2';
+
+const p1Image = this.gameMode === 'twoPlayer' ? p1CharImage : 'ishan-jha.png';
+const p1Name  = this.gameMode === 'twoPlayer' ? p1CharName  : 'Ishan';</pre></div>
+
+      <p>This code checks saved character data. If no character was saved, the game uses safe default values like <code>ishan-jha.png</code> and <code>Ishan</code>.</p>
+
+      <div class="code-block"><pre>selectCharacter(char, playerNum, accentColor) {
+    const charData = {
+        image: char.image,
+        name: char.name,
+        accentColor: accentColor
+    };
+
+    if (playerNum === 1) {
+        this.p1Character = charData;
+        localStorage.setItem('peppaPlayer1CharImage', char.image);
+        localStorage.setItem('peppaPlayer1CharName', char.name);
+    } else {
+        this.p2Character = charData;
+        localStorage.setItem('peppaPlayer2CharImage', char.image);
+        localStorage.setItem('peppaPlayer2CharName', char.name);
+    }
+
+    this.updateStartButton();
+}</pre></div>
+
+      <p>This is a strong example of data persistence because the game stores each player's character name and image in the browser, then uses those values later during gameplay.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- LOCAL STORAGE -->
+    <section id="storage">
+      <div class="section-heading">
+        <div class="icon">💾</div>
+        <h2>LocalStorage and Data Persistence</h2>
+      </div>
+      <hr class="rule">
+      <h3>Remembering Game State in the Browser</h3>
+      <p><code>localStorage</code> is used so the game can remember player preferences and scores after the page reloads. This includes the selected game mode, player name, character choices, and local leaderboard scores.</p>
+
+      <div class="tag-row">
+        <span class="tag">peppaGameMode</span>
+        <span class="tag">peppaPlayerName</span>
+        <span class="tag">peppaPlayer1CharImage</span>
+        <span class="tag">peppaPlayer2CharImage</span>
+        <span class="tag">peppa-leaderboard-level</span>
+      </div>
+
+      <div class="code-block"><pre>ensurePlayerName() {
+    if (this.playerName &amp;&amp; this.playerName.trim()) return;
+
+    const savedName = localStorage.getItem('peppaPlayerName');
+    if (savedName &amp;&amp; savedName.trim()) {
+        this.playerName = savedName.trim();
+        return;
+    }
+
+    let inputName = window.prompt('Enter your name for the leaderboard:', '');
+    if (!inputName || !inputName.trim()) {
+        inputName = 'Player';
+    }
+
+    this.playerName = inputName.trim().slice(0, 20);
+    localStorage.setItem('peppaPlayerName', this.playerName);
+}</pre></div>
+
+      <p>This method first checks whether a player name already exists. If not, it checks <code>localStorage</code>. If there is still no name, the game asks the player for one and saves it for later.</p>
+
+      <h3>Local Leaderboard Storage</h3>
+      <div class="code-block"><pre>saveScoreLocal(score) {
+    try {
+        const leaderboardKey = `peppa-leaderboard-${this.config.levelId}`;
+        const existing = this.loadLeaderboardLocal();
+        existing.push({
+            name: this.playerName || 'Player',
+            score: score,
+            timestamp: Date.now()
+        });
+
+        // Sort by score descending and keep top scores
+        existing.sort((a, b) =&gt; (b.score ?? 0) - (a.score ?? 0));
+        const topScores = existing.slice(0, 10);
+
+        localStorage.setItem(leaderboardKey, JSON.stringify(topScores));
+    } catch (error) {
+        console.error('Error saving score locally:', error);
+    }
+}</pre></div>
+
+      <p>The leaderboard stores scores by level using a key like <code>peppa-leaderboard-lvl1</code>. The game sorts scores from highest to lowest and only keeps the top 10 so the stored data stays clean.</p>
+
+      <div class="callout">
+        <p><strong>Why this is important:</strong> This shows that the game does not only run while the page is open. It can save player choices and leaderboard data across sessions using browser storage.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- COLLISIONS -->
+    <section id="collisions">
+      <div class="section-heading">
+        <div class="icon">🎯</div>
+        <h2>Collision System</h2>
+      </div>
+      <hr class="rule">
+      <h3>Player, Laser, Boss, and Floor Collisions</h3>
+      <p>The second file also explains multiple collision systems. The game checks player-vs-player collisions, laser collisions, and floor barriers so characters stay inside the playable area.</p>
+
+      <div class="code-block"><pre>// Two-player collision: P1 hits P2 or P2 hits P1
+if (this.gameMode === 'twoPlayer' &amp;&amp; player &amp;&amp; player2) {
+    if (player.isCollision(player2)) {
+        if (!this.lastPlayerHitAt || Date.now() - this.lastPlayerHitAt &gt; this.playerDamageCooldownMs) {
+            this.playerHealth = Math.max(0, this.playerHealth - player2.playerDamage);
+            this.lastPlayerHitAt = Date.now();
+            this.updateHud(`P1 hit by P2! Health: ${this.playerHealth}/${this.playerMaxHealth}`);
+        }
+    }
+
+    if (player2.isCollision(player)) {
+        if (!this.lastPlayer2HitAt || Date.now() - this.lastPlayer2HitAt &gt; this.playerDamageCooldownMs) {
+            this.player2Health = Math.max(0, this.player2Health - player.playerDamage);
+            this.lastPlayer2HitAt = Date.now();
+            this.updateHud(`P2 hit by P1! Health: ${this.player2Health}/${this.player2MaxHealth}`);
+        }
+    }
+}</pre></div>
+
+      <p>This collision logic uses cooldown timing so players do not lose all their health instantly when they touch each other. The code checks the current time with <code>Date.now()</code> before applying damage again.</p>
+
+      <div class="code-block"><pre>// Keep players and boss inside the playable floor area
+if (player &amp;&amp; player.height) {
+    if (player.position.y &lt; this.floorY) {
+        player.position.y = this.floorY;
+        player.velocity.y = 0;
+    }
+    if (player.position.y + player.height &gt; this.gameEnv.innerHeight) {
+        player.position.y = this.gameEnv.innerHeight - player.height;
+        player.velocity.y = 0;
+    }
+}</pre></div>
+
+      <p>The floor barrier logic keeps players and bosses inside the game screen. This prevents characters from falling out of bounds or moving into areas where the player cannot see them.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- PROOF IMAGES -->
+    <section id="proof">
+      <div class="section-heading">
+        <div class="icon">📸</div>
+        <h2>Proof Images to Add</h2>
+      </div>
+      <hr class="rule">
+      <p>Use this section to prove that the features work. Put the images in your repo's <code>images</code> folder, then keep the filenames below the same. If your repo uses Jekyll base URLs, change each <code>src</code> to <code>{{ site.baseurl }}/images/filename.png</code>.</p>
+
+      <div class="image-path-list">
+        <div class="image-path-card"><strong>Main game preview</strong><br><code>images/game-preview.png</code></div>
+        <div class="image-path-card"><strong>Music API proof</strong><br><code>images/music-api.png</code></div>
+        <div class="image-path-card"><strong>Welcome screen proof</strong><br><code>images/proof-welcome-screen.png</code></div>
+        <div class="image-path-card"><strong>Character select proof</strong><br><code>images/proof-character-select.png</code></div>
+        <div class="image-path-card"><strong>Two-player proof</strong><br><code>images/proof-two-player-mode.png</code></div>
+        <div class="image-path-card"><strong>localStorage proof</strong><br><code>images/proof-localstorage-devtools.png</code></div>
+        <div class="image-path-card"><strong>Leaderboard proof</strong><br><code>images/proof-leaderboard-storage.png</code></div>
+        <div class="image-path-card"><strong>Collision proof</strong><br><code>images/proof-collision-test.png</code></div>
+      </div>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <img src="images/proof-welcome-screen.png" alt="Proof of welcome screen and game mode selection">
+          <div class="proof-body">
+            <div class="proof-title">Welcome Screen / Game Mode</div>
+            <p>Add a screenshot showing Single Player and 2 Players buttons.</p>
+          </div>
+        </div>
+        <div class="proof-card">
+          <img src="images/proof-character-select.png" alt="Proof of character selection screen">
+          <div class="proof-body">
+            <div class="proof-title">Character Selection</div>
+            <p>Add a screenshot showing Player 1 and Player 2 character choices.</p>
+          </div>
+        </div>
+        <div class="proof-card">
+          <img src="images/proof-two-player-mode.png" alt="Proof of two player mode running">
+          <div class="proof-body">
+            <div class="proof-title">2-Player Gameplay</div>
+            <p>Add a screenshot showing both players in the same battle.</p>
+          </div>
+        </div>
+        <div class="proof-card">
+          <img src="images/proof-localstorage-devtools.png" alt="Proof of localStorage in browser devtools">
+          <div class="proof-body">
+            <div class="proof-title">localStorage DevTools</div>
+            <p>Add a screenshot of DevTools showing keys like <code>peppaGameMode</code> and <code>peppaPlayerName</code>.</p>
+          </div>
+        </div>
+        <div class="proof-card">
+          <img src="images/proof-leaderboard-storage.png" alt="Proof of leaderboard local storage">
+          <div class="proof-body">
+            <div class="proof-title">Saved Leaderboard</div>
+            <p>Add a screenshot of the leaderboard or the saved leaderboard JSON in localStorage.</p>
+          </div>
+        </div>
+        <div class="proof-card">
+          <img src="images/proof-collision-test.png" alt="Proof of collision detection working">
+          <div class="proof-body">
+            <div class="proof-title">Collision Test</div>
+            <p>Add a screenshot showing a hit message, player damage, or laser collision.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Best proof image location:</strong> Put all proof screenshots in <code>images/</code> at the root of your repo. Example: <code>images/proof-localstorage-devtools.png</code>.</p>
+      </div>
+    </section>
+
     <!-- CODE RUNNER -->
     <section id="coderunner">
       <div class="section-heading">
@@ -807,12 +1292,12 @@ console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></d
       </div>
       <hr class="rule">
       <p>To make my blog more interactive, I added a Code Runner Challenge section inspired by the style of online coding sandboxes. Instead of only describing API logic, this lets the reader run a small async/await example directly in the page and see the output below the editor.</p>
-      <p>The challenge connects directly to my leaderboard system because it mimics the same ideas used in my game: sending JSON data, handling async functions, using <code>try/catch</code>, and printing results when the request succeeds or fails.</p>
+      <p>The challenge connects directly to my localStorage system because it mimics the same ideas used in my game: saving a player name, saving a game mode, storing leaderboard scores as JSON, and loading the data back into the page.</p>
 
       <div class="challenge-card">
         <div class="challenge-header">
           <h3>Code Runner Challenge</h3>
-          <p>Experiment with async/await and mock fetch JSON handling. This mimics posting and reading leaderboard data.</p>
+          <p>Experiment with localStorage and JSON handling. This mimics saving game settings and leaderboard data.</p>
         </div>
         <div class="editor-toolbar">
           <button class="editor-btn" id="runChallengeBtn">▶ Run</button>
@@ -836,13 +1321,13 @@ console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></d
         <div class="output-panel">
           <h4>Output</h4>
           <div class="challenge-output" id="challengeOutput">Click "Run" in the code control panel to see output ...</div>
-          <p class="challenge-note">This challenge demonstrates the same concepts as my leaderboard code: JSON.stringify, async/await, mock API responses, console output, and error handling.</p>
+          <p class="challenge-note">This challenge demonstrates the same concepts as my game storage code: localStorage, JSON.stringify, JSON.parse, sorting scores, and error handling.</p>
         </div>
       </div>
 
       <div class="challenge-explain">
-        <p><strong>Why this belongs in my blog:</strong> My Peppa Pig Fighting Game saves leaderboard scores with an async <code>fetch()</code> call and loads them back into the DOM. This challenge is a smaller, safer version of that same workflow.</p>
-        <p><strong>Connection to the project:</strong> The code acts like a mock leaderboard request. It shows how I understand posting a score, returning JSON data, and reading it back before displaying results to the user.</p>
+        <p><strong>Why this belongs in my blog:</strong> My Peppa Pig Fighting Game saves game mode, character selections, player name, and leaderboard scores with <code>localStorage</code>. This challenge is a smaller, safer version of that same workflow.</p>
+        <p><strong>Connection to the project:</strong> The code acts like a mock local leaderboard. It shows how I understand storing data, reading it back, sorting it, and displaying useful results to the user.</p>
       </div>
 
       <div class="code-block"><pre><span class="kw">async</span> <span class="prop">saveScore</span>(score) {
@@ -1138,39 +1623,49 @@ button.addEventListener(<span class="str">"click"</span>, () => {
 
   <script>
     (function() {
-      const defaultChallengeCode = `async function postScore(player, score) {
-  try {
-    const payload = JSON.stringify({ player, score });
-    console.log('POST payload', payload);
-
-    return {
-      ok: true,
-      data: {
-        player,
-        score,
-        date: '2026-03-24'
-      }
-    };
-  } catch (e) {
-    console.error('postScore error', e.message);
-    return null;
-  }
+      const defaultChallengeCode = `function saveGameMode(mode) {
+  localStorage.setItem('peppaGameMode', mode);
+  console.log('Saved mode:', mode);
 }
 
-async function loadLeaderboard() {
-  return [
-    { player: 'Pranay', score: 500 },
-    { player: 'Ishan', score: 400 },
-    { player: 'Player', score: 300 }
-  ];
+function savePlayerName(name) {
+  const cleanName = (name || 'Player').trim().slice(0, 20);
+  localStorage.setItem('peppaPlayerName', cleanName);
+  console.log('Saved player name:', cleanName);
 }
 
-async function main() {
-  const saved = await postScore('Pranay', 450);
-  console.log('Saved result', saved);
+function saveScoreLocal(levelId, name, score) {
+  const key = 'peppa-leaderboard-' + levelId;
+  const existing = JSON.parse(localStorage.getItem(key) || '[]');
 
-  const board = await loadLeaderboard();
-  console.log('Leaderboard', board);
+  existing.push({
+    name: name || 'Player',
+    score: score,
+    timestamp: Date.now()
+  });
+
+  existing.sort((a, b) => (b.score || 0) - (a.score || 0));
+  const topScores = existing.slice(0, 10);
+  localStorage.setItem(key, JSON.stringify(topScores));
+
+  console.log('Saved leaderboard:', topScores);
+}
+
+function loadGameData() {
+  const mode = localStorage.getItem('peppaGameMode') || 'singlePlayer';
+  const name = localStorage.getItem('peppaPlayerName') || 'Player';
+  const leaderboard = JSON.parse(localStorage.getItem('peppa-leaderboard-lvl1') || '[]');
+
+  console.log('Loaded mode:', mode);
+  console.log('Loaded name:', name);
+  console.log('Loaded leaderboard:', leaderboard);
+}
+
+function main() {
+  saveGameMode('twoPlayer');
+  savePlayerName('Pranay');
+  saveScoreLocal('lvl1', 'Pranay', 500);
+  loadGameData();
 }
 
 main();`;
