@@ -130,13 +130,6 @@
       box-shadow: 0 16px 36px rgba(45,125,240,0.36);
       opacity: 0.95;
     }
-    .proof-note {
-      margin-top: 16px;
-      color: var(--text-dim);
-      font-size: 0.86rem;
-    }
-    .proof-note code { font-size: 0.78rem; }
-
     .hero-preview {
       margin: 22px auto 22px;
       max-width: 720px;
@@ -467,27 +460,38 @@
 
 
 
-    /* ── Feature / proof cards added for multiplayer + localStorage documentation ── */
+    /* ── Feature cards added for multiplayer + localStorage documentation ── */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin: 18px 0 26px;
+      margin: 18px 0 24px;
     }
     @media (max-width: 700px) { .feature-grid { grid-template-columns: 1fr; } }
     .feature-card {
-      background: linear-gradient(135deg, rgba(91,141,238,0.12), rgba(79,196,207,0.05));
-      border: 1px solid rgba(91,141,238,0.28);
+      background: linear-gradient(135deg, rgba(91,141,238,0.10), rgba(79,196,207,0.06));
+      border: 1px solid rgba(91,141,238,0.24);
       border-radius: 12px;
       padding: 16px 18px;
     }
-    .feature-card .feature-title {
-      color: var(--text-bright);
-      font-weight: 700;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
+    .feature-card h3 { margin-top: 0; }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 18px;
     }
-    .feature-card p { margin: 0; color: var(--text); font-size: 0.87rem; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(79,196,207,0.28);
+      background: rgba(79,196,207,0.08);
+      color: var(--accent-cyan);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+    }
     .callout {
       background: rgba(62,207,142,0.07);
       border: 1px solid rgba(62,207,142,0.25);
@@ -496,56 +500,16 @@
       margin: 18px 0 24px;
     }
     .callout strong { color: var(--accent-green); }
-    .proof-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+    .section-image {
       margin: 20px 0 28px;
     }
-    @media (max-width: 700px) { .proof-grid { grid-template-columns: 1fr; } }
-    .proof-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .proof-card img {
-      width: 100%;
-      display: block;
-      border-bottom: 1px solid var(--border);
-      background: #111118;
-    }
-    .proof-card .proof-body { padding: 13px 15px 15px; }
-    .proof-card .proof-title {
-      color: var(--text-bright);
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-    .proof-card p {
-      margin: 0;
+    .section-image figcaption {
+      margin-top: 10px;
       color: var(--text-dim);
-      font-size: 0.82rem;
-      line-height: 1.55;
+      font-size: 0.84rem;
+      text-align: center;
     }
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 12px 0 20px;
-    }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border2);
-      background: rgba(255,255,255,0.03);
-      color: var(--text-dim);
-      font-size: 0.78rem;
-      font-family: 'IBM Plex Mono', monospace;
-    }
+
 
     /* ── Homework links ── */
     .hw-link {
@@ -559,9 +523,22 @@
       margin: 14px 0;
       font-size: 0.88rem;
     }
-    .hw-link::before { content: '📚'; flex-shrink: 0; }
-    .hw-link a { color: var(--accent-green); font-weight: 600; }
-    .hw-link p { margin: 0; color: var(--text-dim); }
+    .hw-link::before {
+      content: '📚';
+      flex-shrink: 0;
+    }
+    .hw-link a {
+      color: var(--accent-green);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .hw-link a:hover {
+      text-decoration: underline;
+    }
+    .hw-link p {
+      margin: 0;
+      color: var(--text-dim);
+    }
   </style>
 </head>
 <body>
@@ -583,7 +560,6 @@
       </p>
       <figure class="hero-preview">
         <img src="images/game-preview.png" alt="Peppa Pig Fighting Game preview screenshot">
-        <figcaption>Main game preview image. Save your screenshot at <code>images/game-preview.png</code>.</figcaption>
       </figure>
 
       <div class="hero-actions">
@@ -591,9 +567,6 @@
           ▶ Play the Game
         </a>
       </div>
-      <p class="proof-note">
-        Image paths used in this page: <code>images/game-preview.png</code>, <code>images/music-api.png</code>, and the proof screenshots listed near the end.
-      </p>
     </section>
 
     <nav class="toc-block">
@@ -612,7 +585,7 @@
         <li><a href="#characters">Character Selection</a></li>
         <li><a href="#storage">LocalStorage</a></li>
         <li><a href="#collisions">Collision System</a></li>
-        <li><a href="#proof">Proof Images</a></li>
+        <li><a href="#scoring">Coins and Scoring</a></li>
         <li><a href="#coderunner">Code Runner Challenge</a></li>
         <li><a href="#io">Input / Output</a></li>
         <li><a href="#gameplay">Gameplay Mechanics</a></li>
@@ -702,29 +675,44 @@
         <h2>Methods &amp; Functions</h2>
       </div>
       <hr class="rule">
-      <h3>Setup Logic and Input Handling</h3>
+      <h3>Setup Logic, Persistence, and Input Handling</h3>
+      <p>The updated level code uses methods to keep each job separated. The <code>initialize()</code> method starts the level, loads saved data, creates coins, builds the HUD, creates the laser canvas, and loads the leaderboard. This keeps setup logic organized instead of mixing it into the game loop.</p>
       <div class="code-block"><pre><span class="prop">initialize</span>() {
+    <span class="kw">if</span> (window.speechSynthesis) {
+        window.speechSynthesis.speak = () =&gt; {};
+        window.speechSynthesis.cancel();
+    }
+
+    <span class="prop">this</span>.ensurePlayerName();
+    <span class="prop">this</span>.generateCoins();
     <span class="prop">this</span>.createHud();
-    <span class="prop">this</span>.updateHud(
-        <span class="str">`${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight! Use WASD to move and SPACE to fire lasers.`</span>
-    );
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+        <span class="prop">this</span>.updateHud(<span class="str">'2P Mode: Collect coins and defeat the boss!'</span>);
+    } <span class="kw">else</span> {
+        <span class="prop">this</span>.updateHud(<span class="str">'Fight! Use WASD to move, SPACE to fire lasers, and collect coins.'</span>);
+    }
+
     document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
     <span class="prop">this</span>.createLaserLayer();
 
-    <span class="prop">this</span>.loadLeaderboard().then(() => {
+    <span class="prop">this</span>.loadLeaderboard().then(() =&gt; {
         <span class="prop">this</span>.renderLeaderboard();
     });
-}
-
-<span class="prop">handleKeyDown</span>(event) {
+}</pre></div>
+      <p>The <code>handleKeyDown(event)</code> method also supports both players. Player 1 attacks with <code>Space</code>, and Player 2 attacks with <code>Enter</code> only when the game is in two-player mode.</p>
+      <div class="code-block"><pre><span class="prop">handleKeyDown</span>(event) {
     <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
         <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
         event.preventDefault();
     }
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span> &amp;&amp; event.code === <span class="str">'Enter'</span>) {
+        <span class="prop">this</span>.player2AttackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
 }</pre></div>
-      <p>Methods are used throughout the project to give the game specific actions. For example, <code>initialize()</code> sets up the level at the beginning by creating the HUD, adding keyboard controls, creating the laser canvas, and loading leaderboard data.</p>
-      <p>Another good example is <code>handleKeyDown(event)</code>. This method checks whether the player pressed the space bar. If the player does, the game sets <code>this.attackRequested = true</code>, which tells the update loop that the player wants to shoot.</p>
-      <p>This is a strong example of separating responsibilities: one method handles keyboard input, while another part of the code handles actually firing the laser.</p>
+      <p>This is a good example of methods working together: input methods set request flags, the update loop reads those flags, and separate spawn methods create the lasers.</p>
     </section>
 
     <hr class="section-divider">
@@ -736,13 +724,16 @@
         <h2>Data Types</h2>
       </div>
       <hr class="rule">
-      <div class="code-block"><pre><span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;   <span class="cmt">// Number</span>
-<span class="prop">this</span>.playerName = config.playerName || <span class="str">'Ishan'</span>;       <span class="cmt">// String</span>
-<span class="prop">this</span>.battleEnded = <span class="kw">false</span>;                               <span class="cmt">// Boolean</span>
-<span class="prop">this</span>.lasers = [];                                       <span class="cmt">// Array</span>
+      <div class="code-block"><pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>; <span class="cmt">// String</span>
+<span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;      <span class="cmt">// Number</span>
+<span class="prop">this</span>.player2Health = <span class="prop">this</span>.player2MaxHealth;          <span class="cmt">// Number</span>
+<span class="prop">this</span>.attackRequested = <span class="kw">false</span>;                      <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.player2AttackRequested = <span class="kw">false</span>;               <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.lasers = [];                                     <span class="cmt">// Array</span>
+<span class="prop">this</span>.coins = [];                                      <span class="cmt">// Array</span>
 <span class="prop">this</span>.playerSpawn = { x: width * <span class="num">0.12</span>, y: height * <span class="num">0.72</span> }; <span class="cmt">// Object</span></pre></div>
-      <p>The game uses many different data types. Numbers are used for things like health, cooldowns, and score. Strings are used for values like the player name and enemy greeting. Booleans are used for true-or-false states, such as whether the battle has ended. Arrays store multiple items, like all active lasers. Objects store grouped information, like spawn positions and configuration settings.</p>
-      <p>A specific example is <code>this.lasers = []</code>, which creates an array to hold every laser currently moving on the screen. Another example is <code>this.playerSpawn = { x: ..., y: ... }</code>, which uses an object to store the exact spawn point for the player.</p>
+      <p>The updated game uses many JavaScript data types. Strings store the game mode and player names, numbers store health and score values, booleans track whether attacks were requested, arrays store lasers and coins, and objects store spawn positions and sprite data.</p>
+      <p>A strong example is <code>this.gameMode</code>. It can be <code>'singlePlayer'</code> or <code>'twoPlayer'</code>, and the rest of the code changes behavior based on that string.</p>
     </section>
 
     <hr class="section-divider">
@@ -755,12 +746,14 @@
       </div>
       <hr class="rule">
       <div class="code-block"><pre><span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
+<span class="prop">this</span>.player2Health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.player2Health - <span class="num">1</span>);
+L.x += L.vx;
+L.y += L.vy;
 L.life -= <span class="num">1</span>;
-<span class="kw">const</span> score = <span class="prop">this</span>.playerHealth * <span class="num">100</span>;
-<span class="kw">const</span> dx = targetX - fromX;
-<span class="kw">const</span> dy = targetY - fromY;</pre></div>
-      <p>Operators are used constantly to make the game function. Subtraction is used when the player or enemy takes damage. Multiplication is used to calculate the final score. Assignment operators update values over time.</p>
-      <p>For example, <code>this.playerHealth - 1</code> decreases the player's health when hit by a laser or by colliding with the boss. <code>L.life -= 1</code> reduces a laser's lifetime every frame until it disappears. <code>this.playerHealth * 100</code> turns remaining health into score, so if the player wins with 4 health left, the score becomes 400.</p>
+<span class="kw">const</span> score = (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) + (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);
+<span class="kw">const</span> distance = Math.hypot(playerCenterX - coin.x, playerCenterY - coin.y);</pre></div>
+      <p>Operators are used constantly to make the game function. Subtraction lowers player health, addition updates laser position, and multiplication calculates the final score.</p>
+      <p>The improved score formula rewards both survival and coin collection: remaining health is worth <code>100</code> points each, and each coin adds a bonus based on <code>coinValue</code>.</p>
     </section>
 
     <hr class="section-divider">
@@ -772,28 +765,27 @@ L.life -= <span class="num">1</span>;
         <h2>Control Structures</h2>
       </div>
       <hr class="rule">
-      <div class="code-block"><pre><span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
-    <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
-}
-
-<span class="kw">if</span> (!response.ok) {
-    <span class="kw">throw new</span> Error(<span class="str">`POST failed: ${response.status}`</span>);
-}
-
-<span class="kw">if</span> (<span class="prop">this</span>.playerHealth &lt;= <span class="num">0</span> &amp;&amp; !<span class="prop">this</span>.battleEnded) {
-    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
-    <span class="prop">this</span>.updateHud(<span class="str">'You lost. Restarting level...'</span>);
-    <span class="prop">this</span>.showLoseScreenAndRestart();
-    <span class="kw">return</span>;
-}
-
-<span class="kw">if</span> (boss.isDefeated &amp;&amp; !<span class="prop">this</span>.battleEnded) {
-    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
-    <span class="kw">const</span> score = <span class="prop">this</span>.playerHealth * <span class="num">100</span>;
+      <p>Control structures decide which version of the game runs. The code checks whether the game is in single-player or two-player mode, whether a player has attacked, whether someone has lost, and whether the boss has been defeated.</p>
+      <div class="code-block"><pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="kw">if</span> (!player || !player2) <span class="kw">return</span>;
+} <span class="kw">else</span> {
+    <span class="kw">if</span> (!player || !boss) <span class="kw">return</span>;
 }</pre></div>
-      <p>Control structures are one of the most important parts of the game because they decide what happens in different situations.</p>
-      <p>One example is checking if the player pressed space. If that condition is true, the game marks an attack request. Another example is API error handling — if the response is not successful, the code throws an error.</p>
-      <p>The biggest examples are the win and lose conditions. If player health becomes 0 or less, the game ends the battle and restarts the level. If the boss is defeated, the game marks the battle as ended, calculates the score, saves it, and moves on.</p>
+      <p>This conditional prevents the game loop from running until the correct objects exist. In two-player mode, the game waits for both players. In single-player mode, it waits for the player and the boss.</p>
+      <div class="code-block"><pre><span class="kw">const</span> player1Dead = <span class="prop">this</span>.playerHealth &lt;= <span class="num">0</span>;
+<span class="kw">const</span> player2Dead = player2 &amp;&amp; <span class="prop">this</span>.player2Health &lt;= <span class="num">0</span>;
+
+<span class="kw">if</span> ((player1Dead || player2Dead) &amp;&amp; !<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
+    <span class="kw">let</span> lossMessage = <span class="str">'You lost. Restarting level...'</span>;
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+        <span class="kw">if</span> (player1Dead &amp;&amp; player2Dead) lossMessage = <span class="str">'Draw! Both players defeated! Restarting...'</span>;
+        <span class="kw">else if</span> (player1Dead) lossMessage = <span class="str">'Player 2 Wins! Player 1 defeated. Restarting...'</span>;
+        <span class="kw">else</span> lossMessage = <span class="str">'Player 1 Wins! Player 2 defeated. Restarting...'</span>;
+    }
+}</pre></div>
+      <p>This makes the ending more advanced because the game can show different messages depending on which player loses in two-player mode.</p>
     </section>
 
     <hr class="section-divider">
@@ -805,23 +797,29 @@ L.life -= <span class="num">1</span>;
         <h2>Arrays and Collections</h2>
       </div>
       <hr class="rule">
+      <p>Arrays are used to store multiple game objects, lasers, coins, and leaderboard entries. This lets the game update many items every frame without needing separate variables for each one.</p>
       <div class="code-block"><pre><span class="prop">this</span>.classes = [
-    { <span class="kw">class</span>: <span class="cls">GamEnvBackground</span>, data: image_data_background },
-    { <span class="kw">class</span>: <span class="cls">Player</span>,           data: sprite_data_ishan   },
-    { <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>,   data: sprite_data_enemy   }
+    { <span class="kw">class</span>: <span class="cls">GameEnvBackground</span>, data: image_data_background },
+    { <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_ishan }
 ];
 
-<span class="prop">this</span>.lasers.push({
+<span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
+}</pre></div>
+      <p>This is important because the game builds a different class list depending on the selected mode. Two-player mode adds a second player, while single-player mode adds the boss enemy.</p>
+      <div class="code-block"><pre><span class="prop">this</span>.lasers.push({
     x: fromX,
     y: fromY,
     vx,
     vy,
     isPlayerLaser,
+    source: sourceId,
     life: <span class="num">60</span>,
     maxLife: <span class="num">60</span>
 });</pre></div>
-      <p>Arrays are used in multiple important ways. The <code>this.classes</code> array stores the game objects that should be created in the level, including the background, the player, and the boss enemy.</p>
-      <p>The <code>this.lasers</code> array stores every laser currently active in the game. Every time the player or enemy shoots, a new laser object is pushed into the array. This allows the game to keep track of many moving projectiles at once.</p>
+      <p>The <code>source</code> property makes the laser system more flexible. A laser can come from <code>player1</code>, <code>player2</code>, or the <code>boss</code>, so the collision system knows who should be damaged.</p>
     </section>
 
     <hr class="section-divider">
@@ -834,33 +832,26 @@ L.life -= <span class="num">1</span>;
       </div>
       <hr class="rule">
       <h3>Why the Update Method Matters</h3>
-      <div class="code-block"><pre><span class="prop">update</span>() {
-    <span class="kw">if</span> (<span class="prop">this</span>.battleEnded) {
-        <span class="kw">return</span>;
-    }
-
-    <span class="kw">const</span> player = <span class="prop">this</span>.getPlayer();
-    <span class="kw">const</span> boss   = <span class="prop">this</span>.getBoss();
-    <span class="kw">if</span> (!player || !boss) {
-        <span class="kw">return</span>;
-    }
-
-    <span class="kw">const</span> now = Date.now();
-
-    <span class="kw">if</span> (<span class="prop">this</span>.attackRequested) {
-        <span class="prop">this</span>.attackRequested = <span class="kw">false</span>;
-        <span class="kw">if</span> (now - <span class="prop">this</span>.lastAttackAt >= <span class="prop">this</span>.attackCooldownMs &amp;&amp; !boss.isDefeated) {
-            <span class="prop">this</span>.lastAttackAt = now;
-            <span class="kw">const</span> px  = player.position.x + player.width  / <span class="num">2</span>;
-            <span class="kw">const</span> py  = player.position.y + player.height / <span class="num">2</span>;
-            <span class="kw">const</span> dir = player.direction || <span class="str">'right'</span>;
-            <span class="prop">this</span>.spawnLaserStraight(px, py, dir, <span class="kw">true</span>);
-        }
+      <p>The <code>update()</code> method is the main real-time loop for the battle. It checks player objects, handles attacks, moves lasers, enforces boundaries, checks win/loss conditions, and updates the HUD every frame.</p>
+      <div class="code-block"><pre><span class="kw">if</span> (<span class="prop">this</span>.attackRequested) {
+    <span class="prop">this</span>.attackRequested = <span class="kw">false</span>;
+    <span class="kw">if</span> (now - <span class="prop">this</span>.lastAttackAt &gt;= <span class="prop">this</span>.attackCooldownMs) {
+        <span class="prop">this</span>.lastAttackAt = now;
+        <span class="kw">const</span> px = player.position.x + player.width / <span class="num">2</span>;
+        <span class="kw">const</span> py = player.position.y + player.height / <span class="num">2</span>;
+        <span class="kw">const</span> dir = player.direction || <span class="str">'right'</span>;
+        <span class="prop">this</span>.spawnLaserStraight(px, py, dir, <span class="kw">true</span>, <span class="str">'player1'</span>);
     }
 }</pre></div>
-      <p>The <code>update()</code> method acts like the main game loop for this level. It runs repeatedly while the level is active and checks the current game state.</p>
-      <p>A specific example is when the player presses space. That sets <code>attackRequested</code> to true, but the actual laser is only fired during <code>update()</code>. The code then checks cooldown timing using <code>Date.now()</code> so the player cannot spam attacks too fast.</p>
-      <p>This is an important game development idea because it separates input from real-time processing.</p>
+      <p>This code uses attack request flags and cooldown timing so attacks happen in the update loop and cannot be spammed too quickly.</p>
+      <div class="code-block"><pre><span class="kw">if</span> (boss &amp;&amp; !boss.isDefeated &amp;&amp; now - <span class="prop">this</span>.lastEnemyLaserAt &gt;= <span class="prop">this</span>.enemyLaserIntervalMs) {
+    <span class="prop">this</span>.lastEnemyLaserAt = now;
+    <span class="kw">const</span> closestPlayer = <span class="prop">this</span>.getClosestPlayer(boss);
+    <span class="kw">if</span> (closestPlayer) {
+        <span class="prop">this</span>.spawnLaser(bx, by, px, py, <span class="kw">false</span>, <span class="str">'boss'</span>);
+    }
+}</pre></div>
+      <p>The boss can target the closest player by comparing center distances. That makes the enemy behavior more dynamic than always shooting at one fixed player.</p>
     </section>
 
     <hr class="section-divider">
@@ -879,7 +870,6 @@ L.life -= <span class="num">1</span>;
       <div class="screenshot">
         <img src="images/music-api.png" alt="Music API screenshot showing the iTunes Search API or music feature working">
       </div>
-      <p class="proof-note">Save your Music API proof screenshot at <code>images/music-api.png</code>. This can show the API code, browser console output, or the music controls working in the game.</p>
 
       <p>This follows the same Web API flow used in class:</p>
       <ul>
@@ -1022,32 +1012,34 @@ console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></d
       </div>
       <hr class="rule">
       <h3>2-Player Mode with Separate Controls</h3>
-      <p>The second file adds documentation for local multiplayer. The game can run in <code>singlePlayer</code> or <code>twoPlayer</code> mode. This matters because the game changes how many players are created, what controls are shown, and how attacks are handled.</p>
+      <p>The updated code supports both <code>singlePlayer</code> and <code>twoPlayer</code> mode. The mode can come from the level config, from <code>localStorage</code>, or default to single-player if nothing was saved.</p>
+
+      <figure class="hero-preview section-image">
+        <img src="images/game-mode-screen.png" alt="Game mode selection screen with Single Player and 2 Players options">
+      </figure>
 
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-title">Player 1 Controls</div>
-          <p>Player 1 uses <code>WASD</code> for movement and <code>SPACE</code> to attack.</p>
+          <div class="feature-title">Player 1</div>
+          <p>Player 1 uses <code>WASD</code> to move and <code>Space</code> to fire a cyan laser.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-title">Player 2 Controls</div>
-          <p>Player 2 uses the arrow keys for movement and <code>Enter</code> to attack.</p>
+          <div class="feature-title">Player 2</div>
+          <p>Player 2 uses the arrow keys to move and <code>Enter</code> to fire a green laser.</p>
         </div>
       </div>
 
-      <div class="code-block"><pre>// Game mode: 'singlePlayer' or 'twoPlayer'
-// First check config, then check localStorage, then default to singlePlayer
-this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';</pre></div>
+      <div class="code-block"><pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>;</pre></div>
 
-      <p>This line is important because it lets the game remember the selected mode even after the page reloads. If the player chose 2-player mode earlier, <code>localStorage</code> can restore that choice.</p>
+      <p>The level also creates different game objects depending on the mode. In <code>twoPlayer</code> mode, it adds Player 2. In single-player mode, it adds the boss enemy.</p>
 
-      <div class="code-block"><pre>// Player 2 attack with Enter key only in 2-player mode
-if (this.gameMode === 'twoPlayer' &amp;&amp; event.code === 'Enter') {
-    this.player2AttackRequested = true;
-    event.preventDefault();
+      <div class="code-block"><pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
 }</pre></div>
 
-      <p>The game only listens for Player 2's attack if the mode is actually <code>twoPlayer</code>. This prevents the Enter key from doing unnecessary actions in single-player mode.</p>
+      <p>The HUD changes too. In two-player mode, it becomes wider, shows Player 2 health, and displays both control schemes.</p>
     </section>
 
     <hr class="section-divider">
@@ -1061,6 +1053,11 @@ if (this.gameMode === 'twoPlayer' &amp;&amp; event.code === 'Enter') {
       <hr class="rule">
       <h3>Saving Player Character Choices</h3>
       <p>The game also supports character swapping. Before the battle starts, players can choose character images and names. Those choices are saved so the battle level can load the correct player sprites.</p>
+
+      <figure class="hero-preview section-image">
+        <img src="images/multiplayer-screen.png" alt="Character selection screen showing Player 1 and Player 2 character choices">
+        <figcaption>Multiplayer character selection screen where Player 1 and Player 2 choose their characters before starting.</figcaption>
+      </figure>
 
       <div class="code-block"><pre>// Read character selections saved by the welcome/character-select screen
 const p1CharImage = localStorage.getItem('peppaPlayer1CharImage') || 'ishan-jha.png';
@@ -1113,54 +1110,67 @@ const p1Name  = this.gameMode === 'twoPlayer' ? p1CharName  : 'Ishan';</pre></di
         <span class="tag">peppaPlayerName</span>
         <span class="tag">peppaPlayer1CharImage</span>
         <span class="tag">peppaPlayer2CharImage</span>
-        <span class="tag">peppa-leaderboard-level</span>
+        <span class="tag">peppa-leaderboard-levelId</span>
       </div>
 
-      <div class="code-block"><pre>ensurePlayerName() {
-    if (this.playerName &amp;&amp; this.playerName.trim()) return;
+      <div class="code-block"><pre><span class="prop">ensurePlayerName</span>() {
+    <span class="kw">if</span> (<span class="prop">this</span>.playerName &amp;&amp; <span class="prop">this</span>.playerName.trim()) <span class="kw">return</span>;
 
-    const savedName = localStorage.getItem('peppaPlayerName');
-    if (savedName &amp;&amp; savedName.trim()) {
-        this.playerName = savedName.trim();
-        return;
+    <span class="kw">const</span> savedName = localStorage.getItem(<span class="str">'peppaPlayerName'</span>);
+    <span class="kw">if</span> (savedName &amp;&amp; savedName.trim()) {
+        <span class="prop">this</span>.playerName = savedName.trim();
+        <span class="kw">return</span>;
     }
 
-    let inputName = window.prompt('Enter your name for the leaderboard:', '');
-    if (!inputName || !inputName.trim()) {
-        inputName = 'Player';
-    }
+    <span class="kw">let</span> inputName = window.prompt(<span class="str">'Enter your name for the leaderboard:'</span>, <span class="str">''</span>);
+    <span class="kw">if</span> (!inputName || !inputName.trim()) inputName = <span class="str">'Player'</span>;
 
-    this.playerName = inputName.trim().slice(0, 20);
-    localStorage.setItem('peppaPlayerName', this.playerName);
+    <span class="prop">this</span>.playerName = inputName.trim().slice(<span class="num">0</span>, <span class="num">20</span>);
+    localStorage.setItem(<span class="str">'peppaPlayerName'</span>, <span class="prop">this</span>.playerName);
 }</pre></div>
 
-      <p>This method first checks whether a player name already exists. If not, it checks <code>localStorage</code>. If there is still no name, the game asks the player for one and saves it for later.</p>
+      <p>This method first checks whether a player name already exists, then checks browser storage, then asks the player for a name only if needed. The name is limited to 20 characters before saving.</p>
+
+      <h3>API Fallback to Local Leaderboard</h3>
+      <p>The game can save scores to a backend API when <code>apiBase</code> exists. If no API is configured, it automatically saves the leaderboard locally instead.</p>
+      <div class="code-block"><pre><span class="kw">async</span> <span class="prop">saveScore</span>(score) {
+    <span class="kw">if</span> (!<span class="prop">this</span>.apiBase) {
+        <span class="prop">this</span>.saveScoreLocal(score);
+        <span class="kw">return</span> { success: <span class="kw">true</span> };
+    }
+
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="str">`${this.apiBase}/leaderboard`</span>, {
+        method: <span class="str">'POST'</span>,
+        headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+        body: JSON.stringify({
+            name: <span class="prop">this</span>.playerName || <span class="str">'Player'</span>,
+            score: score,
+            levelId: <span class="prop">this</span>.config.levelId,
+            levelTitle: <span class="prop">this</span>.config.levelTitle
+        })
+    });
+}</pre></div>
 
       <h3>Local Leaderboard Storage</h3>
-      <div class="code-block"><pre>saveScoreLocal(score) {
-    try {
-        const leaderboardKey = `peppa-leaderboard-${this.config.levelId}`;
-        const existing = this.loadLeaderboardLocal();
-        existing.push({
-            name: this.playerName || 'Player',
-            score: score,
-            timestamp: Date.now()
-        });
+      <div class="code-block"><pre><span class="prop">saveScoreLocal</span>(score) {
+    <span class="kw">const</span> leaderboardKey = <span class="str">`peppa-leaderboard-${this.config.levelId}`</span>;
+    <span class="kw">const</span> existing = <span class="prop">this</span>.loadLeaderboardLocal();
 
-        // Sort by score descending and keep top scores
-        existing.sort((a, b) =&gt; (b.score ?? 0) - (a.score ?? 0));
-        const topScores = existing.slice(0, 10);
+    existing.push({
+        name: <span class="prop">this</span>.playerName || <span class="str">'Player'</span>,
+        score: score,
+        timestamp: Date.now()
+    });
 
-        localStorage.setItem(leaderboardKey, JSON.stringify(topScores));
-    } catch (error) {
-        console.error('Error saving score locally:', error);
-    }
+    existing.sort((a, b) =&gt; (b.score ?? <span class="num">0</span>) - (a.score ?? <span class="num">0</span>));
+    <span class="kw">const</span> topScores = existing.slice(<span class="num">0</span>, <span class="num">10</span>);
+    localStorage.setItem(leaderboardKey, JSON.stringify(topScores));
 }</pre></div>
 
-      <p>The leaderboard stores scores by level using a key like <code>peppa-leaderboard-lvl1</code>. The game sorts scores from highest to lowest and only keeps the top 10 so the stored data stays clean.</p>
+      <p>The leaderboard is stored separately for each level using a key like <code>peppa-leaderboard-lvl1</code>. The game sorts scores from highest to lowest and keeps the top 10.</p>
 
       <div class="callout">
-        <p><strong>Why this is important:</strong> This shows that the game does not only run while the page is open. It can save player choices and leaderboard data across sessions using browser storage.</p>
+        <p><strong>Why this is important:</strong> The game still has persistent scores even without a live backend server, which makes the project more reliable for demos and GitHub Pages deployment.</p>
       </div>
     </section>
 
@@ -1173,116 +1183,87 @@ const p1Name  = this.gameMode === 'twoPlayer' ? p1CharName  : 'Ishan';</pre></di
         <h2>Collision System</h2>
       </div>
       <hr class="rule">
-      <h3>Player, Laser, Boss, and Floor Collisions</h3>
-      <p>The second file also explains multiple collision systems. The game checks player-vs-player collisions, laser collisions, and floor barriers so characters stay inside the playable area.</p>
+      <h3>Laser Hitboxes and Damage</h3>
+      <p>The collision system checks whether laser hitboxes overlap with players or the boss. The updated laser objects also store a <code>source</code>, so the game knows whether the laser came from Player 1, Player 2, or the boss.</p>
 
-      <div class="code-block"><pre>// Two-player collision: P1 hits P2 or P2 hits P1
-if (this.gameMode === 'twoPlayer' &amp;&amp; player &amp;&amp; player2) {
-    if (player.isCollision(player2)) {
-        if (!this.lastPlayerHitAt || Date.now() - this.lastPlayerHitAt &gt; this.playerDamageCooldownMs) {
-            this.playerHealth = Math.max(0, this.playerHealth - player2.playerDamage);
-            this.lastPlayerHitAt = Date.now();
-            this.updateHud(`P1 hit by P2! Health: ${this.playerHealth}/${this.playerMaxHealth}`);
-        }
-    }
-
-    if (player2.isCollision(player)) {
-        if (!this.lastPlayer2HitAt || Date.now() - this.lastPlayer2HitAt &gt; this.playerDamageCooldownMs) {
-            this.player2Health = Math.max(0, this.player2Health - player.playerDamage);
-            this.lastPlayer2HitAt = Date.now();
-            this.updateHud(`P2 hit by P1! Health: ${this.player2Health}/${this.player2MaxHealth}`);
-        }
+      <div class="code-block"><pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="kw">if</span> (L.source === <span class="str">'player1'</span> &amp;&amp; player2) {
+        <span class="cmt">// Player 1 laser can hit Player 2</span>
+        <span class="prop">this</span>.player2Health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.player2Health - <span class="num">1</span>);
+    } <span class="kw">else if</span> (L.source === <span class="str">'player2'</span> &amp;&amp; player) {
+        <span class="cmt">// Player 2 laser can hit Player 1</span>
+        <span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
     }
 }</pre></div>
 
-      <p>This collision logic uses cooldown timing so players do not lose all their health instantly when they touch each other. The code checks the current time with <code>Date.now()</code> before applying damage again.</p>
+      <p>In two-player mode, Player 1 and Player 2 can damage each other with lasers. The game uses cooldown timers like <code>lastPlayerHitAt</code> and <code>lastPlayer2HitAt</code> so damage does not happen too quickly.</p>
 
-      <div class="code-block"><pre>// Keep players and boss inside the playable floor area
-if (player &amp;&amp; player.height) {
-    if (player.position.y &lt; this.floorY) {
-        player.position.y = this.floorY;
-        player.velocity.y = 0;
+      <h3>Bounding Box Collision</h3>
+      <div class="code-block"><pre><span class="prop">areColliding</span>(a, b) {
+    <span class="kw">if</span> (!a || !b) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">return</span> (
+        a.position.x &lt; b.position.x + b.width &amp;&amp;
+        a.position.x + a.width &gt; b.position.x &amp;&amp;
+        a.position.y &lt; b.position.y + b.height &amp;&amp;
+        a.position.y + a.height &gt; b.position.y
+    );
+}</pre></div>
+
+      <p>This method checks whether two rectangles overlap. It is used for physical collision checks like the player touching the boss in single-player mode.</p>
+
+      <h3>Floor Barriers</h3>
+      <div class="code-block"><pre><span class="kw">if</span> (player &amp;&amp; player.height) {
+    <span class="kw">if</span> (player.position.y &lt; floorY) {
+        player.position.y = floorY;
+        player.velocity.y = <span class="num">0</span>;
     }
-    if (player.position.y + player.height &gt; this.gameEnv.innerHeight) {
-        player.position.y = this.gameEnv.innerHeight - player.height;
-        player.velocity.y = 0;
+    <span class="kw">if</span> (player.position.y + player.height &gt; height) {
+        player.position.y = height - player.height;
+        player.velocity.y = <span class="num">0</span>;
     }
 }</pre></div>
 
-      <p>The floor barrier logic keeps players and bosses inside the game screen. This prevents characters from falling out of bounds or moving into areas where the player cannot see them.</p>
+      <p>The floor barrier logic keeps players and bosses inside the visible arena. This prevents characters from floating too high, falling out of bounds, or leaving the playable area.</p>
     </section>
 
     <hr class="section-divider">
 
-    <!-- PROOF IMAGES -->
-    <section id="proof">
+    <!-- SCORING -->
+    <section id="scoring">
       <div class="section-heading">
-        <div class="icon">📸</div>
-        <h2>Proof Images to Add</h2>
+        <div class="icon">🪙</div>
+        <h2>Coins and Scoring</h2>
       </div>
       <hr class="rule">
-      <p>Use this section to prove that the features work. Put the images in your repo's <code>images</code> folder, then keep the filenames below the same. If your repo uses Jekyll base URLs, change each <code>src</code> to <code>{{ site.baseurl }}/images/filename.png</code>.</p>
+      <h3>Coin Generation and Collection</h3>
+      <p>The updated code adds collectible coins. Coins spawn randomly inside the playable arena, avoid spawning too close to the player or enemy, and increase the final score when collected.</p>
+      <div class="code-block"><pre><span class="prop">this</span>.coins = [];
+<span class="prop">this</span>.coinCount = <span class="num">0</span>;
+<span class="prop">this</span>.coinValue = config.coinValue ?? <span class="num">25</span>;
+<span class="prop">this</span>.coinRadius = config.coinRadius ?? <span class="num">14</span>;
+<span class="prop">this</span>.coinTotal = config.coinTotal ?? <span class="num">8</span>;</pre></div>
+      <p>These values control how many coins appear, how large they are, and how many points each coin is worth.</p>
+      <div class="code-block"><pre><span class="kw">if</span> (distance &lt;= collectRadius) {
+    coin.collected = <span class="kw">true</span>;
+    <span class="prop">this</span>.coinCount += <span class="num">1</span>;
+    <span class="prop">this</span>.updateHud(<span class="str">`Coin collected! +${this.coinValue} score`</span>);
+}</pre></div>
+      <p>When the player is close enough to a coin, the coin becomes collected, the coin count increases, and the HUD shows immediate feedback.</p>
 
-      <div class="image-path-list">
-        <div class="image-path-card"><strong>Main game preview</strong><br><code>images/game-preview.png</code></div>
-        <div class="image-path-card"><strong>Music API proof</strong><br><code>images/music-api.png</code></div>
-        <div class="image-path-card"><strong>Welcome screen proof</strong><br><code>images/proof-welcome-screen.png</code></div>
-        <div class="image-path-card"><strong>Character select proof</strong><br><code>images/proof-character-select.png</code></div>
-        <div class="image-path-card"><strong>Two-player proof</strong><br><code>images/proof-two-player-mode.png</code></div>
-        <div class="image-path-card"><strong>localStorage proof</strong><br><code>images/proof-localstorage-devtools.png</code></div>
-        <div class="image-path-card"><strong>Leaderboard proof</strong><br><code>images/proof-leaderboard-storage.png</code></div>
-        <div class="image-path-card"><strong>Collision proof</strong><br><code>images/proof-collision-test.png</code></div>
-      </div>
+      <h3>Final Score and Victory Screen</h3>
+      <div class="code-block"><pre><span class="kw">const</span> score = (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) + (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);
+<span class="prop">this</span>.levelScore = score;
 
-      <div class="proof-grid">
-        <div class="proof-card">
-          <img src="images/proof-welcome-screen.png" alt="Proof of welcome screen and game mode selection">
-          <div class="proof-body">
-            <div class="proof-title">Welcome Screen / Game Mode</div>
-            <p>Add a screenshot showing Single Player and 2 Players buttons.</p>
-          </div>
-        </div>
-        <div class="proof-card">
-          <img src="images/proof-character-select.png" alt="Proof of character selection screen">
-          <div class="proof-body">
-            <div class="proof-title">Character Selection</div>
-            <p>Add a screenshot showing Player 1 and Player 2 character choices.</p>
-          </div>
-        </div>
-        <div class="proof-card">
-          <img src="images/proof-two-player-mode.png" alt="Proof of two player mode running">
-          <div class="proof-body">
-            <div class="proof-title">2-Player Gameplay</div>
-            <p>Add a screenshot showing both players in the same battle.</p>
-          </div>
-        </div>
-        <div class="proof-card">
-          <img src="images/proof-localstorage-devtools.png" alt="Proof of localStorage in browser devtools">
-          <div class="proof-body">
-            <div class="proof-title">localStorage DevTools</div>
-            <p>Add a screenshot of DevTools showing keys like <code>peppaGameMode</code> and <code>peppaPlayerName</code>.</p>
-          </div>
-        </div>
-        <div class="proof-card">
-          <img src="images/proof-leaderboard-storage.png" alt="Proof of leaderboard local storage">
-          <div class="proof-body">
-            <div class="proof-title">Saved Leaderboard</div>
-            <p>Add a screenshot of the leaderboard or the saved leaderboard JSON in localStorage.</p>
-          </div>
-        </div>
-        <div class="proof-card">
-          <img src="images/proof-collision-test.png" alt="Proof of collision detection working">
-          <div class="proof-body">
-            <div class="proof-title">Collision Test</div>
-            <p>Add a screenshot showing a hit message, player damage, or laser collision.</p>
-          </div>
-        </div>
-      </div>
-
+<span class="prop">this</span>.saveScore(score)
+    .then(() =&gt; <span class="prop">this</span>.loadLeaderboard())
+    .then(() =&gt; <span class="prop">this</span>.renderLeaderboard());</pre></div>
+      <p>The final score combines remaining health with the coin bonus. After calculating it, the game saves the score, reloads the leaderboard, and re-renders the leaderboard on the HUD.</p>
       <div class="callout">
-        <p><strong>Best proof image location:</strong> Put all proof screenshots in <code>images/</code> at the root of your repo. Example: <code>images/proof-localstorage-devtools.png</code>.</p>
+        <p><strong>Improvement from the original version:</strong> The game now rewards exploration and survival instead of only counting boss defeat. Coins make the arena more interactive.</p>
       </div>
     </section>
+
+    <hr class="section-divider">
 
     <!-- CODE RUNNER -->
     <section id="coderunner">
@@ -1411,7 +1392,7 @@ if (player &amp;&amp; player.height) {
         <span class="prop">this</span>.lasers.splice(i, <span class="num">1</span>);
     }
 }</pre></div>
-      <p>This collision code checks whether a player laser overlaps the boss hitbox. If it does, the boss takes damage and the HUD shows a message. There is also matching logic for enemy lasers hitting the player, which reduces player health. This is a strong example of how math and conditionals work together in game design.</p>
+      <p>This collision code checks whether a player laser overlaps the boss hitbox. If it does, the boss takes damage and the laser is removed. The updated version also uses laser sources so Player 1 lasers can be cyan, Player 2 lasers can be green, and boss lasers can be red. This makes the gameplay easier to understand visually.</p>
     </section>
 
     <hr class="section-divider">
@@ -1538,7 +1519,7 @@ button.addEventListener(<span class="str">"click"</span>, () => {
         <li>I learned how methods can separate tasks like input handling, attacks, leaderboard loading, HUD updates, and level transitions.</li>
         <li>I improved my understanding of arrays and objects through systems like lasers, class lists, and configuration data.</li>
         <li>I learned how conditionals control real gameplay events such as winning, losing, collisions, and cooldown timing.</li>
-        <li>I also gained experience with API integration by saving and loading leaderboard data from a backend instead of keeping scores only in memory.</li>
+        <li>I also gained experience with API integration, localStorage fallback, music API data, and saving leaderboard scores across sessions.</li>
         <li>Overall, this project showed me how classroom programming concepts can be used together in a real interactive application.</li>
       </ul>
     </section>
@@ -1557,7 +1538,7 @@ button.addEventListener(<span class="str">"click"</span>, () => {
         <li>Expand the laser system with special attacks, power-ups, or different projectile patterns.</li>
         <li>Improve enemy behavior so bosses move and attack in smarter ways.</li>
         <li>Add sound effects, attack animations, and visual effects to make combat feel more polished.</li>
-        <li>Enhance the leaderboard by sorting by level, adding timestamps, or storing player stats.</li>
+        <li>Enhance the leaderboard by sorting by level, showing timestamps, or storing player stats.</li>
         <li>Improve balancing so health, attack speed, and difficulty feel fair across all levels.</li>
         <li>Add a start menu, restart button, and clearer instructions for players.</li>
         <li>Make the code more scalable so adding new levels and enemies takes less repeated work.</li>
@@ -1573,48 +1554,48 @@ button.addEventListener(<span class="str">"click"</span>, () => {
         <h2>Homework Connections</h2>
       </div>
       <hr class="rule">
-      <p>These assignments connect directly to the concepts used in my game project. Each one helped build the skills needed for features like player movement, health systems, class design, conditionals, and arrays of lasers.</p>
+      <p>These assignments connect directly to the concepts used in my game project. Each one helped build the skills needed for features like player movement, health systems, class design, conditionals, arrays of lasers, coins, localStorage, and API integration.</p>
 
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/csse/lessons/variables/homework" target="_blank">Variables Homework</a>
-          <p>Relates to storing values like player health, score, cooldown timers, and positions.</p>
+          <p>Relates to storing values like player health, score, cooldown timers, coin count, player names, and positions.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/javascript/boolean-hack" target="_blank">Boolean Homework</a>
-          <p>Connects to game-state flags like <code>battleEnded</code>, <code>isPlayerLaser</code>, and whether the boss is defeated.</p>
+          <p>Connects to game-state flags like <code>battleEnded</code>, <code>isPlayerLaser</code>, <code>attackRequested</code>, and whether the game is in single-player or two-player mode.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-variables/hw" target="_blank">Classes and Variables Homework</a>
-          <p>Supports the class-based structure of the game, where the level and enemy systems store and manage data.</p>
+          <p>Supports the class-based structure of the game, where the level, player, enemy, coins, lasers, and leaderboard data are managed through objects and class properties.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/javascript/functions/tinkerers-hw" target="_blank">Functions Homework</a>
-          <p>Connects to methods like <code>initialize()</code>, <code>updateHud()</code>, <code>spawnLaser()</code>, and <code>saveScore()</code>.</p>
+          <p>Connects to methods like <code>initialize()</code>, <code>updateHud()</code>, <code>generateCoins()</code>, <code>spawnLaser()</code>, <code>saveScore()</code>, and <code>loadLeaderboard()</code>.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/csse/javascript/constellators/conditionals-hw" target="_blank">Conditionals Homework</a>
-          <p>Relates to win and lose conditions, cooldown checks, and collision-based decisions in the game loop.</p>
+          <p>Relates to win and lose conditions, cooldown checks, collision checks, player mode checks, and API/localStorage error handling.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-methods/homework" target="_blank">Classes and Methods Homework</a>
-          <p>Connects to object-oriented programming in the project, especially the level class and reusable gameplay methods.</p>
+          <p>Connects to object-oriented programming in the project, especially the reusable <code>PeppaBattleLevelBase</code> class and its gameplay methods.</p>
         </div>
       </div>
       <div class="hw-link">
         <div>
           <a href="https://pkdev0101.github.io/student/javascript/array/homework" target="_blank">Array Homework</a>
-          <p>Relates to arrays like <code>this.lasers</code> and <code>this.classes</code>, which store projectiles and game objects.</p>
+          <p>Relates to arrays like <code>this.lasers</code>, <code>this.classes</code>, <code>this.coins</code>, and <code>this.leaderboard</code>.</p>
         </div>
       </div>
     </section>
