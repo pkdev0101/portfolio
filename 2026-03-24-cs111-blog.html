@@ -576,6 +576,7 @@
         <li><a href="#oop">Object-Oriented Programming</a></li>
         <li><a href="#methods">Methods &amp; Functions</a></li>
         <li><a href="#datatypes">Data Types</a></li>
+        <li><a href="#specific-definitions">Specific Code Definitions</a></li>
         <li><a href="#operators">Operators</a></li>
         <li><a href="#control">Control Structures</a></li>
         <li><a href="#arrays">Arrays and Collections</a></li>
@@ -664,6 +665,114 @@
 }</pre></div>
       <p>A specific example is the <code>initialize()</code> method, which starts the HUD and shows a message telling the player how to fight. Another example is <code>destroy()</code>, which removes event listeners and HUD elements so old level data does not stay on the screen.</p>
       <p>This is useful because each level can reuse the same class structure while changing values in <code>config</code>, such as the enemy name, enemy health, level title, and intro message.</p>
+
+      <h3>Custom Boss Enemy Class</h3>
+      <p>The <code>PeppaBossEnemy</code> class is one of the clearest examples of object-oriented programming in the project. It extends the engine's <code>Enemy</code> class, so it inherits basic sprite drawing, position, and canvas behavior, then adds custom boss-specific state like <code>health</code>, <code>maxHealth</code>, <code>moveSpeed</code>, and <code>isDefeated</code>.</p>
+      <div class="code-block"><pre>import Enemy from &#x27;@assets/js/GameEnginev1.1/essentials/Enemy.js&#x27;;
+
+class PeppaBossEnemy extends Enemy {
+    constructor(data = null, gameEnv = null) {
+        super(data, gameEnv);
+        this.health = data?.health ?? 3;
+        this.maxHealth = this.health;
+        this.moveSpeed = data?.moveSpeed ?? 0.8;
+        this.isDefeated = false;
+    }
+
+    update() {
+        this.draw();
+        if (this.isDefeated) return;
+
+        const player = this.gameEnv.gameObjects.find(obj =&gt; obj?.constructor?.name === &#x27;Player&#x27;);
+        if (!player) return;
+
+        const myCenterX = this.position.x + this.width / 2;
+        const myCenterY = this.position.y + this.height / 2;
+        const playerCenterX = player.position.x + player.width / 2;
+        const playerCenterY = player.position.y + player.height / 2;
+
+        const dx = playerCenterX - myCenterX;
+        const dy = playerCenterY - myCenterY;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance &gt; 1) {
+            this.position.x += (dx / distance) * this.moveSpeed;
+            this.position.y += (dy / distance) * this.moveSpeed;
+        }
+
+        this.stayWithinCanvas();
+    }
+
+    handleCollisionEvent() {
+        // Collision handling is managed by the level logic.
+    }
+
+    takeDamage(amount = 1) {
+        if (this.isDefeated) return true;
+
+        this.health = Math.max(0, this.health - amount);
+        if (this.health === 0) {
+            this.isDefeated = true;
+            this.canvas.style.filter = &#x27;grayscale(1) brightness(0.8)&#x27;;
+            this.canvas.style.opacity = &#x27;0.6&#x27;;
+        }
+
+        return this.isDefeated;
+    }
+}
+
+export default PeppaBossEnemy;</pre></div>
+      <p>The important OOP idea is constructor chaining. The line <code>super(data, gameEnv)</code> runs the parent <code>Enemy</code> constructor first, which lets the boss appear as a real game object. After that, my custom constructor adds the health system and movement speed. The <code>update()</code> method overrides the enemy behavior so the boss redraws every frame, finds the player, calculates the distance using <code>Math.hypot()</code>, and moves toward the player with normalized movement.</p>
+      <p>The <code>takeDamage(amount)</code> method gives the boss its battle logic. It subtracts health with <code>Math.max(0, this.health - amount)</code>, marks the boss as defeated when health reaches zero, and visually changes the sprite with grayscale and opacity. Returning <code>this.isDefeated</code> is useful because the level logic can tell whether a laser hit finished the fight.</p>
+
+      <h3>Power-Up Menu Class</h3>
+      <p>The <code>PeppaPowerUpMenu</code> class adds another example of a custom class that is not a normal battle level. It creates a menu between levels where the player can choose <code>Extra Speed</code>, <code>Extra Health</code>, or <code>Extra Damage</code>. This shows arrays, DOM output, keyboard input, and game-state persistence through <code>gameControl.chosenPower</code>.</p>
+      <div class="code-block"><pre>class PeppaPowerUpMenu {
+    constructor(gameEnv) {
+        this.gameEnv = gameEnv;
+        this.selectedOption = 0;
+        this.options = [
+            { name: &#x27;Extra Speed&#x27;, description: &#x27;Move faster in battle&#x27; },
+            { name: &#x27;Extra Health&#x27;, description: &#x27;Start with more health&#x27; },
+            { name: &#x27;Extra Damage&#x27;, description: &#x27;Deal more damage per laser&#x27; }
+        ];
+        this.chosenPower = null;
+        this.classes = [];
+    }
+
+    initialize() {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.speak = () =&gt; {};
+            window.speechSynthesis.cancel();
+        }
+        this.createMenu();
+        this.boundKeyDown = this.handleKeyDown.bind(this);
+        document.addEventListener(&#x27;keydown&#x27;, this.boundKeyDown);
+        this.gameEnv.gameControl.removeExitKeyListener();
+    }
+
+    destroy() {
+        document.removeEventListener(&#x27;keydown&#x27;, this.boundKeyDown);
+        const menu = document.getElementById(&#x27;peppa-powerup-menu&#x27;);
+        if (menu) menu.remove();
+        this.gameEnv.gameControl.addExitKeyListener();
+    }
+
+    selectPower() {
+        this.chosenPower = this.options[this.selectedOption].name;
+        this.gameEnv.gameControl.chosenPower = this.chosenPower;
+        this.gameEnv.gameControl.currentLevel.continue = false;
+    }
+
+    update() {
+        // No-op for compatibility with game loop
+    }
+}
+
+export default PeppaPowerUpMenu;</pre></div>
+      <p>The menu stores the choices in an array of objects called <code>options</code>. Each object has a <code>name</code> and <code>description</code>, which makes the menu easy to expand later. The <code>selectedOption</code> number tracks which power-up is currently highlighted, and <code>selectPower()</code> saves the final choice to <code>this.gameEnv.gameControl.chosenPower</code> so the next battle level can read it.</p>
+      <div class="note"><strong>Code review note:</strong> I changed the event-listener pattern in the blog version to store <code>this.boundKeyDown</code>. That matters because <code>removeEventListener()</code> only works correctly if it receives the exact same function reference that was passed to <code>addEventListener()</code>.</div>
+
     </section>
 
     <hr class="section-divider">
@@ -713,11 +822,200 @@
     }
 }</pre></div>
       <p>This is a good example of methods working together: input methods set request flags, the update loop reads those flags, and separate spawn methods create the lasers.</p>
+      <h3>Return Values in Battle Methods</h3>
+      <p>The boss and menu code also show methods with useful return values and state changes. <code>takeDamage(amount)</code> returns a boolean, so the level can know if the boss has been defeated after a hit. <code>selectPower()</code> does not return a value, but it changes shared game state by saving the chosen power-up to <code>gameControl.chosenPower</code> and then moving the game to the next level.</p>
+      <div class="code-block"><pre>takeDamage(amount = 1) {
+    if (this.isDefeated) return true;
+
+    this.health = Math.max(0, this.health - amount);
+    if (this.health === 0) {
+        this.isDefeated = true;
+        this.canvas.style.filter = 'grayscale(1) brightness(0.8)';
+        this.canvas.style.opacity = '0.6';
+    }
+
+    return this.isDefeated;
+}</pre></div>
+      <p>This method connects directly to the gameplay because every player laser hit eventually calls <code>boss.takeDamage()</code>. The method handles the boss's health, defeat state, visual defeat effect, and return value in one organized place.</p>
+
     </section>
 
     <hr class="section-divider">
 
     <!-- DATA TYPES -->
+
+    <section id="specific-definitions">
+      <div class="section-heading">
+        <div class="icon">🧩</div>
+        <h2>Specific Code Definitions</h2>
+      </div>
+      <hr class="rule">
+
+      <p>This section makes the blog stronger because it does not only say that the game uses arrays, numbers, booleans, and objects. It explains the exact variables that are defined in my code, what each one stores, and why each one matters during gameplay.</p>
+
+      <h3>Important Variables Defined in the Battle Level</h3>
+      <p>Most of the important game state is defined inside the constructor of <code>PeppaBattleLevelBase</code>. These definitions are important because the constructor runs once when the level starts, so it sets the starting rules for health, lasers, coins, multiplayer mode, cooldowns, score, and the leaderboard.</p>
+
+      <pre><code>this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';
+
+this.playerMaxHealth = config.playerHealth ?? 5;
+this.playerHealth = this.playerMaxHealth;
+this.player2MaxHealth = config.playerHealth ?? 5;
+this.player2Health = this.player2MaxHealth;
+
+this.attackCooldownMs = config.attackCooldownMs ?? 450;
+this.lastAttackAt = 0;
+this.lastPlayer2AttackAt = 0;
+this.enemyLaserIntervalMs = config.enemyLaserIntervalMs ?? 1100;
+
+this.lasers = [];
+this.coins = [];
+this.coinCount = 0;
+this.coinValue = config.coinValue ?? 25;
+this.leaderboard = [];
+this.battleEnded = false;</code></pre>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Definition</th>
+            <th>Type</th>
+            <th>What It Controls</th>
+            <th>Why It Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>this.gameMode</code></td>
+            <td>String</td>
+            <td>Stores whether the game is in <code>singlePlayer</code> or <code>twoPlayer</code> mode.</td>
+            <td>This controls whether the level creates only Player 1 and the boss, or creates both Player 1 and Player 2 for multiplayer.</td>
+          </tr>
+          <tr>
+            <td><code>this.playerHealth</code> and <code>this.player2Health</code></td>
+            <td>Number</td>
+            <td>Stores the current HP for Player 1 and Player 2.</td>
+            <td>These values decide when a player loses. When health reaches <code>0</code>, the lose screen or multiplayer winner message is triggered.</td>
+          </tr>
+          <tr>
+            <td><code>this.attackCooldownMs</code></td>
+            <td>Number</td>
+            <td>Stores the required delay between laser attacks.</td>
+            <td>This prevents the player from holding the attack key and firing unlimited lasers every frame.</td>
+          </tr>
+          <tr>
+            <td><code>this.lastAttackAt</code> and <code>this.lastPlayer2AttackAt</code></td>
+            <td>Number</td>
+            <td>Stores the timestamp of the last attack for each player.</td>
+            <td>The code compares <code>Date.now()</code> to these timestamps to decide whether the cooldown has passed.</td>
+          </tr>
+          <tr>
+            <td><code>this.enemyLaserIntervalMs</code></td>
+            <td>Number</td>
+            <td>Controls how often the boss fires a laser.</td>
+            <td>Lower values make the boss attack faster, which makes the level harder without changing the rest of the code.</td>
+          </tr>
+          <tr>
+            <td><code>this.lasers</code></td>
+            <td>Array</td>
+            <td>Stores every active laser projectile currently moving across the screen.</td>
+            <td>Each laser is pushed into this array when fired, updated every frame, and removed when it expires or hits something.</td>
+          </tr>
+          <tr>
+            <td><code>this.coins</code></td>
+            <td>Array</td>
+            <td>Stores every coin object placed in the level.</td>
+            <td>The game loops through this array to draw coins and check whether the player collected one.</td>
+          </tr>
+          <tr>
+            <td><code>this.coinCount</code> and <code>this.coinValue</code></td>
+            <td>Number</td>
+            <td>Tracks how many coins were collected and how much each coin is worth.</td>
+            <td>These values are used in the final score calculation: health points plus coin bonus.</td>
+          </tr>
+          <tr>
+            <td><code>this.leaderboard</code></td>
+            <td>Array</td>
+            <td>Stores score entries loaded from an API or from localStorage.</td>
+            <td>This lets the HUD display top scores without hard-coding them into the page.</td>
+          </tr>
+          <tr>
+            <td><code>this.battleEnded</code></td>
+            <td>Boolean</td>
+            <td>Stores whether the current fight is already over.</td>
+            <td>This stops the update loop from continuing after a win or loss, preventing extra lasers, damage, or repeated transitions.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>How <code>this.lasers</code> Actually Works</h3>
+      <p>The <code>this.lasers</code> array is one of the most important definitions in the project. It starts empty, but every time a player or boss fires, a new laser object is added with its position, velocity, owner, and lifetime.</p>
+
+      <pre><code>this.lasers.push({
+  x: fromX,
+  y: fromY,
+  vx: (dx / len) * this.laserSpeed,
+  vy: (dy / len) * this.laserSpeed,
+  isPlayerLaser,
+  source: sourceId,
+  life: 60,
+  maxLife: 60
+});</code></pre>
+
+      <p>Each laser object stores everything the game needs to move and draw the laser. <code>x</code> and <code>y</code> are the current position. <code>vx</code> and <code>vy</code> are the movement speed in the x and y directions. <code>source</code> tells the game who fired it, such as <code>player1</code>, <code>player2</code>, or <code>boss</code>. <code>life</code> counts down every frame so old lasers disappear instead of staying forever.</p>
+
+      <h3>Specific Variables in the Boss Enemy Class</h3>
+      <p>The <code>PeppaBossEnemy</code> constructor defines boss-specific state. These variables make the boss different from a normal engine enemy because the boss can chase the player, take damage, and become defeated.</p>
+
+      <pre><code>this.health = data?.health ?? 3;
+this.maxHealth = this.health;
+this.moveSpeed = data?.moveSpeed ?? 0.8;
+this.isDefeated = false;</code></pre>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Boss Variable</th>
+            <th>What It Does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>this.health</code></td>
+            <td>Stores how many hits the boss can still take before losing.</td>
+          </tr>
+          <tr>
+            <td><code>this.maxHealth</code></td>
+            <td>Stores the original health value so the HUD can show health as current HP out of max HP.</td>
+          </tr>
+          <tr>
+            <td><code>this.moveSpeed</code></td>
+            <td>Controls how many pixels the boss moves toward the player each frame.</td>
+          </tr>
+          <tr>
+            <td><code>this.isDefeated</code></td>
+            <td>Acts as a boolean state flag. When it becomes <code>true</code>, the boss stops moving and the level can transition to the next stage.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Specific Variables in the Power-Up Menu</h3>
+      <p>The power-up menu also has important definitions. This class does not control lasers directly, but it controls the player's choice before the next battle.</p>
+
+      <pre><code>this.selectedOption = 0;
+this.options = [
+  { name: 'Extra Speed', description: 'Move faster in battle' },
+  { name: 'Extra Health', description: 'Start with more health' },
+  { name: 'Extra Damage', description: 'Deal more damage per laser' }
+];
+this.chosenPower = null;</code></pre>
+
+      <p><code>this.selectedOption</code> stores which menu option is currently highlighted. <code>this.options</code> is an array of objects, where each object has a <code>name</code> and <code>description</code>. <code>this.chosenPower</code> starts as <code>null</code> because the player has not picked anything yet. After pressing Enter, the selected power-up is stored in <code>this.gameEnv.gameControl.chosenPower</code> so the game can remember the choice across levels.</p>
+
+      <h3>Why Another Student's Blog May Look Like It Has More Code</h3>
+      <p>A longer blog does not always mean the game has more working features. A lot of the extra length comes from explanation, JSDoc comments, debugging notes, tables, screenshots, code runner examples, and rubric connections. That kind of writing is useful because it proves understanding, but it is different from adding more gameplay code. To make my blog stronger, I added more explanation of the exact definitions in my own code instead of randomly adding copied code that my game may not actually use.</p>
+    </section>
+
     <section id="datatypes">
       <div class="section-heading">
         <div class="icon">🔢</div>
@@ -786,6 +1084,25 @@ L.life -= <span class="num">1</span>;
     }
 }</pre></div>
       <p>This makes the ending more advanced because the game can show different messages depending on which player loses in two-player mode.</p>
+
+      <h3>Menu Control with Arrow Keys and Enter</h3>
+      <p>The power-up menu uses conditionals to control navigation. Pressing the up arrow moves the selected option backward, pressing the down arrow moves it forward, and pressing Enter confirms the current power-up. The modulo operator keeps the selection inside the array, so moving above the first option wraps around to the last option.</p>
+      <div class="code-block"><pre>handleKeyDown(event) {
+    if (event.key === 'ArrowUp') {
+        this.selectedOption = (this.selectedOption - 1 + this.options.length) % this.options.length;
+        this.renderOptions();
+    } else if (event.key === 'ArrowDown') {
+        this.selectedOption = (this.selectedOption + 1) % this.options.length;
+        this.renderOptions();
+    } else if (event.key === 'Enter') {
+        this.selectPower();
+    } else if (event.key === 'Escape') {
+        event.preventDefault();
+    }
+    event.preventDefault();
+}</pre></div>
+      <p>This is a strong control-structure example because one method handles multiple possible inputs and updates the screen differently depending on which key was pressed.</p>
+
     </section>
 
     <hr class="section-divider">
