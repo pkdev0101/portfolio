@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CS111 Game Development Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:          #16161a;
+      --surface:     #1e1e24;
+      --surface2:    #252530;
+      --border:      #2e2e3a;
+      --border2:     #3a3a48;
+      --text:        #d4d4d8;
+      --text-dim:    #8888a0;
+      --text-bright: #f4f4f5;
+      --accent-ora:  #e8823a;
+      --accent-cyan: #4fc4cf;
+      --accent-blue: #5b8dee;
+      --accent-green:#3ecf8e;
+      --inline-bg:   #1a1a24;
+      --inline-border:#35354a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* ── Site header ── */
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0 14px;
+      text-align: center;
+    }
+    .site-header .title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .site-header .meta {
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 28px 80px;
+    }
+
+    /* ── Article title ── */
+    .article-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.25;
+      margin-bottom: 32px;
+    }
+
+    /* ── Table of Contents ── */
+    .toc-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 48px;
+    }
+    .toc-block .toc-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+    .toc-block ol {
+      padding-left: 20px;
+      column-count: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 600px) { .toc-block ol { column-count: 1; } }
+    .toc-block li { margin-bottom: 5px; font-size: 0.88rem; }
+    .toc-block a { color: var(--accent-blue); text-decoration: none; }
+    .toc-block a:hover { text-decoration: underline; }
+
+    /* ── Section divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 52px 0 40px;
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .section-heading + .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 28px;
+    }
+
+    /* ── Sub-headings ── */
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin: 28px 0 10px;
+    }
+
+    /* ── Body text ── */
+    p { color: var(--text); margin-bottom: 14px; }
+
+    ul, ol { padding-left: 24px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; color: var(--text); }
+
+    a { color: var(--accent-blue); }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82em;
+      color: var(--accent-cyan);
+      background: var(--inline-bg);
+      border: 1px solid var(--inline-border);
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    /* ── Code blocks ── */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+    .code-block .kw  { color: var(--accent-cyan); }
+    .code-block .cls { color: var(--accent-ora); font-weight: 600; }
+    .code-block .str { color: var(--accent-green); }
+    .code-block .cmt { color: #606078; font-style: italic; }
+    .code-block .num { color: #bd93f9; }
+    .code-block .prop{ color: var(--accent-blue); }
+
+    /* ── Screenshot ── */
+    .screenshot img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: block;
+      margin: 16px 0;
+    }
+
+    /* ── Table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--text);
+    }
+    th {
+      background: var(--surface2);
+      color: var(--text-bright);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    /* ── Challenge card ── */
+    .challenge-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .challenge-header {
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .challenge-header h3 {
+      font-size: 1.1rem;
+      color: var(--text-bright);
+      margin: 0 0 6px;
+    }
+    .challenge-header p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Editor toolbar ── */
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 16px;
+      background: #13131a;
+      border-bottom: 1px solid var(--border);
+    }
+    .editor-btn, .editor-select {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border: 1px solid var(--border2);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .editor-btn {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+    .editor-btn.secondary {
+      background: var(--surface2);
+      color: var(--text);
+    }
+    .editor-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .editor-select {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    /* ── Editor shell ── */
+    .editor-shell {
+      background: #1a1a22;
+      border-bottom: 1px solid var(--border);
+    }
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      min-height: 340px;
+    }
+    .line-numbers {
+      background: #13131a;
+      color: #44445a;
+      padding: 16px 8px;
+      text-align: right;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      user-select: none;
+      border-right: 1px solid var(--border);
+      white-space: pre;
+    }
+    .challenge-editor {
+      width: 100%;
+      min-height: 340px;
+      border: none;
+      resize: vertical;
+      padding: 16px 18px;
+      background: #1a1a22;
+      color: var(--accent-cyan);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .editor-status {
+      background: #13131a;
+      color: var(--text-dim);
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+    }
+
+    /* ── Output panel ── */
+    .output-panel { padding: 16px 20px; }
+    .output-panel h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .challenge-output {
+      background: #13131a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-height: 80px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+    }
+    .challenge-note {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Challenge explain ── */
+    .challenge-explain {
+      margin-top: 20px;
+      background: rgba(91,141,238,0.07);
+      border: 1px solid rgba(91,141,238,0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.88rem;
+    }
+    .challenge-explain p { margin-bottom: 8px; color: var(--text); }
+    .challenge-explain strong { color: var(--accent-blue); }
+
+    /* ── Homework links ── */
+    .hw-link {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(62,207,142,0.06);
+      border: 1px solid rgba(62,207,142,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 0.88rem;
+    }
+    .hw-link::before { content: '📚'; flex-shrink: 0; }
+    .hw-link a { color: var(--accent-green); font-weight: 600; }
+    .hw-link p { margin: 0; color: var(--text-dim); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="title">CS111 Game Development Blog</div>
+    <div class="meta">Pranay Kamath &nbsp;·&nbsp; March 25, 2026</div>
+  </header>
+
+  <main class="page">
+
+    <h1 class="article-title">🎮 Peppa Pig Fighting Game</h1>
+
+    <nav class="toc-block">
+      <div class="toc-title">Table of Contents</div>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#oop">Object-Oriented Programming</a></li>
+        <li><a href="#methods">Methods &amp; Functions</a></li>
+        <li><a href="#datatypes">Data Types</a></li>
+        <li><a href="#operators">Operators</a></li>
+        <li><a href="#control">Control Structures</a></li>
+        <li><a href="#arrays">Arrays and Collections</a></li>
+        <li><a href="#gameloop">Game Loop &amp; Real-Time Updates</a></li>
+        <li><a href="#api">API Integration</a></li>
+        <li><a href="#coderunner">Code Runner Challenge</a></li>
+        <li><a href="#io">Input / Output</a></li>
+        <li><a href="#gameplay">Gameplay Mechanics</a></li>
+        <li><a href="#dom">DOM Manipulation</a></li>
+        <li><a href="#testing">Testing</a></li>
+        <li><a href="#otherprojects">Additional Projects</a></li>
+        <li><a href="#reflection">Reflection</a></li>
+        <li><a href="#future">Future Improvements</a></li>
+        <li><a href="#homework">Homework Connections</a></li>
+      </ol>
+    </nav>
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <div class="section-heading">
+        <div class="icon">📝</div>
+        <h2>Overview</h2>
+      </div>
+      <hr class="rule">
+      <p>This project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig characters in different levels. The code handles movement, attacks, lasers, health, collision detection, HUD updates, win and lose screens, and a leaderboard system.</p>
+      <p>The game is organized around a level class called <code>PeppaBattleLevelBase</code>, which manages the main gameplay systems for each fight. This makes the project more advanced than a simple one-screen game because it keeps track of many systems at the same time, such as player health, enemy health, attack cooldowns, API calls, and visual updates.</p>
+      <p>A strong example of this is in the constructor, where the game sets up values like player health, attack cooldown, enemy laser timing, the player name, score tracking, and leaderboard data all in one place.</p>
+      <div class="code-block"><pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(gameEnv, config) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.config = config;
+
+        <span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;
+        <span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+        <span class="prop">this</span>.playerDamageCooldownMs = config.playerDamageCooldownMs ?? <span class="num">650</span>;
+        <span class="prop">this</span>.attackCooldownMs = config.attackCooldownMs ?? <span class="num">450</span>;
+        <span class="prop">this</span>.laserSpeed = config.laserSpeed ?? <span class="num">14</span>;
+
+        <span class="prop">this</span>.apiBase = config.apiBase || <span class="num">null</span>;
+        <span class="prop">this</span>.playerName = config.playerName || <span class="str">'Ishan'</span>;
+        <span class="prop">this</span>.levelScore = <span class="num">0</span>;
+        <span class="prop">this</span>.leaderboard = [];
+    }
+}</pre></div>
+      <p>This code shows how the game stores important information at the start of the level. If no custom player health is provided, the game automatically uses 5. If no player name is given, it defaults to <code>"Ishan"</code>. This makes the code more flexible and reusable.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- OOP -->
+    <section id="oop">
+      <div class="section-heading">
+        <div class="icon">🧠</div>
+        <h2>Object-Oriented Programming (OOP)</h2>
+      </div>
+      <hr class="rule">
+      <h3>How the Level Class Organizes the Fight</h3>
+      <p>This project uses object-oriented programming because the game is built around classes and methods. The <code>PeppaBattleLevelBase</code> class is responsible for controlling one level of the game. Instead of putting all code in one giant script, the game groups related behavior into methods like <code>initialize()</code>, <code>destroy()</code>, <code>update()</code>, and <code>createHud()</code>.</p>
+      <div class="code-block"><pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(gameEnv, config) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.config = config;
+        <span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+        <span class="prop">this</span>.levelScore = <span class="num">0</span>;
+        <span class="prop">this</span>.leaderboard = [];
+    }
+
+    <span class="prop">initialize</span>() {
+        <span class="prop">this</span>.createHud();
+        <span class="prop">this</span>.updateHud(
+            <span class="str">`${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight!`</span>
+        );
+    }
+
+    <span class="prop">destroy</span>() {
+        document.removeEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+        <span class="kw">if</span> (<span class="prop">this</span>.hud) {
+            <span class="prop">this</span>.hud.remove();
+        }
+    }
+}</pre></div>
+      <p>A specific example is the <code>initialize()</code> method, which starts the HUD and shows a message telling the player how to fight. Another example is <code>destroy()</code>, which removes event listeners and HUD elements so old level data does not stay on the screen.</p>
+      <p>This is useful because each level can reuse the same class structure while changing values in <code>config</code>, such as the enemy name, enemy health, level title, and intro message.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- METHODS -->
+    <section id="methods">
+      <div class="section-heading">
+        <div class="icon">⚙️</div>
+        <h2>Methods &amp; Functions</h2>
+      </div>
+      <hr class="rule">
+      <h3>Setup Logic and Input Handling</h3>
+      <div class="code-block"><pre><span class="prop">initialize</span>() {
+    <span class="prop">this</span>.createHud();
+    <span class="prop">this</span>.updateHud(
+        <span class="str">`${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight! Use WASD to move and SPACE to fire lasers.`</span>
+    );
+    document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+    <span class="prop">this</span>.createLaserLayer();
+
+    <span class="prop">this</span>.loadLeaderboard().then(() => {
+        <span class="prop">this</span>.renderLeaderboard();
+    });
+}
+
+<span class="prop">handleKeyDown</span>(event) {
+    <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+}</pre></div>
+      <p>Methods are used throughout the project to give the game specific actions. For example, <code>initialize()</code> sets up the level at the beginning by creating the HUD, adding keyboard controls, creating the laser canvas, and loading leaderboard data.</p>
+      <p>Another good example is <code>handleKeyDown(event)</code>. This method checks whether the player pressed the space bar. If the player does, the game sets <code>this.attackRequested = true</code>, which tells the update loop that the player wants to shoot.</p>
+      <p>This is a strong example of separating responsibilities: one method handles keyboard input, while another part of the code handles actually firing the laser.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- DATA TYPES -->
+    <section id="datatypes">
+      <div class="section-heading">
+        <div class="icon">🔢</div>
+        <h2>Data Types</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre><span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;   <span class="cmt">// Number</span>
+<span class="prop">this</span>.playerName = config.playerName || <span class="str">'Ishan'</span>;       <span class="cmt">// String</span>
+<span class="prop">this</span>.battleEnded = <span class="kw">false</span>;                               <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.lasers = [];                                       <span class="cmt">// Array</span>
+<span class="prop">this</span>.playerSpawn = { x: width * <span class="num">0.12</span>, y: height * <span class="num">0.72</span> }; <span class="cmt">// Object</span></pre></div>
+      <p>The game uses many different data types. Numbers are used for things like health, cooldowns, and score. Strings are used for values like the player name and enemy greeting. Booleans are used for true-or-false states, such as whether the battle has ended. Arrays store multiple items, like all active lasers. Objects store grouped information, like spawn positions and configuration settings.</p>
+      <p>A specific example is <code>this.lasers = []</code>, which creates an array to hold every laser currently moving on the screen. Another example is <code>this.playerSpawn = { x: ..., y: ... }</code>, which uses an object to store the exact spawn point for the player.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- OPERATORS -->
+    <section id="operators">
+      <div class="section-heading">
+        <div class="icon">➕</div>
+        <h2>Operators</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre><span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
+L.life -= <span class="num">1</span>;
+<span class="kw">const</span> score = <span class="prop">this</span>.playerHealth * <span class="num">100</span>;
+<span class="kw">const</span> dx = targetX - fromX;
+<span class="kw">const</span> dy = targetY - fromY;</pre></div>
+      <p>Operators are used constantly to make the game function. Subtraction is used when the player or enemy takes damage. Multiplication is used to calculate the final score. Assignment operators update values over time.</p>
+      <p>For example, <code>this.playerHealth - 1</code> decreases the player's health when hit by a laser or by colliding with the boss. <code>L.life -= 1</code> reduces a laser's lifetime every frame until it disappears. <code>this.playerHealth * 100</code> turns remaining health into score, so if the player wins with 4 health left, the score becomes 400.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- CONTROL STRUCTURES -->
+    <section id="control">
+      <div class="section-heading">
+        <div class="icon">🔀</div>
+        <h2>Control Structures</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre><span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+    <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+}
+
+<span class="kw">if</span> (!response.ok) {
+    <span class="kw">throw new</span> Error(<span class="str">`POST failed: ${response.status}`</span>);
+}
+
+<span class="kw">if</span> (<span class="prop">this</span>.playerHealth &lt;= <span class="num">0</span> &amp;&amp; !<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
+    <span class="prop">this</span>.updateHud(<span class="str">'You lost. Restarting level...'</span>);
+    <span class="prop">this</span>.showLoseScreenAndRestart();
+    <span class="kw">return</span>;
+}
+
+<span class="kw">if</span> (boss.isDefeated &amp;&amp; !<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
+    <span class="kw">const</span> score = <span class="prop">this</span>.playerHealth * <span class="num">100</span>;
+}</pre></div>
+      <p>Control structures are one of the most important parts of the game because they decide what happens in different situations.</p>
+      <p>One example is checking if the player pressed space. If that condition is true, the game marks an attack request. Another example is API error handling — if the response is not successful, the code throws an error.</p>
+      <p>The biggest examples are the win and lose conditions. If player health becomes 0 or less, the game ends the battle and restarts the level. If the boss is defeated, the game marks the battle as ended, calculates the score, saves it, and moves on.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ARRAYS -->
+    <section id="arrays">
+      <div class="section-heading">
+        <div class="icon">🔁</div>
+        <h2>Arrays and Collections</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre><span class="prop">this</span>.classes = [
+    { <span class="kw">class</span>: <span class="cls">GamEnvBackground</span>, data: image_data_background },
+    { <span class="kw">class</span>: <span class="cls">Player</span>,           data: sprite_data_ishan   },
+    { <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>,   data: sprite_data_enemy   }
+];
+
+<span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx,
+    vy,
+    isPlayerLaser,
+    life: <span class="num">60</span>,
+    maxLife: <span class="num">60</span>
+});</pre></div>
+      <p>Arrays are used in multiple important ways. The <code>this.classes</code> array stores the game objects that should be created in the level, including the background, the player, and the boss enemy.</p>
+      <p>The <code>this.lasers</code> array stores every laser currently active in the game. Every time the player or enemy shoots, a new laser object is pushed into the array. This allows the game to keep track of many moving projectiles at once.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- GAME LOOP -->
+    <section id="gameloop">
+      <div class="section-heading">
+        <div class="icon">🎮</div>
+        <h2>Game Loop and Real-Time Updates</h2>
+      </div>
+      <hr class="rule">
+      <h3>Why the Update Method Matters</h3>
+      <div class="code-block"><pre><span class="prop">update</span>() {
+    <span class="kw">if</span> (<span class="prop">this</span>.battleEnded) {
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">const</span> player = <span class="prop">this</span>.getPlayer();
+    <span class="kw">const</span> boss   = <span class="prop">this</span>.getBoss();
+    <span class="kw">if</span> (!player || !boss) {
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">const</span> now = Date.now();
+
+    <span class="kw">if</span> (<span class="prop">this</span>.attackRequested) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">false</span>;
+        <span class="kw">if</span> (now - <span class="prop">this</span>.lastAttackAt >= <span class="prop">this</span>.attackCooldownMs &amp;&amp; !boss.isDefeated) {
+            <span class="prop">this</span>.lastAttackAt = now;
+            <span class="kw">const</span> px  = player.position.x + player.width  / <span class="num">2</span>;
+            <span class="kw">const</span> py  = player.position.y + player.height / <span class="num">2</span>;
+            <span class="kw">const</span> dir = player.direction || <span class="str">'right'</span>;
+            <span class="prop">this</span>.spawnLaserStraight(px, py, dir, <span class="kw">true</span>);
+        }
+    }
+}</pre></div>
+      <p>The <code>update()</code> method acts like the main game loop for this level. It runs repeatedly while the level is active and checks the current game state.</p>
+      <p>A specific example is when the player presses space. That sets <code>attackRequested</code> to true, but the actual laser is only fired during <code>update()</code>. The code then checks cooldown timing using <code>Date.now()</code> so the player cannot spam attacks too fast.</p>
+      <p>This is an important game development idea because it separates input from real-time processing.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- API -->
+    <section id="api">
+      <div class="section-heading">
+        <div class="icon">🌐</div>
+        <h2>API Integration</h2>
+      </div>
+      <hr class="rule">
+
+      <h3>Using a Live Web API for Game Music</h3>
+      <p>The API part of my Peppa Pig Fighting Game uses the iTunes Search API to request real music data from the internet. Instead of hard-coding one song into the game, the code searches for music related to Peppa Pig, receives JSON data, finds a playable preview URL, and uses that preview as background music in the game.</p>
+
+      <div class="screenshot">
+        <img src="images/music-api.png" alt="Music API screenshot">
+      </div>
+
+      <p>This follows the same Web API flow used in class:</p>
+      <ul>
+        <li>Use <code>fetch()</code> to request data from a web server.</li>
+        <li>Check the HTTP response status before using the data.</li>
+        <li>Convert the response into JSON with <code>response.json()</code>.</li>
+        <li>Extract useful fields like <code>trackName</code>, <code>artistName</code>, and <code>previewUrl</code>.</li>
+        <li>Use the result in gameplay by playing the preview with the browser Audio API.</li>
+      </ul>
+
+      <h3>Building the API Request URL</h3>
+      <div class="code-block"><pre><span class="kw">const</span> filter = <span class="str">"peppa pig theme"</span>;
+<span class="kw">const</span> url = <span class="str">"https://itunes.apple.com/search?term="</span> + encodeURIComponent(filter);
+
+console.log(url);</pre></div>
+
+      <p>The iTunes API needs a search term inside the URL. I use <code>encodeURIComponent()</code> because spaces and special characters need to be converted into a safe URL format. For example, <code>"peppa pig theme"</code> becomes <code>"peppa%20pig%20theme"</code>.</p>
+
+      <h3>Fetching and Checking the API Response</h3>
+      <div class="code-block"><pre><span class="kw">const</span> url = <span class="str">"https://itunes.apple.com/search?term="</span> + encodeURIComponent(<span class="str">"peppa pig theme"</span>);
+
+fetch(url, { method: <span class="str">'GET'</span>, mode: <span class="str">'cors'</span> })
+  .then(response =&gt; {
+    <span class="kw">if</span> (response.status !== <span class="num">200</span>) {
+      <span class="kw">throw new</span> Error(<span class="str">'Database response error: '</span> + response.status);
+    }
+    <span class="kw">return</span> response.json();
+  })
+  .then(data =&gt; {
+    console.log(<span class="str">'Track count:'</span>, data.results.length);
+  })
+  .catch(err =&gt; console.error(err));</pre></div>
+
+      <p>This code sends a GET request to the iTunes Search API. The most important part is checking the status code before using the response. If the response is not successful, the code throws an error instead of trying to use broken data.</p>
+
+      <h3>Reading JSON Data from the API</h3>
+      <div class="code-block"><pre><span class="kw">const</span> data = {
+  results: [
+    {
+      artistName: <span class="str">'The Wiggles'</span>,
+      trackName: <span class="str">'Peppa Pig Theme'</span>,
+      artworkUrl100: <span class="str">'https://example.com/image.jpg'</span>,
+      previewUrl: <span class="str">'https://example.com/preview.mp4'</span>
+    }
+  ]
+};
+
+<span class="kw">for</span> (<span class="kw">const</span> row <span class="kw">of</span> data.results) {
+  <span class="kw">const</span> artist = row.artistName;
+  <span class="kw">const</span> track = row.trackName;
+  <span class="kw">const</span> imageUrl = row.artworkUrl100;
+  <span class="kw">const</span> previewUrl = row.previewUrl;
+
+  console.log(artist, track, imageUrl, previewUrl);
+}</pre></div>
+
+      <p>JSON is the format returned by the API. After the response is parsed, the data can be used like a normal JavaScript object. In this project, the most important value is <code>previewUrl</code>, because that is the audio preview the game can play.</p>
+
+      <h3>Playing API Music with the Audio API</h3>
+      <div class="code-block"><pre><span class="kw">const</span> previewUrl = <span class="str">'https://example.com/song.mp4'</span>;
+<span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+audio.volume = <span class="num">0.35</span>;
+audio.loop = <span class="kw">true</span>;
+
+audio.play().catch(err =&gt; {
+  console.warn(<span class="str">'Autoplay blocked until user gesture:'</span>, err);
+});</pre></div>
+
+      <p>The Audio API lets the browser create and control sound. The game creates a new <code>Audio</code> object from the API preview URL, lowers the volume, loops the track, and tries to play it. The <code>catch()</code> block is important because some browsers block audio until the player clicks or presses a key.</p>
+
+      <h3>Controller Class for Cleaner API Code</h3>
+      <div class="code-block"><pre><span class="kw">class</span> <span class="cls">PeppaMusicApiController</span> {
+  <span class="kw">constructor</span>(endpoint) {
+    <span class="prop">this</span>.endpoint = endpoint;
+  }
+
+  <span class="kw">async</span> fetchPreviewUrl() {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="prop">this</span>.endpoint);
+
+    <span class="kw">if</span> (!response.ok) {
+      <span class="kw">throw new</span> Error(<span class="str">'API request failed ('</span> + response.status + <span class="str">')'</span>);
+    }
+
+    <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+    <span class="kw">const</span> tracks = data &amp;&amp; Array.isArray(data.results) ? data.results : [];
+    <span class="kw">const</span> track = tracks.find(item =&gt; item &amp;&amp; item.previewUrl);
+
+    <span class="kw">if</span> (!track) {
+      <span class="kw">throw new</span> Error(<span class="str">'No playable preview URL found'</span>);
+    }
+
+    <span class="kw">return</span> track.previewUrl;
+  }
+
+  <span class="kw">async</span> startMusic() {
+    <span class="kw">const</span> previewUrl = <span class="kw">await</span> <span class="prop">this</span>.fetchPreviewUrl();
+    <span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+    audio.volume = <span class="num">0.35</span>;
+    audio.loop = <span class="kw">true</span>;
+
+    <span class="kw">await</span> audio.play();
+  }
+}
+
+console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></div>
+
+      <p>This class separates the API logic from the rest of the game. The <code>fetchPreviewUrl()</code> method handles the web request and JSON parsing, while <code>startMusic()</code> handles the audio playback. This makes the project cleaner because the game does not need to repeat API code every time it wants to play music.</p>
+
+      <h3>Error Handling</h3>
+      <div class="code-block"><pre><span class="kw">async</span> <span class="prop">startMusicSafely</span>(controller) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> previewUrl = <span class="kw">await</span> controller.fetchPreviewUrl();
+    <span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+    audio.volume = <span class="num">0.35</span>;
+    audio.loop = <span class="kw">true</span>;
+
+    <span class="kw">await</span> audio.play();
+    console.log(<span class="str">'Music started successfully'</span>);
+  } <span class="kw">catch</span> (error) {
+    console.warn(<span class="str">'Failed to play music:'</span>, error);
+  }
+}</pre></div>
+
+      <p>Error handling is important because APIs can fail, internet connections can break, or the browser can block autoplay. With <code>try/catch</code>, the game can continue running even if the music does not play.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- CODE RUNNER -->
+    <section id="coderunner">
+      <div class="section-heading">
+        <div class="icon">🧪</div>
+        <h2>Code Runner Challenge</h2>
+      </div>
+      <hr class="rule">
+      <p>To make my blog more interactive, I added a Code Runner Challenge section inspired by the style of online coding sandboxes. Instead of only describing API logic, this lets the reader run a small async/await example directly in the page and see the output below the editor.</p>
+      <p>The challenge connects directly to my leaderboard system because it mimics the same ideas used in my game: sending JSON data, handling async functions, using <code>try/catch</code>, and printing results when the request succeeds or fails.</p>
+
+      <div class="challenge-card">
+        <div class="challenge-header">
+          <h3>Code Runner Challenge</h3>
+          <p>Experiment with async/await and mock fetch JSON handling. This mimics posting and reading leaderboard data.</p>
+        </div>
+        <div class="editor-toolbar">
+          <button class="editor-btn" id="runChallengeBtn">▶ Run</button>
+          <button class="editor-btn secondary" id="resetChallengeBtn">↺ Reset</button>
+          <button class="editor-btn secondary" id="copyChallengeBtn">⧉ Copy</button>
+          <select class="editor-select" id="challengeLanguage"><option selected>JavaScript</option></select>
+          <select class="editor-select" id="challengeFontSize">
+            <option>12px</option>
+            <option selected>14px</option>
+            <option>16px</option>
+            <option>18px</option>
+          </select>
+        </div>
+        <div class="editor-shell">
+          <div class="editor-grid">
+            <div class="line-numbers" id="challengeLines">1</div>
+            <textarea class="challenge-editor" id="challengeEditor" spellcheck="false"></textarea>
+          </div>
+        </div>
+        <div class="editor-status" id="challengeStatus">Lines: 1 &nbsp; Characters: 0</div>
+        <div class="output-panel">
+          <h4>Output</h4>
+          <div class="challenge-output" id="challengeOutput">Click "Run" in the code control panel to see output ...</div>
+          <p class="challenge-note">This challenge demonstrates the same concepts as my leaderboard code: JSON.stringify, async/await, mock API responses, console output, and error handling.</p>
+        </div>
+      </div>
+
+      <div class="challenge-explain">
+        <p><strong>Why this belongs in my blog:</strong> My Peppa Pig Fighting Game saves leaderboard scores with an async <code>fetch()</code> call and loads them back into the DOM. This challenge is a smaller, safer version of that same workflow.</p>
+        <p><strong>Connection to the project:</strong> The code acts like a mock leaderboard request. It shows how I understand posting a score, returning JSON data, and reading it back before displaying results to the user.</p>
+      </div>
+
+      <div class="code-block"><pre><span class="kw">async</span> <span class="prop">saveScore</span>(score) {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="str">`${this.apiBase}/leaderboard`</span>, {
+        method: <span class="str">'POST'</span>,
+        headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+        body: JSON.stringify({
+            name:    <span class="prop">this</span>.playerName,
+            score:   score,
+            levelId: <span class="prop">this</span>.config.levelId
+        })
+    });
+}</pre></div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- INPUT / OUTPUT -->
+    <section id="io">
+      <div class="section-heading">
+        <div class="icon">⌨️</div>
+        <h2>Input / Output</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre>document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+
+<span class="prop">handleKeyDown</span>(event) {
+    <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+}
+
+<span class="prop">updateHud</span>(message = <span class="kw">null</span>) {
+    <span class="kw">const</span> playerHpEl  = document.getElementById(<span class="str">`peppa-player-hp-${this.config.levelId}`</span>);
+    <span class="kw">const</span> enemyHpEl   = document.getElementById(<span class="str">`peppa-enemy-hp-${this.config.levelId}`</span>);
+    <span class="kw">const</span> messageEl   = document.getElementById(<span class="str">`peppa-message-${this.config.levelId}`</span>);
+}</pre></div>
+      <p>Input comes from the keyboard. A specific example is the space bar, which triggers attacks. The game also uses WASD movement through the player sprite data configuration.</p>
+      <p>Output appears through the HUD. The game updates text for player HP, enemy HP, and messages like:</p>
+      <ul>
+        <li>"Laser hit! Peppa took damage."</li>
+        <li>"You lost. Restarting level..."</li>
+        <li>"George defeated! Score: 400. Moving to next level..."</li>
+      </ul>
+      <p>This is important because it gives the player immediate feedback about what is happening.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- GAMEPLAY -->
+    <section id="gameplay">
+      <div class="section-heading">
+        <div class="icon">💥</div>
+        <h2>Gameplay Mechanics</h2>
+      </div>
+      <hr class="rule">
+      <h3>Projectile Motion and Hit Detection</h3>
+      <div class="code-block"><pre><span class="prop">spawnLaserStraight</span>(fromX, fromY, direction, isPlayerLaser) {
+    <span class="kw">const</span> [vx, vy] = <span class="prop">this</span>.directionToVelocity(direction);
+    <span class="prop">this</span>.lasers.push({
+        x: fromX,
+        y: fromY,
+        vx,
+        vy,
+        isPlayerLaser,
+        life: <span class="num">60</span>,
+        maxLife: <span class="num">60</span>
+    });
+}</pre></div>
+      <p>One of the most specific gameplay systems in the code is the laser system. When the player attacks, the game creates a new laser object with x and y position, velocity, type, and lifetime. The projectile actually stores its own position and speed values and updates over time.</p>
+      <div class="code-block"><pre><span class="kw">if</span> (L.isPlayerLaser &amp;&amp; boss &amp;&amp; !boss.isDefeated) {
+    <span class="kw">if</span> (
+        hitLeft           &lt;  boss.position.x + boss.width  &amp;&amp;
+        hitLeft + hitW    &gt;  boss.position.x               &amp;&amp;
+        hitTop            &lt;  boss.position.y + boss.height &amp;&amp;
+        hitTop  + hitH    &gt;  boss.position.y
+    ) {
+        boss.takeDamage(<span class="num">1</span>);
+        <span class="prop">this</span>.updateHud(<span class="str">`Laser hit! ${this.config.enemyName} took damage.`</span>);
+        <span class="prop">this</span>.lasers.splice(i, <span class="num">1</span>);
+    }
+}</pre></div>
+      <p>This collision code checks whether a player laser overlaps the boss hitbox. If it does, the boss takes damage and the HUD shows a message. There is also matching logic for enemy lasers hitting the player, which reduces player health. This is a strong example of how math and conditionals work together in game design.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- DOM -->
+    <section id="dom">
+      <div class="section-heading">
+        <div class="icon">🖥️</div>
+        <h2>DOM Manipulation</h2>
+      </div>
+      <hr class="rule">
+      <div class="code-block"><pre><span class="prop">updateHud</span>(message) {
+    <span class="kw">const</span> hud = document.getElementById(<span class="str">"hud"</span>);
+    <span class="kw">if</span> (hud) {
+        hud.textContent = message;
+    }
+}</pre></div>
+      <p>DOM manipulation allows the game to update what the player sees on the screen outside of the canvas. While the canvas handles graphics like characters and movement, the DOM is used for UI elements like score, messages, and the leaderboard.</p>
+      <p>For example, when the player scores points or defeats an enemy:</p>
+      <ul>
+        <li>The game calls <code>updateHud()</code></li>
+        <li>The text inside the HUD element changes</li>
+        <li>The player immediately sees feedback on screen</li>
+      </ul>
+
+      <div class="code-block"><pre><span class="kw">const</span> leaderboardDiv = document.getElementById(<span class="str">"leaderboard"</span>);
+
+<span class="prop">this</span>.leaderboard.forEach(entry => {
+    <span class="kw">const</span> item = document.createElement(<span class="str">"div"</span>);
+    item.textContent = <span class="str">`${entry.name}: ${entry.score}`</span>;
+    leaderboardDiv.appendChild(item);
+});</pre></div>
+      <p>After retrieving data from the API, the game dynamically creates HTML elements and adds them to the page. This makes the leaderboard update in real time without refreshing the page.</p>
+
+      <div class="code-block"><pre><span class="kw">const</span> button = document.getElementById(<span class="str">"startButton"</span>);
+
+button.addEventListener(<span class="str">"click"</span>, () => {
+    <span class="prop">this</span>.start();
+});</pre></div>
+      <p>DOM events allow the player to interact with the game using buttons or UI elements. This shows how the DOM connects user input to game logic.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- TESTING -->
+    <section id="testing">
+      <div class="section-heading">
+        <div class="icon">✅</div>
+        <h2>Testing</h2>
+      </div>
+      <hr class="rule">
+      <ul>
+        <li>Tested whether pressing space correctly creates player lasers.</li>
+        <li>Tested whether enemy lasers correctly damage the player.</li>
+        <li>Tested whether collision with the boss reduces player health.</li>
+        <li>Tested whether the player loses when health reaches 0.</li>
+        <li>Tested whether the score is calculated correctly using remaining health × 100.</li>
+        <li>Tested whether the leaderboard loads at the start of the level.</li>
+        <li>Tested whether the leaderboard updates after winning a battle.</li>
+        <li>Tested whether the HUD correctly displays player HP, enemy HP, and battle messages.</li>
+      </ul>
+    </section>
+
+    <hr class="section-divider">
+    
+    <!-- OTHER PROJECTS -->
+    <section id="otherprojects">
+      <div class="section-heading">
+        <div class="icon">🕹️</div>
+        <h2>Additional Projects &amp; CS111 Connections</h2>
+      </div>
+      <hr class="rule">
+      <p>Along with my Peppa Pig Fighting Game, I also built other projects that apply the same CS111 concepts in different ways. These include a calculator and a word game, which demonstrate how programming ideas like input, output, conditionals, strings, and DOM manipulation can be used across multiple applications.</p>
+      <p>
+        <a href="https://compsciteam.github.io/student/calculator" target="_blank">▶ Calculator Project</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="https://compsciteam.github.io/student/wordgame" target="_blank">▶ Word Game Project</a>
+      </p>
+
+      <h3>🧮 Calculator — Operators, Input, and Real-Time Output</h3>
+      <p>The calculator project focuses on handling user input and performing mathematical operations. Each button represents an input event, and the program updates the display dynamically based on what the user presses.</p>
+      <ul>
+        <li>Clicking numbers builds an expression</li>
+        <li>Operators like <code>+</code>, <code>-</code>, <code>*</code>, and <code>÷</code> perform calculations</li>
+        <li><code>=</code> evaluates the expression</li>
+        <li><code>A/C</code> clears the screen</li>
+        <li><code>√</code> adds an extra math feature beyond the four basic operations</li>
+    
+    <div class="screenshot">
+      <img src="images/calculator.png" alt="Calculator screenshot">
+    </div>
+      
+      </ul>
+      <p>This project strengthens concepts like variables, operators, functions, conditionals, and DOM manipulation. It also shows how event-driven programming works in a web interface.</p>
+
+      <h3>⌨️ Word Game — Strings, Accuracy, and Dynamic Feedback</h3>
+      <p>The word game focuses on string handling and real-time feedback. The user types words or phrases, and the program compares their input to the expected text while calculating speed and accuracy.</p>
+      <ul>
+        <li>Stores prompt text as a string</li>
+        <li>Reads user input continuously</li>
+        <li>Calculates WPM (words per minute)</li>
+        <li>Tracks accuracy based on correct characters</li>
+        <li>Updates results live while the player is typing</li>
+      </ul>
+
+    <div class="screenshot">
+      <img src="images/wordgame.png" alt="Word game screenshot">
+    </div>
+      
+      <p>Together, these projects show that I applied CS111 concepts across multiple types of programs, not just one game. This demonstrates a deeper understanding of programming concepts and how they can be reused in different contexts.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- REFLECTION -->
+    <section id="reflection">
+      <div class="section-heading">
+        <div class="icon">📚</div>
+        <h2>Reflection</h2>
+      </div>
+      <hr class="rule">
+      <ul>
+        <li>This project helped me understand how object-oriented programming can organize a full game into reusable systems.</li>
+        <li>I learned how methods can separate tasks like input handling, attacks, leaderboard loading, HUD updates, and level transitions.</li>
+        <li>I improved my understanding of arrays and objects through systems like lasers, class lists, and configuration data.</li>
+        <li>I learned how conditionals control real gameplay events such as winning, losing, collisions, and cooldown timing.</li>
+        <li>I also gained experience with API integration by saving and loading leaderboard data from a backend instead of keeping scores only in memory.</li>
+        <li>Overall, this project showed me how classroom programming concepts can be used together in a real interactive application.</li>
+      </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- FUTURE -->
+    <section id="future">
+      <div class="section-heading">
+        <div class="icon">🔗</div>
+        <h2>Future Improvements</h2>
+      </div>
+      <hr class="rule">
+      <ul>
+        <li>Add more bosses and level-specific mechanics so each fight feels more unique.</li>
+        <li>Expand the laser system with special attacks, power-ups, or different projectile patterns.</li>
+        <li>Improve enemy behavior so bosses move and attack in smarter ways.</li>
+        <li>Add sound effects, attack animations, and visual effects to make combat feel more polished.</li>
+        <li>Enhance the leaderboard by sorting by level, adding timestamps, or storing player stats.</li>
+        <li>Improve balancing so health, attack speed, and difficulty feel fair across all levels.</li>
+        <li>Add a start menu, restart button, and clearer instructions for players.</li>
+        <li>Make the code more scalable so adding new levels and enemies takes less repeated work.</li>
+      </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- HOMEWORK -->
+    <section id="homework">
+      <div class="section-heading">
+        <div class="icon">📚</div>
+        <h2>Homework Connections</h2>
+      </div>
+      <hr class="rule">
+      <p>These assignments connect directly to the concepts used in my game project. Each one helped build the skills needed for features like player movement, health systems, class design, conditionals, and arrays of lasers.</p>
+
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/csse/lessons/variables/homework" target="_blank">Variables Homework</a>
+          <p>Relates to storing values like player health, score, cooldown timers, and positions.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/javascript/boolean-hack" target="_blank">Boolean Homework</a>
+          <p>Connects to game-state flags like <code>battleEnded</code>, <code>isPlayerLaser</code>, and whether the boss is defeated.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-variables/hw" target="_blank">Classes and Variables Homework</a>
+          <p>Supports the class-based structure of the game, where the level and enemy systems store and manage data.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/javascript/functions/tinkerers-hw" target="_blank">Functions Homework</a>
+          <p>Connects to methods like <code>initialize()</code>, <code>updateHud()</code>, <code>spawnLaser()</code>, and <code>saveScore()</code>.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/csse/javascript/constellators/conditionals-hw" target="_blank">Conditionals Homework</a>
+          <p>Relates to win and lose conditions, cooldown checks, and collision-based decisions in the game loop.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-methods/homework" target="_blank">Classes and Methods Homework</a>
+          <p>Connects to object-oriented programming in the project, especially the level class and reusable gameplay methods.</p>
+        </div>
+      </div>
+      <div class="hw-link">
+        <div>
+          <a href="https://pkdev0101.github.io/student/javascript/array/homework" target="_blank">Array Homework</a>
+          <p>Relates to arrays like <code>this.lasers</code> and <code>this.classes</code>, which store projectiles and game objects.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (function() {
+      const defaultChallengeCode = `async function postScore(player, score) {
+  try {
+    const payload = JSON.stringify({ player, score });
+    console.log('POST payload', payload);
+
+    return {
+      ok: true,
+      data: {
+        player,
+        score,
+        date: '2026-03-24'
+      }
+    };
+  } catch (e) {
+    console.error('postScore error', e.message);
+    return null;
+  }
+}
+
+async function loadLeaderboard() {
+  return [
+    { player: 'Pranay', score: 500 },
+    { player: 'Ishan', score: 400 },
+    { player: 'Player', score: 300 }
+  ];
+}
+
+async function main() {
+  const saved = await postScore('Pranay', 450);
+  console.log('Saved result', saved);
+
+  const board = await loadLeaderboard();
+  console.log('Leaderboard', board);
+}
+
+main();`;
+
+      const editor    = document.getElementById('challengeEditor');
+      const output    = document.getElementById('challengeOutput');
+      const lines     = document.getElementById('challengeLines');
+      const status    = document.getElementById('challengeStatus');
+      const runBtn    = document.getElementById('runChallengeBtn');
+      const resetBtn  = document.getElementById('resetChallengeBtn');
+      const copyBtn   = document.getElementById('copyChallengeBtn');
+      const fontSelect= document.getElementById('challengeFontSize');
+
+      if (!editor) return;
+
+      function updateEditorMeta() {
+        const lineCount = editor.value.split('\n').length;
+        lines.textContent = Array.from({length: lineCount}, (_, i) => i + 1).join('\n');
+        status.innerHTML = `Lines: ${lineCount} &nbsp; Characters: ${editor.value.length}`;
+      }
+
+      function resetEditor() {
+        editor.value = defaultChallengeCode;
+        output.textContent = 'Click "Run" in the code control panel to see output ...';
+        updateEditorMeta();
+      }
+
+      editor.addEventListener('input', updateEditorMeta);
+
+      fontSelect.addEventListener('change', () => {
+        editor.style.fontSize = fontSelect.value;
+        lines.style.fontSize  = fontSelect.value;
+      });
+
+      runBtn.addEventListener('click', async () => {
+        const logs = [];
+        const fakeConsole = {
+          log:   (...args) => logs.push(args.map(v => typeof v === 'string' ? v : JSON.stringify(v, null, 2)).join(' ')),
+          error: (...args) => logs.push('ERROR: ' + args.map(v => typeof v === 'string' ? v : JSON.stringify(v, null, 2)).join(' '))
+        };
+        try {
+          const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+          const runner = new AsyncFunction('console', editor.value);
+          await runner(fakeConsole);
+          output.textContent = logs.length ? logs.join('\n') : 'Program finished with no console output.';
+        } catch (err) {
+          output.textContent = 'Runtime error: ' + err.message;
+        }
+      });
+
+      resetBtn.addEventListener('click', resetEditor);
+
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(editor.value);
+          output.textContent = 'Code copied to clipboard.';
+        } catch (err) {
+          output.textContent = 'Could not copy: ' + err.message;
+        }
+      });
+
+      resetEditor();
+    })();
+  </script>
+
+</body>
+</html>
