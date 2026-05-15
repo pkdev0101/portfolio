@@ -9,7 +9,6 @@ Hi! My name is Pranay Kamath
 
 ### Development Environment
 
-
 > Coding starts with tools, explore these tools and procedures with a click.
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
@@ -36,7 +35,6 @@ Hi! My name is Pranay Kamath
 ### My Lessons
 
 > Foundations in Tech are essential, click to see some of my lesson creations.
-
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
     <a href="{{site.baseurl}}/code/javascript" style="text-decoration: none;">
@@ -71,7 +69,7 @@ Hi! My name is Pranay Kamath
     <a href="{{site.baseurl}}/snake" class="btn">
         Snake
     </a>
-    <a href="{{site.baseurl}}/gamify/parallax" class="btn" style="background-color: var(--green); ">
+    <a href="{{site.baseurl}}/gamify/parallax" class="btn" style="background-color: var(--green);">
         Fish
     </a>
     <a href="{{site.baseurl}}/gamify" class="btn" style="background-color: var(--teal);">
@@ -79,6 +77,9 @@ Hi! My name is Pranay Kamath
     </a>
     <a href="{{site.baseurl}}/cs-pathway" class="btn" style="background-color: var(--orange);">
        CS Pathway
+    </a>
+    <a href="{{site.baseurl}}/CS111-blog.html" class="btn" style="background-color: #8e44ad; color: white;">
+   CS111 Blog
     </a>
 </div>
 
