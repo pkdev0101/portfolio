@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation and Debugging</title>
+
+  <style>
+    :root {
+      --bg: #16161a;
+      --surface: #1e1e24;
+      --surface2: #252530;
+      --border: #2e2e3a;
+      --border2: #3a3a48;
+      --text: #d4d4d8;
+      --text-dim: #8888a0;
+      --text-bright: #f4f4f5;
+      --accent-ora: #e8823a;
+      --accent-cyan: #4fc4cf;
+      --accent-blue: #5b8dee;
+      --accent-green: #3ecf8e;
+      --inline-bg: #1a1a24;
+      --inline-border: #35354a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover { text-decoration: underline; }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon { font-size: 34px; }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 28px;
+    }
+
+    .section-divider { margin: 52px 0 40px; }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin: 28px 0 10px;
+    }
+
+    p { color: var(--text); margin-bottom: 14px; }
+    ul, ol { padding-left: 24px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; color: var(--text); }
+    a { color: var(--accent-blue); }
+
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82em;
+      color: var(--accent-cyan);
+      background: var(--inline-bg);
+      border: 1px solid var(--inline-border);
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    .kw { color: var(--accent-cyan); }
+    .cls { color: var(--accent-ora); font-weight: 600; }
+    .str { color: var(--accent-green); }
+    .cmt { color: #606078; font-style: italic; }
+    .num { color: #bd93f9; }
+    .prop { color: var(--accent-blue); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--text);
+    }
+
+    th {
+      background: var(--surface2);
+      color: var(--text-bright);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 0 22px; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-card,
+    .callout,
+    .hw-link {
+      background: rgba(91,141,238,0.07);
+      border: 1px solid rgba(91,141,238,0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .feature-card h3 { margin-top: 0; }
+
+    .callout {
+      background: rgba(62,207,142,0.07);
+      border-color: rgba(62,207,142,0.25);
+    }
+
+    .callout strong { color: var(--accent-green); }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="{{ site.baseurl }}/2026-03-25-college-ready-blog.html">← College Ready Blog</a>
+    <a href="{{ site.baseurl }}/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">📝</span>
+    <h1>Documentation and Debugging</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page explains how my Peppa Pig Fighting Game uses code documentation, JSDoc comments,
+    console logs, DevTools, hitbox visualization, network debugging, application storage checks,
+    and testing to make the project easier to understand and fix.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Code Documentation</td>
+        <td>Use comments and JSDoc to explain classes, constructors, parameters, return values, and important logic.</td>
+        <td>Review code comments, method headers, and portfolio explanations.</td>
+      </tr>
+      <tr>
+        <td>Console Debugging</td>
+        <td>Use <code>console.log()</code>, <code>console.warn()</code>, and <code>console.error()</code> to track game state.</td>
+        <td>Demo console output while testing the game.</td>
+      </tr>
+      <tr>
+        <td>Hitbox Debugging</td>
+        <td>Use a visible hitbox rectangle to verify collision boundaries.</td>
+        <td>Compare visual sprite location to collision rectangle.</td>
+      </tr>
+      <tr>
+        <td>Network Debugging</td>
+        <td>Inspect API requests, status codes, and JSON payloads in the Network tab.</td>
+        <td>Review fetch calls and response handling.</td>
+      </tr>
+      <tr>
+        <td>Application Debugging</td>
+        <td>Check localStorage values for player name, game mode, selected characters, and leaderboard data.</td>
+        <td>Inspect Application tab storage values after gameplay.</td>
+      </tr>
+      <tr>
+        <td>Testing and Verification</td>
+        <td>Test player attacks, boss damage, win/loss conditions, leaderboard behavior, and error handling.</td>
+        <td>Live demo and test explanation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="documentation">
+    <div class="section-heading">
+      <div class="icon">📝</div>
+      <h2>JSDoc Comments and Code Documentation</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Code documentation makes the project easier to understand because it explains what each class or method does
+      before someone reads the actual code. In my game, documentation is especially important because different systems
+      work together, such as the boss class, laser system, player input, HUD output, localStorage, and leaderboard API.
+    </p>
+
+    <p>
+      JSDoc comments are useful because they describe parameters, return values, and class purpose. This helps show that
+      the code is not just copied into the project, but understood well enough to explain clearly.
+    </p>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * PeppaBossEnemy — custom boss class extending the Enemy base.
+ * Adds health system, defeat state, movement AI, and hitbox debugging.
+ *
+ * @class PeppaBossEnemy
+ * @extends Enemy
+ */</span>
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+  <span class="cmt">/**
+   * @param {Object} data - Sprite and config data for this enemy.
+   * @param {number} data.health - Starting HP for this boss.
+   * @param {number} data.moveSpeed - Pixels per frame toward the player.
+   * @param {Object} gameEnv - Shared game environment reference.
+   */</span>
+  <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+    <span class="kw">super</span>(data, gameEnv);
+    <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+    <span class="prop">this</span>.maxHealth = <span class="prop">this</span>.health;
+    <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+    <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+  }
+}</pre>
+    </div>
+
+    <p>
+      This documentation explains the purpose of the class and the type of data the constructor expects. The comments
+      make the code easier to review because the reader can quickly understand that this class controls the boss enemy's
+      health, movement, and defeated state.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="method-docs">
+    <div class="section-heading">
+      <div class="icon">⚙️</div>
+      <h2>Method Documentation with Parameters and Return Values</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Methods that change game state should be documented because they affect gameplay directly. For example,
+      <code>takeDamage(amount)</code> changes boss health and returns whether the boss has been defeated.
+    </p>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * Applies damage to the boss.
+ *
+ * @param {number} amount - HP to subtract from the boss.
+ * @returns {boolean} true if this hit defeated the boss.
+ */</span>
+takeDamage(amount = <span class="num">1</span>) {
+    <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span> <span class="kw">true</span>;
+
+    <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+
+    <span class="kw">if</span> (<span class="prop">this</span>.health === <span class="num">0</span>) {
+        <span class="prop">this</span>.isDefeated = <span class="kw">true</span>;
+        <span class="prop">this</span>.canvas.style.filter = <span class="str">'grayscale(1) brightness(0.8)'</span>;
+        <span class="prop">this</span>.canvas.style.opacity = <span class="str">'0.6'</span>;
+    }
+
+    <span class="kw">return</span> <span class="prop">this</span>.isDefeated;
+}</pre>
+    </div>
+
+    <p>
+      The <code>@param</code> tag explains what the method receives, and the <code>@returns</code> tag explains what the method sends back.
+      In this case, the return value matters because the level logic can use it to decide whether the battle should end.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="debugging">
+    <div class="section-heading">
+      <div class="icon">🐛</div>
+      <h2>Debugging with DevTools</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Debugging was important because the game has several systems running at the same time. Player movement, boss movement,
+      lasers, collisions, score saving, localStorage, and API requests all have to work together. I used browser DevTools
+      to inspect the game's behavior and find problems faster.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>DevTools Area</th>
+          <th>What I Used It For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Console</td>
+          <td>Tracked HP changes, laser spawns, boss defeats, score saving, and API errors while the game was running.</td>
+        </tr>
+        <tr>
+          <td>Sources</td>
+          <td>Used breakpoints to pause inside important methods like <code>takeDamage()</code> and inspect variables line by line.</td>
+        </tr>
+        <tr>
+          <td>Network</td>
+          <td>Checked leaderboard or API <code>fetch()</code> requests, request bodies, response codes, and JSON response data.</td>
+        </tr>
+        <tr>
+          <td>Application</td>
+          <td>Checked <code>localStorage</code> keys like <code>peppaGameMode</code>, player names, character choices, and local leaderboard values.</td>
+        </tr>
+        <tr>
+          <td>Elements</td>
+          <td>Inspected HUD divs, canvas layers, button elements, and styling to make sure UI output was placed correctly.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="console-logging">
+    <div class="section-heading">
+      <div class="icon">💬</div>
+      <h2>Console Logging Pattern</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Console logs helped me check what was happening without stopping the game. I used logs for boss spawning,
+      laser hits, HP changes, defeated state, hitbox positions, leaderboard saving, and API errors.
+    </p>
+
+    <div class="code-block">
+<pre><span class="cmt">// Strategic console.log placement — tracks state during gameplay</span>
+console.log(<span class="str">`[PeppaBossEnemy] Spawned: ${data?.id} with ${this.health} HP`</span>);
+console.log(<span class="str">`[Boss] Hit! HP: ${this.health}/${this.maxHealth}`</span>);
+console.log(<span class="str">`[Boss] Defeated!`</span>);
+console.warn(<span class="str">`[Boss] Invulnerable, ignoring damage.`</span>);
+console.log(<span class="str">`[Hitbox] pos=(${Math.round(this.position.x)},${Math.round(this.position.y)})`</span>);
+console.log(<span class="str">`[Leaderboard] Score saved:`</span>, data);
+console.error(<span class="str">`[Leaderboard] POST failed:`</span>, error.message);</pre>
+    </div>
+
+    <p>
+      These logs make debugging easier because I can see when a method runs and whether the important variables have the
+      values I expect.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="hitbox-debugging">
+    <div class="section-heading">
+      <div class="icon">🎯</div>
+      <h2>Hitbox Debugging</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Hitbox debugging helped me compare what the player sees to what the collision system actually checks. Sometimes a
+      sprite image can be larger than the visible character, so a laser might look like it missed while the rectangular
+      hitbox still counts it as a hit. Drawing the hitbox makes that problem easier to fix.
+    </p>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * Draws a red rectangle over the boss sprite for collision debugging.
+ */</span>
+drawHitbox() {
+    <span class="kw">const</span> ctx = <span class="prop">this</span>.gameEnv?.ctx;
+    <span class="kw">if</span> (!ctx) <span class="kw">return</span>;
+
+    ctx.save();
+    ctx.strokeStyle = <span class="str">'rgba(255, 0, 0, 0.85)'</span>;
+    ctx.lineWidth = <span class="num">2</span>;
+    ctx.strokeRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.fillStyle = <span class="str">'rgba(255, 0, 0, 0.08)'</span>;
+    ctx.fillRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.restore();
+}</pre>
+    </div>
+
+    <div class="callout">
+      <p>
+        <strong>Why this matters:</strong>
+        If the visible character and the collision rectangle do not match, the game feels unfair. Hitbox debugging helps
+        make collision detection match what the player sees on screen.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="api-debugging">
+    <div class="section-heading">
+      <div class="icon">🌐</div>
+      <h2>Network and API Debugging</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Network debugging is important because API calls can fail for reasons that are not visible on the page. The backend
+      might be offline, the request body might be wrong, the server might return an error status, or CORS could block the
+      request. The Network tab helps check the real request and response.
+    </p>
+
+    <div class="code-block">
+<pre><span class="cmt">// API error handling pattern</span>
+<span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(url, fetchOptions);
+
+    <span class="kw">if</span> (!response.ok) {
+        <span class="kw">throw new</span> Error(<span class="str">`HTTP ${response.status}`</span>);
+    }
+
+    <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+    <span class="kw">return</span> data;
+} <span class="kw">catch</span> (error) {
+    console.error(<span class="str">`[API] Request failed: ${error.message}`</span>);
+    <span class="kw">return</span> <span class="kw">null</span>;
+}</pre>
+    </div>
+
+    <p>
+      This pattern prevents the game from crashing when an API request fails. Instead of breaking gameplay, the project
+      logs the issue and continues running.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="testing">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Testing and Verification</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      I tested the game by playing through important features and checking whether the screen output and saved data matched
+      the expected behavior.
+    </p>
+
+    <ul>
+      <li>Tested whether pressing <code>Space</code> creates player lasers.</li>
+      <li>Tested whether Player 2 can attack with <code>Enter</code> in two-player mode.</li>
+      <li>Tested whether laser collision reduces boss health.</li>
+      <li>Tested whether player health decreases when hit.</li>
+      <li>Tested whether the battle ends when health reaches <code>0</code>.</li>
+      <li>Tested whether the HUD updates health, messages, score, and leaderboard output.</li>
+      <li>Tested whether localStorage keeps player name, game mode, and selected characters after reload.</li>
+      <li>Tested whether API failures are caught with <code>try/catch</code> instead of crashing the game.</li>
+    </ul>
+
+    <div class="callout">
+      <p>
+        <strong>Testing connection:</strong>
+        These tests prove that documentation and debugging are not separate from the project. They support the actual
+        development process by helping verify that each game system works during a live demo.
+      </p>
+    </div>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+</body>
+</html>

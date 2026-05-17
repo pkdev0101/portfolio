@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CS111 Game Development Blog</title>
+  <title>College Ready Blog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -278,6 +278,27 @@
       color: #c9c9d8;
       white-space: pre;
     }
+
+    pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+      margin: 18px 0 24px;
+    }
+    pre code {
+      background: transparent;
+      border: none;
+      color: #c9c9d8;
+      padding: 0;
+      font-size: inherit;
+    }
     .code-block .kw  { color: var(--accent-cyan); }
     .code-block .cls { color: var(--accent-ora); font-weight: 600; }
     .code-block .str { color: var(--accent-green); }
@@ -511,6 +532,110 @@
     }
 
 
+    /* ── Live iTunes API Rickroll Demo ── */
+    .live-api-demo {
+      background: #12161d;
+      border: 1px solid rgba(91,141,238,0.45);
+      border-top: 4px solid #2d72ff;
+      border-radius: 14px;
+      padding: 24px 26px;
+      margin: 26px 0 30px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+    }
+    .live-api-demo h3 {
+      margin-top: 0;
+      color: var(--text-bright);
+      font-size: 1.15rem;
+    }
+    .live-api-demo p {
+      color: var(--text);
+      line-height: 1.75;
+    }
+    .api-demo-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .api-demo-btn {
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 11px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .api-demo-btn.secondary {
+      background: var(--surface2);
+      color: var(--text-bright);
+      border: 1px solid var(--border2);
+    }
+    .api-demo-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    .api-demo-btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+    .api-demo-output {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 20px;
+      background: #0f0f15;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .api-demo-output img {
+      width: 92px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .api-demo-output strong {
+      display: block;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+    .api-demo-output span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+    @media (max-width: 600px) {
+      .api-demo-output { grid-template-columns: 1fr; }
+      .api-demo-output img { width: 100%; height: auto; max-width: 180px; }
+    }
+
+
+
+
+    /* ── Documentation objective table ── */
+    .objective-intro {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .objective-table th {
+      background: var(--surface2);
+      color: var(--text-bright);
+    }
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
     /* ── Homework links ── */
     .hw-link {
       display: flex;
@@ -544,13 +669,12 @@
 <body>
 
   <header class="site-header">
-    <div class="title">CS111 Game Development Blog</div>
-    <div class="meta">Pranay Kamath &nbsp;·&nbsp; March 25, 2026</div>
+    <div class="title">College Ready Blog</div>
+    <div class="meta">Pranay Kamath</div>
   </header>
 
   <main class="page">
 
-    <h1 class="article-title">🎮 Peppa Pig Fighting Game</h1>
 
     <section class="hero-panel" aria-label="Project introduction">
       <div class="hero-kicker">Final Project Walkthrough</div>
@@ -591,10 +715,9 @@
         <li><a href="#io">Input / Output</a></li>
         <li><a href="#gameplay">Gameplay Mechanics</a></li>
         <li><a href="#dom">DOM Manipulation</a></li>
+        <li><a href="#documentation-debugging">Documentation and Debugging</a></li>
         <li><a href="#testing">Testing</a></li>
         <li><a href="#otherprojects">Additional Projects</a></li>
-        <li><a href="#reflection">Reflection</a></li>
-        <li><a href="#future">Future Improvements</a></li>
         <li><a href="#homework">Homework Connections</a></li>
       </ol>
     </nav>
@@ -845,178 +968,209 @@ export default PeppaPowerUpMenu;</pre></div>
     <!-- DATA TYPES -->
 
     <section id="specific-definitions">
-      <div class="section-heading">
-        <div class="icon">🧩</div>
-        <h2>Specific Code Definitions</h2>
-      </div>
-      <hr class="rule">
+        <div class="section-heading">
+          <div class="icon">🧩</div>
+          <h2>Specific Code Definitions</h2>
+        </div>
 
-      <p>This section makes the blog stronger because it does not only say that the game uses arrays, numbers, booleans, and objects. It explains the exact variables that are defined in my code, what each one stores, and why each one matters during gameplay.</p>
+        <hr class="rule">
 
-      <h3>Important Variables Defined in the Battle Level</h3>
-      <p>Most of the important game state is defined inside the constructor of <code>PeppaBattleLevelBase</code>. These definitions are important because the constructor runs once when the level starts, so it sets the starting rules for health, lasers, coins, multiplayer mode, cooldowns, score, and the leaderboard.</p>
+        <p>
+          This section makes the blog stronger because it does not only say that the game uses arrays, numbers,
+          booleans, and objects. It explains the exact variables that are defined in my code, what each one stores,
+          and why each one matters during gameplay.
+        </p>
 
-      <pre><code>this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';
+        <h3>Important Variables Defined in the Battle Level</h3>
 
-this.playerMaxHealth = config.playerHealth ?? 5;
-this.playerHealth = this.playerMaxHealth;
-this.player2MaxHealth = config.playerHealth ?? 5;
-this.player2Health = this.player2MaxHealth;
+        <p>
+          Most of the important game state is defined inside the constructor of <code>PeppaBattleLevelBase</code>.
+          These definitions are important because the constructor runs once when the level starts, so it sets the
+          starting rules for health, lasers, coins, multiplayer mode, cooldowns, score, and the leaderboard.
+        </p>
 
-this.attackCooldownMs = config.attackCooldownMs ?? 450;
-this.lastAttackAt = 0;
-this.lastPlayer2AttackAt = 0;
-this.enemyLaserIntervalMs = config.enemyLaserIntervalMs ?? 1100;
+        <pre><code>this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';
 
-this.lasers = [];
-this.coins = [];
-this.coinCount = 0;
-this.coinValue = config.coinValue ?? 25;
-this.leaderboard = [];
-this.battleEnded = false;</code></pre>
+    this.playerMaxHealth = config.playerHealth ?? 5;
+    this.playerHealth = this.playerMaxHealth;
+    this.player2MaxHealth = config.playerHealth ?? 5;
+    this.player2Health = this.player2MaxHealth;
 
-      <table>
-        <thead>
-          <tr>
-            <th>Definition</th>
-            <th>Type</th>
-            <th>What It Controls</th>
-            <th>Why It Matters</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>this.gameMode</code></td>
-            <td>String</td>
-            <td>Stores whether the game is in <code>singlePlayer</code> or <code>twoPlayer</code> mode.</td>
-            <td>This controls whether the level creates only Player 1 and the boss, or creates both Player 1 and Player 2 for multiplayer.</td>
-          </tr>
-          <tr>
-            <td><code>this.playerHealth</code> and <code>this.player2Health</code></td>
-            <td>Number</td>
-            <td>Stores the current HP for Player 1 and Player 2.</td>
-            <td>These values decide when a player loses. When health reaches <code>0</code>, the lose screen or multiplayer winner message is triggered.</td>
-          </tr>
-          <tr>
-            <td><code>this.attackCooldownMs</code></td>
-            <td>Number</td>
-            <td>Stores the required delay between laser attacks.</td>
-            <td>This prevents the player from holding the attack key and firing unlimited lasers every frame.</td>
-          </tr>
-          <tr>
-            <td><code>this.lastAttackAt</code> and <code>this.lastPlayer2AttackAt</code></td>
-            <td>Number</td>
-            <td>Stores the timestamp of the last attack for each player.</td>
-            <td>The code compares <code>Date.now()</code> to these timestamps to decide whether the cooldown has passed.</td>
-          </tr>
-          <tr>
-            <td><code>this.enemyLaserIntervalMs</code></td>
-            <td>Number</td>
-            <td>Controls how often the boss fires a laser.</td>
-            <td>Lower values make the boss attack faster, which makes the level harder without changing the rest of the code.</td>
-          </tr>
-          <tr>
-            <td><code>this.lasers</code></td>
-            <td>Array</td>
-            <td>Stores every active laser projectile currently moving across the screen.</td>
-            <td>Each laser is pushed into this array when fired, updated every frame, and removed when it expires or hits something.</td>
-          </tr>
-          <tr>
-            <td><code>this.coins</code></td>
-            <td>Array</td>
-            <td>Stores every coin object placed in the level.</td>
-            <td>The game loops through this array to draw coins and check whether the player collected one.</td>
-          </tr>
-          <tr>
-            <td><code>this.coinCount</code> and <code>this.coinValue</code></td>
-            <td>Number</td>
-            <td>Tracks how many coins were collected and how much each coin is worth.</td>
-            <td>These values are used in the final score calculation: health points plus coin bonus.</td>
-          </tr>
-          <tr>
-            <td><code>this.leaderboard</code></td>
-            <td>Array</td>
-            <td>Stores score entries loaded from an API or from localStorage.</td>
-            <td>This lets the HUD display top scores without hard-coding them into the page.</td>
-          </tr>
-          <tr>
-            <td><code>this.battleEnded</code></td>
-            <td>Boolean</td>
-            <td>Stores whether the current fight is already over.</td>
-            <td>This stops the update loop from continuing after a win or loss, preventing extra lasers, damage, or repeated transitions.</td>
-          </tr>
-        </tbody>
-      </table>
+    this.attackCooldownMs = config.attackCooldownMs ?? 450;
+    this.lastAttackAt = 0;
+    this.lastPlayer2AttackAt = 0;
+    this.enemyLaserIntervalMs = config.enemyLaserIntervalMs ?? 1100;
 
-      <h3>How <code>this.lasers</code> Actually Works</h3>
-      <p>The <code>this.lasers</code> array is one of the most important definitions in the project. It starts empty, but every time a player or boss fires, a new laser object is added with its position, velocity, owner, and lifetime.</p>
+    this.lasers = [];
+    this.coins = [];
+    this.coinCount = 0;
+    this.coinValue = config.coinValue ?? 25;
+    this.leaderboard = [];
+    this.battleEnded = false;</code></pre>
 
-      <pre><code>this.lasers.push({
-  x: fromX,
-  y: fromY,
-  vx: (dx / len) * this.laserSpeed,
-  vy: (dy / len) * this.laserSpeed,
-  isPlayerLaser,
-  source: sourceId,
-  life: 60,
-  maxLife: 60
-});</code></pre>
+        <table>
+          <thead>
+            <tr>
+              <th>Definition</th>
+              <th>Type</th>
+              <th>What It Controls</th>
+              <th>Why It Matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>this.gameMode</code></td>
+              <td>String</td>
+              <td>Stores whether the game is in <code>singlePlayer</code> or <code>twoPlayer</code> mode.</td>
+              <td>This controls whether the level creates only Player 1 and the boss, or creates both Player 1 and Player 2 for multiplayer.</td>
+            </tr>
+            <tr>
+              <td><code>this.playerHealth</code> and <code>this.player2Health</code></td>
+              <td>Number</td>
+              <td>Stores the current HP for Player 1 and Player 2.</td>
+              <td>These values decide when a player loses. When health reaches <code>0</code>, the lose screen or multiplayer winner message is triggered.</td>
+            </tr>
+            <tr>
+              <td><code>this.attackCooldownMs</code></td>
+              <td>Number</td>
+              <td>Stores the required delay between laser attacks.</td>
+              <td>This prevents the player from holding the attack key and firing unlimited lasers every frame.</td>
+            </tr>
+            <tr>
+              <td><code>this.lastAttackAt</code> and <code>this.lastPlayer2AttackAt</code></td>
+              <td>Number</td>
+              <td>Stores the timestamp of the last attack for each player.</td>
+              <td>The code compares <code>Date.now()</code> to these timestamps to decide whether the cooldown has passed.</td>
+            </tr>
+            <tr>
+              <td><code>this.enemyLaserIntervalMs</code></td>
+              <td>Number</td>
+              <td>Controls how often the boss fires a laser.</td>
+              <td>Lower values make the boss attack faster, which makes the level harder without changing the rest of the code.</td>
+            </tr>
+            <tr>
+              <td><code>this.lasers</code></td>
+              <td>Array</td>
+              <td>Stores every active laser projectile currently moving across the screen.</td>
+              <td>Each laser is pushed into this array when fired, updated every frame, and removed when it expires or hits something.</td>
+            </tr>
+            <tr>
+              <td><code>this.coins</code></td>
+              <td>Array</td>
+              <td>Stores every coin object placed in the level.</td>
+              <td>The game loops through this array to draw coins and check whether the player collected one.</td>
+            </tr>
+            <tr>
+              <td><code>this.coinCount</code> and <code>this.coinValue</code></td>
+              <td>Number</td>
+              <td>Tracks how many coins were collected and how much each coin is worth.</td>
+              <td>These values are used in the final score calculation: health points plus coin bonus.</td>
+            </tr>
+            <tr>
+              <td><code>this.leaderboard</code></td>
+              <td>Array</td>
+              <td>Stores score entries loaded from an API or from localStorage.</td>
+              <td>This lets the HUD display top scores without hard-coding them into the page.</td>
+            </tr>
+            <tr>
+              <td><code>this.battleEnded</code></td>
+              <td>Boolean</td>
+              <td>Stores whether the current fight is already over.</td>
+              <td>This stops the update loop from continuing after a win or loss, preventing extra lasers, damage, or repeated transitions.</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <p>Each laser object stores everything the game needs to move and draw the laser. <code>x</code> and <code>y</code> are the current position. <code>vx</code> and <code>vy</code> are the movement speed in the x and y directions. <code>source</code> tells the game who fired it, such as <code>player1</code>, <code>player2</code>, or <code>boss</code>. <code>life</code> counts down every frame so old lasers disappear instead of staying forever.</p>
+        <h3>How <code>this.lasers</code> Actually Works</h3>
 
-      <h3>Specific Variables in the Boss Enemy Class</h3>
-      <p>The <code>PeppaBossEnemy</code> constructor defines boss-specific state. These variables make the boss different from a normal engine enemy because the boss can chase the player, take damage, and become defeated.</p>
+        <p>
+          The <code>this.lasers</code> array is one of the most important definitions in the project.
+          It starts empty, but every time a player or boss fires, a new laser object is added with its position,
+          velocity, owner, and lifetime.
+        </p>
 
-      <pre><code>this.health = data?.health ?? 3;
-this.maxHealth = this.health;
-this.moveSpeed = data?.moveSpeed ?? 0.8;
-this.isDefeated = false;</code></pre>
+        <pre><code>this.lasers.push({
+      x: fromX,
+      y: fromY,
+      vx: (dx / len) * this.laserSpeed,
+      vy: (dy / len) * this.laserSpeed,
+      isPlayerLaser,
+      source: sourceId,
+      life: 60,
+      maxLife: 60
+    });</code></pre>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Boss Variable</th>
-            <th>What It Does</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>this.health</code></td>
-            <td>Stores how many hits the boss can still take before losing.</td>
-          </tr>
-          <tr>
-            <td><code>this.maxHealth</code></td>
-            <td>Stores the original health value so the HUD can show health as current HP out of max HP.</td>
-          </tr>
-          <tr>
-            <td><code>this.moveSpeed</code></td>
-            <td>Controls how many pixels the boss moves toward the player each frame.</td>
-          </tr>
-          <tr>
-            <td><code>this.isDefeated</code></td>
-            <td>Acts as a boolean state flag. When it becomes <code>true</code>, the boss stops moving and the level can transition to the next stage.</td>
-          </tr>
-        </tbody>
-      </table>
+        <p>
+          Each laser object stores everything the game needs to move and draw the laser. <code>x</code> and
+          <code>y</code> are the current position. <code>vx</code> and <code>vy</code> are the movement speed in
+          the x and y directions. <code>source</code> tells the game who fired it, such as <code>player1</code>,
+          <code>player2</code>, or <code>boss</code>. <code>life</code> counts down every frame so old lasers
+          disappear instead of staying forever.
+        </p>
 
-      <h3>Specific Variables in the Power-Up Menu</h3>
-      <p>The power-up menu also has important definitions. This class does not control lasers directly, but it controls the player's choice before the next battle.</p>
+        <h3>Specific Variables in the Boss Enemy Class</h3>
 
-      <pre><code>this.selectedOption = 0;
-this.options = [
-  { name: 'Extra Speed', description: 'Move faster in battle' },
-  { name: 'Extra Health', description: 'Start with more health' },
-  { name: 'Extra Damage', description: 'Deal more damage per laser' }
-];
-this.chosenPower = null;</code></pre>
+        <p>
+          The <code>PeppaBossEnemy</code> constructor defines boss-specific state. These variables make the boss
+          different from a normal engine enemy because the boss can chase the player, take damage, and become defeated.
+        </p>
 
-      <p><code>this.selectedOption</code> stores which menu option is currently highlighted. <code>this.options</code> is an array of objects, where each object has a <code>name</code> and <code>description</code>. <code>this.chosenPower</code> starts as <code>null</code> because the player has not picked anything yet. After pressing Enter, the selected power-up is stored in <code>this.gameEnv.gameControl.chosenPower</code> so the game can remember the choice across levels.</p>
+        <pre><code>this.health = data?.health ?? 3;
+    this.maxHealth = this.health;
+    this.moveSpeed = data?.moveSpeed ?? 0.8;
+    this.isDefeated = false;</code></pre>
 
-      <h3>Why Another Student's Blog May Look Like It Has More Code</h3>
-      <p>A longer blog does not always mean the game has more working features. A lot of the extra length comes from explanation, JSDoc comments, debugging notes, tables, screenshots, code runner examples, and rubric connections. That kind of writing is useful because it proves understanding, but it is different from adding more gameplay code. To make my blog stronger, I added more explanation of the exact definitions in my own code instead of randomly adding copied code that my game may not actually use.</p>
-    </section>
+        <table>
+          <thead>
+            <tr>
+              <th>Boss Variable</th>
+              <th>What It Does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>this.health</code></td>
+              <td>Stores how many hits the boss can still take before losing.</td>
+            </tr>
+            <tr>
+              <td><code>this.maxHealth</code></td>
+              <td>Stores the original health value so the HUD can show health as current HP out of max HP.</td>
+            </tr>
+            <tr>
+              <td><code>this.moveSpeed</code></td>
+              <td>Controls how many pixels the boss moves toward the player each frame.</td>
+            </tr>
+            <tr>
+              <td><code>this.isDefeated</code></td>
+              <td>Acts as a boolean state flag. When it becomes <code>true</code>, the boss stops moving and the level can transition to the next stage.</td>
+            </tr>
+          </tbody>
+        </table>
 
-    <section id="datatypes">
+        <h3>Specific Variables in the Power-Up Menu</h3>
+
+        <p>
+          The power-up menu also has important definitions. This class does not control lasers directly,
+          but it controls the player's choice before the next battle.
+        </p>
+
+        <pre><code>this.selectedOption = 0;
+    this.options = [
+      { name: 'Extra Speed', description: 'Move faster in battle' },
+      { name: 'Extra Health', description: 'Start with more health' },
+      { name: 'Extra Damage', description: 'Deal more damage per laser' }
+    ];
+    this.chosenPower = null;</code></pre>
+
+        <p>
+          <code>this.selectedOption</code> stores which menu option is currently highlighted.
+          <code>this.options</code> is an array of objects, where each object has a <code>name</code> and
+          <code>description</code>. <code>this.chosenPower</code> starts as <code>null</code> because the player
+          has not picked anything yet. After pressing Enter, the selected power-up is stored in
+          <code>this.gameEnv.gameControl.chosenPower</code> so the game can remember the choice across levels.
+        </p>
+      </section>
+      <section id="datatypes">
       <div class="section-heading">
         <div class="icon">🔢</div>
         <h2>Data Types</h2>
@@ -1197,6 +1351,60 @@ L.life -= <span class="num">1</span>;
         <li>Use the result in gameplay by playing the preview with the browser Audio API.</li>
       </ul>
 
+      <h3>Connection to the Game</h3>
+      <p>
+        The game's <code>PeppaMusic</code> class uses this exact same pattern. It calls the iTunes API, waits for
+        <code>response.json()</code>, extracts a playable <code>previewUrl</code>, and plays the audio during gameplay.
+        The demo below uses the same API flow, but searches for Rick Astley's <strong>Never Gonna Give You Up</strong>
+        instead of a Peppa Pig song.
+      </p>
+
+      <div class="live-api-demo">
+        <h3>🎵 Live Demo — Rickroll with the iTunes API</h3>
+        <p>
+          Click the button to make a real iTunes API call, find <strong>Never Gonna Give You Up</strong>, extract the
+          song's <code>previewUrl</code>, and play the 30-second preview in your browser.
+        </p>
+
+        <div class="api-demo-controls">
+          <button class="api-demo-btn" id="playRickrollBtn">▶ Play Rickroll Preview</button>
+          <button class="api-demo-btn secondary" id="stopRickrollBtn">■ Stop Preview</button>
+        </div>
+
+        <div class="api-demo-output" id="rickrollApiOutput">
+          <img id="rickrollArtwork" alt="iTunes artwork preview" src="" style="display: none;">
+          <div>
+            <strong id="rickrollTitle">Waiting for API call...</strong>
+            <span id="rickrollArtist">Click play to fetch song data from iTunes.</span>
+            <span id="rickrollStatus">No request has been sent yet.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Rickroll iTunes API Code</h3>
+      <div class="code-block"><pre><span class="kw">async</span> <span class="prop">playRickrollPreview</span>() {
+  <span class="kw">const</span> searchTerm = <span class="str">'Rick Astley Never Gonna Give You Up'</span>;
+  <span class="kw">const</span> url = <span class="str">'https://itunes.apple.com/search?entity=song&amp;limit=5&amp;term='</span> +
+    encodeURIComponent(searchTerm);
+
+  <span class="kw">const</span> response = <span class="kw">await</span> fetch(url);
+
+  <span class="kw">if</span> (!response.ok) {
+    <span class="kw">throw new</span> Error(<span class="str">'iTunes API request failed: '</span> + response.status);
+  }
+
+  <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+  <span class="kw">const</span> track = data.results.find(song =&gt;
+    song.previewUrl &amp;&amp;
+    song.trackName.toLowerCase().includes(<span class="str">'never gonna give you up'</span>)
+  );
+
+  <span class="kw">const</span> audio = <span class="kw">new</span> Audio(track.previewUrl);
+  audio.volume = <span class="num">0.35</span>;
+  <span class="kw">await</span> audio.play();
+}</pre></div>
+
+
       <h3>Building the API Request URL</h3>
       <div class="code-block"><pre><span class="kw">const</span> filter = <span class="str">"peppa pig theme"</span>;
 <span class="kw">const</span> url = <span class="str">"https://itunes.apple.com/search?term="</span> + encodeURIComponent(filter);
@@ -1315,10 +1523,6 @@ console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre></d
 
       <p>Error handling is important because APIs can fail, internet connections can break, or the browser can block autoplay. With <code>try/catch</code>, the game can continue running even if the music does not play.</p>
     </section>
-
-    <hr class="section-divider">
-
-
     <hr class="section-divider">
 
     <!-- MULTIPLAYER -->
@@ -1755,22 +1959,270 @@ button.addEventListener(<span class="str">"click"</span>, () => {
     <hr class="section-divider">
 
     <!-- TESTING -->
+    <hr class="section-divider">
+
+    <!-- DOCUMENTATION AND DEBUGGING -->
+    <section id="documentation-debugging">
+      <div class="section-heading">
+        <div class="icon">📝</div>
+        <h2>Documentation and Debugging</h2>
+      </div>
+      <hr class="rule">
+
+      <p class="objective-intro">
+        This section explains how my Peppa Pig Fighting Game uses code documentation, JSDoc comments,
+        console logs, DevTools, hitbox visualization, network debugging, application storage checks,
+        and testing to make the project easier to understand and fix.
+      </p>
+
+      <table class="objective-table">
+        <thead>
+          <tr>
+            <th>Learning Objective</th>
+            <th>Project Evidence Required</th>
+            <th>Assessment Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Code Documentation</td>
+            <td>Use comments and JSDoc to explain classes, constructors, parameters, return values, and important logic.</td>
+            <td>Review code comments, method headers, and portfolio explanations.</td>
+          </tr>
+          <tr>
+            <td>Console Debugging</td>
+            <td>Use <code>console.log()</code>, <code>console.warn()</code>, and <code>console.error()</code> to track game state.</td>
+            <td>Demo console output while testing the game.</td>
+          </tr>
+          <tr>
+            <td>Hitbox Debugging</td>
+            <td>Use a visible hitbox rectangle to verify collision boundaries.</td>
+            <td>Compare visual sprite location to collision rectangle.</td>
+          </tr>
+          <tr>
+            <td>Network Debugging</td>
+            <td>Inspect API requests, status codes, and JSON payloads in the Network tab.</td>
+            <td>Review fetch calls and response handling.</td>
+          </tr>
+          <tr>
+            <td>Application Debugging</td>
+            <td>Check localStorage values for player name, game mode, selected characters, and leaderboard data.</td>
+            <td>Inspect Application tab storage values after gameplay.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>JSDoc Comments and Code Documentation</h3>
+      <p>
+        Code documentation makes the project easier to understand because it explains what each class or method does
+        before someone reads the actual code. In my game, documentation is especially important because different systems
+        work together, such as the boss class, laser system, player input, HUD output, localStorage, and leaderboard API.
+      </p>
+
+      <div class="code-block"><pre><span class="cmt">/**
+ * PeppaBossEnemy — custom boss class extending the Enemy base.
+ * Adds health system, defeat state, movement AI, and hitbox debugging.
+ *
+ * @class PeppaBossEnemy
+ * @extends Enemy
+ */</span>
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+  <span class="cmt">/**
+   * @param {Object} data - Sprite and config data for this enemy.
+   * @param {number} data.health - Starting HP for this boss.
+   * @param {number} data.moveSpeed - Pixels per frame toward the player.
+   * @param {Object} gameEnv - Shared game environment reference.
+   */</span>
+  <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+    <span class="kw">super</span>(data, gameEnv);
+    <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+    <span class="prop">this</span>.maxHealth = <span class="prop">this</span>.health;
+    <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+    <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+  }
+}</pre></div>
+
+      <p>
+        This documentation explains the purpose of the class and the type of data the constructor expects. The comments
+        make the code easier to review because the reader can quickly understand that this class controls the boss enemy's
+        health, movement, and defeated state.
+      </p>
+
+      <h3>Method Documentation with Parameters and Return Values</h3>
+      <p>
+        Methods that change game state should be documented because they affect gameplay directly. For example,
+        <code>takeDamage(amount)</code> changes boss health and returns whether the boss has been defeated.
+      </p>
+
+      <div class="code-block"><pre><span class="cmt">/**
+ * Applies damage to the boss.
+ *
+ * @param {number} amount - HP to subtract from the boss.
+ * @returns {boolean} true if this hit defeated the boss.
+ */</span>
+takeDamage(amount = <span class="num">1</span>) {
+    <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span> <span class="kw">true</span>;
+
+    <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+
+    <span class="kw">if</span> (<span class="prop">this</span>.health === <span class="num">0</span>) {
+        <span class="prop">this</span>.isDefeated = <span class="kw">true</span>;
+        <span class="prop">this</span>.canvas.style.filter = <span class="str">'grayscale(1) brightness(0.8)'</span>;
+        <span class="prop">this</span>.canvas.style.opacity = <span class="str">'0.6'</span>;
+    }
+
+    <span class="kw">return</span> <span class="prop">this</span>.isDefeated;
+}</pre></div>
+
+      <p>
+        The <code>@param</code> tag explains what the method receives, and the <code>@returns</code> tag explains what the method sends back.
+        In this case, the return value matters because the level logic can use it to decide whether the battle should end.
+      </p>
+
+      <h3>Debugging with DevTools</h3>
+      <p>
+        Debugging was important because the game has several systems running at the same time. Player movement, boss movement,
+        lasers, collisions, score saving, localStorage, and API requests all have to work together. I used browser DevTools
+        to inspect the game's behavior and find problems faster.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>DevTools Area</th>
+            <th>What I Used It For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Console</td>
+            <td>Tracked HP changes, laser spawns, boss defeats, score saving, and API errors while the game was running.</td>
+          </tr>
+          <tr>
+            <td>Sources</td>
+            <td>Used breakpoints to pause inside important methods like <code>takeDamage()</code> and inspect variables line by line.</td>
+          </tr>
+          <tr>
+            <td>Network</td>
+            <td>Checked leaderboard or API <code>fetch()</code> requests, request bodies, response codes, and JSON response data.</td>
+          </tr>
+          <tr>
+            <td>Application</td>
+            <td>Checked <code>localStorage</code> keys like <code>peppaGameMode</code>, player names, character choices, and local leaderboard values.</td>
+          </tr>
+          <tr>
+            <td>Elements</td>
+            <td>Inspected HUD divs, canvas layers, button elements, and styling to make sure UI output was placed correctly.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Console Logging Pattern</h3>
+      <p>
+        Console logs helped me check what was happening without stopping the game. I used logs for boss spawning,
+        laser hits, HP changes, defeated state, hitbox positions, leaderboard saving, and API errors.
+      </p>
+
+      <div class="code-block"><pre><span class="cmt">// Strategic console.log placement — tracks state during gameplay</span>
+console.log(<span class="str">`[PeppaBossEnemy] Spawned: ${data?.id} with ${this.health} HP`</span>);
+console.log(<span class="str">`[Boss] Hit! HP: ${this.health}/${this.maxHealth}`</span>);
+console.log(<span class="str">`[Boss] Defeated!`</span>);
+console.warn(<span class="str">`[Boss] Invulnerable, ignoring damage.`</span>);
+console.log(<span class="str">`[Hitbox] pos=(${Math.round(this.position.x)},${Math.round(this.position.y)})`</span>);
+console.log(<span class="str">`[Leaderboard] Score saved:`</span>, data);
+console.error(<span class="str">`[Leaderboard] POST failed:`</span>, error.message);</pre></div>
+
+      <p>
+        These logs make debugging easier because I can see when a method runs and whether the important variables have the
+        values I expect.
+      </p>
+
+      <h3>Hitbox Debugging</h3>
+      <p>
+        Hitbox debugging helped me compare what the player sees to what the collision system actually checks. Sometimes a
+        sprite image can be larger than the visible character, so a laser might look like it missed while the rectangular
+        hitbox still counts it as a hit. Drawing the hitbox makes that problem easier to fix.
+      </p>
+
+      <div class="code-block"><pre><span class="cmt">/**
+ * Draws a red rectangle over the boss sprite for collision debugging.
+ */</span>
+drawHitbox() {
+    <span class="kw">const</span> ctx = <span class="prop">this</span>.gameEnv?.ctx;
+    <span class="kw">if</span> (!ctx) <span class="kw">return</span>;
+
+    ctx.save();
+    ctx.strokeStyle = <span class="str">'rgba(255, 0, 0, 0.85)'</span>;
+    ctx.lineWidth = <span class="num">2</span>;
+    ctx.strokeRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.fillStyle = <span class="str">'rgba(255, 0, 0, 0.08)'</span>;
+    ctx.fillRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.restore();
+}</pre></div>
+
+      <div class="callout">
+        <p>
+          <strong>Why this matters:</strong>
+          If the visible character and the collision rectangle do not match, the game feels unfair. Hitbox debugging helps
+          make collision detection match what the player sees on screen.
+        </p>
+      </div>
+
+      <h3>Network and API Debugging</h3>
+      <p>
+        Network debugging is important because API calls can fail for reasons that are not visible on the page. The backend
+        might be offline, the request body might be wrong, the server might return an error status, or CORS could block the
+        request. The Network tab helps check the real request and response.
+      </p>
+
+      <div class="code-block"><pre><span class="cmt">// API error handling pattern</span>
+<span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(url, fetchOptions);
+
+    <span class="kw">if</span> (!response.ok) {
+        <span class="kw">throw new</span> Error(<span class="str">`HTTP ${response.status}`</span>);
+    }
+
+    <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+    <span class="kw">return</span> data;
+} <span class="kw">catch</span> (error) {
+    console.error(<span class="str">`[API] Request failed: ${error.message}`</span>);
+    <span class="kw">return</span> <span class="kw">null</span>;
+}</pre></div>
+
+      <p>
+        This pattern prevents the game from crashing when an API request fails. Instead of breaking gameplay, the project
+        logs the issue and continues running.
+      </p>
+    </section>
+
     <section id="testing">
       <div class="section-heading">
         <div class="icon">✅</div>
-        <h2>Testing</h2>
+        <h2>Testing and Verification</h2>
       </div>
       <hr class="rule">
+      <p>
+        I tested the game by playing through important features and checking whether the screen output and saved data matched
+        the expected behavior. These tests helped verify that the game systems worked during a live demo.
+      </p>
       <ul>
-        <li>Tested whether pressing space correctly creates player lasers.</li>
-        <li>Tested whether enemy lasers correctly damage the player.</li>
-        <li>Tested whether collision with the boss reduces player health.</li>
-        <li>Tested whether the player loses when health reaches 0.</li>
-        <li>Tested whether the score is calculated correctly using remaining health × 100.</li>
-        <li>Tested whether the leaderboard loads at the start of the level.</li>
-        <li>Tested whether the leaderboard updates after winning a battle.</li>
-        <li>Tested whether the HUD correctly displays player HP, enemy HP, and battle messages.</li>
+        <li>Tested whether pressing <code>Space</code> creates Player 1 lasers.</li>
+        <li>Tested whether Player 2 can attack with <code>Enter</code> in two-player mode.</li>
+        <li>Tested whether laser collision reduces boss health.</li>
+        <li>Tested whether enemy lasers and boss collisions reduce player health.</li>
+        <li>Tested whether the battle ends when health reaches <code>0</code>.</li>
+        <li>Tested whether the HUD updates health, messages, score, and leaderboard output.</li>
+        <li>Tested whether localStorage keeps player name, game mode, and selected characters after reload.</li>
+        <li>Tested whether API failures are caught with <code>try/catch</code> instead of crashing the game.</li>
       </ul>
+      <div class="callout">
+        <p>
+          <strong>Testing connection:</strong>
+          These tests connect to the project because each one checks a real gameplay system, such as input, collisions,
+          storage, API calls, and DOM output.
+        </p>
+      </div>
     </section>
 
     <hr class="section-divider">
@@ -1820,46 +2272,6 @@ button.addEventListener(<span class="str">"click"</span>, () => {
     </div>
       
       <p>Together, these projects show that I applied CS111 concepts across multiple types of programs, not just one game. This demonstrates a deeper understanding of programming concepts and how they can be reused in different contexts.</p>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- REFLECTION -->
-    <section id="reflection">
-      <div class="section-heading">
-        <div class="icon">📚</div>
-        <h2>Reflection</h2>
-      </div>
-      <hr class="rule">
-      <ul>
-        <li>This project helped me understand how object-oriented programming can organize a full game into reusable systems.</li>
-        <li>I learned how methods can separate tasks like input handling, attacks, leaderboard loading, HUD updates, and level transitions.</li>
-        <li>I improved my understanding of arrays and objects through systems like lasers, class lists, and configuration data.</li>
-        <li>I learned how conditionals control real gameplay events such as winning, losing, collisions, and cooldown timing.</li>
-        <li>I also gained experience with API integration, localStorage fallback, music API data, and saving leaderboard scores across sessions.</li>
-        <li>Overall, this project showed me how classroom programming concepts can be used together in a real interactive application.</li>
-      </ul>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- FUTURE -->
-    <section id="future">
-      <div class="section-heading">
-        <div class="icon">🔗</div>
-        <h2>Future Improvements</h2>
-      </div>
-      <hr class="rule">
-      <ul>
-        <li>Add more bosses and level-specific mechanics so each fight feels more unique.</li>
-        <li>Expand the laser system with special attacks, power-ups, or different projectile patterns.</li>
-        <li>Improve enemy behavior so bosses move and attack in smarter ways.</li>
-        <li>Add sound effects, attack animations, and visual effects to make combat feel more polished.</li>
-        <li>Enhance the leaderboard by sorting by level, showing timestamps, or storing player stats.</li>
-        <li>Improve balancing so health, attack speed, and difficulty feel fair across all levels.</li>
-        <li>Add a start menu, restart button, and clearer instructions for players.</li>
-        <li>Make the code more scalable so adding new levels and enemies takes less repeated work.</li>
-      </ul>
     </section>
 
     <hr class="section-divider">
@@ -1920,6 +2332,98 @@ button.addEventListener(<span class="str">"click"</span>, () => {
   </main>
 
   <script>
+
+    let rickrollAudio = null;
+
+    async function playRickrollPreview() {
+      const playBtn = document.getElementById('playRickrollBtn');
+      const artwork = document.getElementById('rickrollArtwork');
+      const title = document.getElementById('rickrollTitle');
+      const artist = document.getElementById('rickrollArtist');
+      const status = document.getElementById('rickrollStatus');
+
+      if (!playBtn || !artwork || !title || !artist || !status) return;
+
+      try {
+        playBtn.disabled = true;
+        playBtn.textContent = 'Loading from iTunes...';
+
+        title.textContent = 'Searching iTunes API...';
+        artist.textContent = 'Fetching Rick Astley song data.';
+        status.textContent = 'Request in progress...';
+
+        const searchTerm = 'Rick Astley Never Gonna Give You Up';
+        const url = 'https://itunes.apple.com/search?entity=song&limit=5&term=' + encodeURIComponent(searchTerm);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error('iTunes API request failed: ' + response.status);
+        }
+
+        const data = await response.json();
+        const tracks = Array.isArray(data.results) ? data.results : [];
+
+        const track = tracks.find(song =>
+          song.previewUrl &&
+          song.trackName &&
+          song.trackName.toLowerCase().includes('never gonna give you up')
+        ) || tracks.find(song => song.previewUrl);
+
+        if (!track) {
+          throw new Error('No playable preview was found.');
+        }
+
+        if (rickrollAudio) {
+          rickrollAudio.pause();
+          rickrollAudio.currentTime = 0;
+        }
+
+        rickrollAudio = new Audio(track.previewUrl);
+        rickrollAudio.volume = 0.35;
+
+        await rickrollAudio.play();
+
+        title.textContent = track.trackName || 'Never Gonna Give You Up';
+        artist.textContent = track.artistName || 'Rick Astley';
+        status.textContent = 'Playing preview from the iTunes API.';
+
+        if (track.artworkUrl100) {
+          artwork.src = track.artworkUrl100;
+          artwork.style.display = 'block';
+        }
+      } catch (error) {
+        title.textContent = 'API or audio error';
+        artist.textContent = 'The song could not be played.';
+        status.textContent = error.message;
+        console.error(error);
+      } finally {
+        playBtn.disabled = false;
+        playBtn.textContent = '▶ Play Rickroll Preview';
+      }
+    }
+
+    function stopRickrollPreview() {
+      const status = document.getElementById('rickrollStatus');
+
+      if (rickrollAudio) {
+        rickrollAudio.pause();
+        rickrollAudio.currentTime = 0;
+      }
+
+      if (status) {
+        status.textContent = 'Preview stopped.';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const playBtn = document.getElementById('playRickrollBtn');
+      const stopBtn = document.getElementById('stopRickrollBtn');
+
+      if (playBtn) playBtn.addEventListener('click', playRickrollPreview);
+      if (stopBtn) stopBtn.addEventListener('click', stopRickrollPreview);
+    });
+
     (function() {
       const defaultChallengeCode = `function saveGameMode(mode) {
   localStorage.setItem('peppaGameMode', mode);

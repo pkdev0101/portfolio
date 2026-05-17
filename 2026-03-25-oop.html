@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object-Oriented Programming</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain,
+    .hw-link,
+    .note {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .note {
+      background: rgba(46, 204, 113, 0.10);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      border-left: 5px solid #2ecc71;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">📐</span>
+    <h1>Object-Oriented Programming</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page focuses on CS111 object-oriented programming requirements: writing custom classes,
+    using methods with parameters, creating objects, inheritance, method overriding, constructor chaining,
+    and organizing game logic into reusable class-based systems.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Writing Classes</td>
+        <td>Create custom classes for the battle level, boss enemy, and power-up menu.</td>
+        <td>Code review of class files.</td>
+      </tr>
+      <tr>
+        <td>Methods &amp; Parameters</td>
+        <td>
+          Use methods such as <code>initialize()</code>, <code>destroy()</code>,
+          <code>handleKeyDown(event)</code>, and <code>takeDamage(amount)</code>.
+        </td>
+        <td>Review method signatures and how parameters are used.</td>
+      </tr>
+      <tr>
+        <td>Instantiation &amp; Objects</td>
+        <td>Use configuration objects and class properties to create level, boss, menu, and gameplay objects.</td>
+        <td>Review object literals and class setup.</td>
+      </tr>
+      <tr>
+        <td>Inheritance</td>
+        <td>Extend base game engine classes such as <code>Enemy</code>.</td>
+        <td>Code review of <code>extends</code> usage.</td>
+      </tr>
+      <tr>
+        <td>Method Overriding</td>
+        <td>Override update-style behavior for custom game objects.</td>
+        <td>Code review of polymorphic methods.</td>
+      </tr>
+      <tr>
+        <td>Constructor Chaining</td>
+        <td>Use <code>super(data, gameEnv)</code> to connect child classes to parent constructors.</td>
+        <td>Review constructor setup.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="oop">
+    <div class="section-heading">
+      <div class="icon">🧠</div>
+      <h2>Object-Oriented Programming Overview</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>How the Level Class Organizes the Fight</h3>
+
+    <p>
+      This project uses object-oriented programming because the game is built around classes and methods.
+      The <code>PeppaBattleLevelBase</code> class is responsible for controlling one level of the game.
+      Instead of putting all code in one giant script, the game groups related behavior into methods like
+      <code>initialize()</code>, <code>destroy()</code>, <code>update()</code>, and <code>createHud()</code>.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(gameEnv, config) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.config = config;
+        <span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+        <span class="prop">this</span>.levelScore = <span class="num">0</span>;
+        <span class="prop">this</span>.leaderboard = [];
+    }
+
+    <span class="prop">initialize</span>() {
+        <span class="prop">this</span>.createHud();
+        <span class="prop">this</span>.updateHud(
+            <span class="str">`${this.config.enemyName}: "${this.config.enemyGreeting}" — Fight!`</span>
+        );
+    }
+
+    <span class="prop">destroy</span>() {
+        document.removeEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+        <span class="kw">if</span> (<span class="prop">this</span>.hud) {
+            <span class="prop">this</span>.hud.remove();
+        }
+    }
+}</pre>
+    </div>
+
+    <p>
+      A specific example is the <code>initialize()</code> method, which starts the HUD and shows a message telling
+      the player how to fight. Another example is <code>destroy()</code>, which removes event listeners and HUD
+      elements so old level data does not stay on the screen.
+    </p>
+
+    <p>
+      This is useful because each level can reuse the same class structure while changing values in
+      <code>config</code>, such as the enemy name, enemy health, level title, and intro message.
+    </p>
+
+    <h3>Custom Boss Enemy Class</h3>
+
+    <p>
+      The <code>PeppaBossEnemy</code> class is one of the clearest examples of object-oriented programming
+      in the project. It extends the engine's <code>Enemy</code> class, so it inherits basic sprite drawing,
+      position, and canvas behavior, then adds custom boss-specific state like <code>health</code>,
+      <code>maxHealth</code>, <code>moveSpeed</code>, and <code>isDefeated</code>.
+    </p>
+
+    <div class="code-block">
+<pre>import Enemy from '@assets/js/GameEnginev1.1/essentials/Enemy.js';
+
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+    <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+        <span class="kw">super</span>(data, gameEnv);
+        <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+        <span class="prop">this</span>.maxHealth = <span class="prop">this</span>.health;
+        <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+        <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+    }
+
+    update() {
+        <span class="prop">this</span>.draw();
+        <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span>;
+
+        <span class="kw">const</span> player = <span class="prop">this</span>.gameEnv.gameObjects.find(obj =&gt; obj?.constructor?.name === <span class="str">'Player'</span>);
+        <span class="kw">if</span> (!player) <span class="kw">return</span>;
+
+        <span class="kw">const</span> myCenterX = <span class="prop">this</span>.position.x + <span class="prop">this</span>.width / <span class="num">2</span>;
+        <span class="kw">const</span> myCenterY = <span class="prop">this</span>.position.y + <span class="prop">this</span>.height / <span class="num">2</span>;
+        <span class="kw">const</span> playerCenterX = player.position.x + player.width / <span class="num">2</span>;
+        <span class="kw">const</span> playerCenterY = player.position.y + player.height / <span class="num">2</span>;
+
+        <span class="kw">const</span> dx = playerCenterX - myCenterX;
+        <span class="kw">const</span> dy = playerCenterY - myCenterY;
+        <span class="kw">const</span> distance = Math.hypot(dx, dy);
+
+        <span class="kw">if</span> (distance &gt; <span class="num">1</span>) {
+            <span class="prop">this</span>.position.x += (dx / distance) * <span class="prop">this</span>.moveSpeed;
+            <span class="prop">this</span>.position.y += (dy / distance) * <span class="prop">this</span>.moveSpeed;
+        }
+
+        <span class="prop">this</span>.stayWithinCanvas();
+    }
+
+    handleCollisionEvent() {
+        <span class="cmt">// Collision handling is managed by the level logic.</span>
+    }
+
+    takeDamage(amount = <span class="num">1</span>) {
+        <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span> <span class="kw">true</span>;
+
+        <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+        <span class="kw">if</span> (<span class="prop">this</span>.health === <span class="num">0</span>) {
+            <span class="prop">this</span>.isDefeated = <span class="kw">true</span>;
+            <span class="prop">this</span>.canvas.style.filter = <span class="str">'grayscale(1) brightness(0.8)'</span>;
+            <span class="prop">this</span>.canvas.style.opacity = <span class="str">'0.6'</span>;
+        }
+
+        <span class="kw">return</span> <span class="prop">this</span>.isDefeated;
+    }
+}
+
+export default PeppaBossEnemy;</pre>
+    </div>
+
+    <p>
+      The important OOP idea is constructor chaining. The line <code>super(data, gameEnv)</code> runs the parent
+      <code>Enemy</code> constructor first, which lets the boss appear as a real game object. After that,
+      my custom constructor adds the health system and movement speed.
+    </p>
+
+    <p>
+      The <code>update()</code> method overrides the enemy behavior so the boss redraws every frame, finds the
+      player, calculates distance using <code>Math.hypot()</code>, and moves toward the player with normalized
+      movement. The <code>takeDamage(amount)</code> method gives the boss its battle logic.
+    </p>
+
+    <h3>Power-Up Menu Class</h3>
+
+    <p>
+      The <code>PeppaPowerUpMenu</code> class adds another example of a custom class that is not a normal battle
+      level. It creates a menu between levels where the player can choose <code>Extra Speed</code>,
+      <code>Extra Health</code>, or <code>Extra Damage</code>. This shows arrays, DOM output, keyboard input,
+      and game-state persistence through <code>gameControl.chosenPower</code>.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaPowerUpMenu</span> {
+    <span class="kw">constructor</span>(gameEnv) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.selectedOption = <span class="num">0</span>;
+        <span class="prop">this</span>.options = [
+            { name: <span class="str">'Extra Speed'</span>, description: <span class="str">'Move faster in battle'</span> },
+            { name: <span class="str">'Extra Health'</span>, description: <span class="str">'Start with more health'</span> },
+            { name: <span class="str">'Extra Damage'</span>, description: <span class="str">'Deal more damage per laser'</span> }
+        ];
+        <span class="prop">this</span>.chosenPower = <span class="kw">null</span>;
+        <span class="prop">this</span>.classes = [];
+    }
+
+    initialize() {
+        <span class="kw">if</span> (window.speechSynthesis) {
+            window.speechSynthesis.speak = () =&gt; {};
+            window.speechSynthesis.cancel();
+        }
+
+        <span class="prop">this</span>.createMenu();
+        <span class="prop">this</span>.boundKeyDown = <span class="prop">this</span>.handleKeyDown.bind(<span class="prop">this</span>);
+        document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+        <span class="prop">this</span>.gameEnv.gameControl.removeExitKeyListener();
+    }
+
+    destroy() {
+        document.removeEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+        <span class="kw">const</span> menu = document.getElementById(<span class="str">'peppa-powerup-menu'</span>);
+        <span class="kw">if</span> (menu) menu.remove();
+        <span class="prop">this</span>.gameEnv.gameControl.addExitKeyListener();
+    }
+
+    selectPower() {
+        <span class="prop">this</span>.chosenPower = <span class="prop">this</span>.options[<span class="prop">this</span>.selectedOption].name;
+        <span class="prop">this</span>.gameEnv.gameControl.chosenPower = <span class="prop">this</span>.chosenPower;
+        <span class="prop">this</span>.gameEnv.gameControl.currentLevel.continue = <span class="kw">false</span>;
+    }
+
+    update() {
+        <span class="cmt">// No-op for compatibility with game loop</span>
+    }
+}
+
+export default PeppaPowerUpMenu;</pre>
+    </div>
+
+    <p>
+      The menu stores the choices in an array of objects called <code>options</code>. Each object has a
+      <code>name</code> and <code>description</code>, which makes the menu easy to expand later.
+      The <code>selectedOption</code> number tracks which power-up is currently highlighted, and
+      <code>selectPower()</code> saves the final choice to <code>this.gameEnv.gameControl.chosenPower</code>.
+    </p>
+
+    <div class="note">
+      <strong>Code review note:</strong>
+      I changed the event-listener pattern in the blog version to store <code>this.boundKeyDown</code>.
+      That matters because <code>removeEventListener()</code> only works correctly if it receives the exact
+      same function reference that was passed to <code>addEventListener()</code>.
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="methods">
+    <div class="section-heading">
+      <div class="icon">⚙️</div>
+      <h2>Methods, Parameters, and Game Logic</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Setup Logic, Persistence, and Input Handling</h3>
+
+    <p>
+      The updated level code uses methods to keep each job separated. The <code>initialize()</code> method starts
+      the level, loads saved data, creates coins, builds the HUD, creates the laser canvas, and loads the leaderboard.
+      This keeps setup logic organized instead of mixing it into the game loop.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">initialize</span>() {
+    <span class="kw">if</span> (window.speechSynthesis) {
+        window.speechSynthesis.speak = () =&gt; {};
+        window.speechSynthesis.cancel();
+    }
+
+    <span class="prop">this</span>.ensurePlayerName();
+    <span class="prop">this</span>.generateCoins();
+    <span class="prop">this</span>.createHud();
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+        <span class="prop">this</span>.updateHud(<span class="str">'2P Mode: Collect coins and defeat the boss!'</span>);
+    } <span class="kw">else</span> {
+        <span class="prop">this</span>.updateHud(<span class="str">'Fight! Use WASD to move, SPACE to fire lasers, and collect coins.'</span>);
+    }
+
+    document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+    <span class="prop">this</span>.createLaserLayer();
+
+    <span class="prop">this</span>.loadLeaderboard().then(() =&gt; {
+        <span class="prop">this</span>.renderLeaderboard();
+    });
+}</pre>
+    </div>
+
+    <p>
+      The <code>handleKeyDown(event)</code> method also supports both players. Player 1 attacks with
+      <code>Space</code>, and Player 2 attacks with <code>Enter</code> only when the game is in two-player mode.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">handleKeyDown</span>(event) {
+    <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span> &amp;&amp; event.code === <span class="str">'Enter'</span>) {
+        <span class="prop">this</span>.player2AttackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+}</pre>
+    </div>
+
+    <p>
+      This is a good example of methods working together: input methods set request flags, the update loop reads
+      those flags, and separate spawn methods create the lasers.
+    </p>
+
+    <h3>Return Values in Battle Methods</h3>
+
+    <p>
+      The boss and menu code also show methods with useful return values and state changes.
+      <code>takeDamage(amount)</code> returns a boolean, so the level can know if the boss has been defeated
+      after a hit. <code>selectPower()</code> does not return a value, but it changes shared game state by saving
+      the chosen power-up to <code>gameControl.chosenPower</code> and then moving the game to the next level.
+    </p>
+
+    <div class="code-block">
+<pre>takeDamage(amount = <span class="num">1</span>) {
+    <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span> <span class="kw">true</span>;
+
+    <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+
+    <span class="kw">if</span> (<span class="prop">this</span>.health === <span class="num">0</span>) {
+        <span class="prop">this</span>.isDefeated = <span class="kw">true</span>;
+        <span class="prop">this</span>.canvas.style.filter = <span class="str">'grayscale(1) brightness(0.8)'</span>;
+        <span class="prop">this</span>.canvas.style.opacity = <span class="str">'0.6'</span>;
+    }
+
+    <span class="kw">return</span> <span class="prop">this</span>.isDefeated;
+}</pre>
+    </div>
+
+    <p>
+      This method connects directly to the gameplay because every player laser hit eventually calls
+      <code>boss.takeDamage()</code>. The method handles the boss's health, defeat state, visual defeat effect,
+      and return value in one organized place.
+    </p>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>

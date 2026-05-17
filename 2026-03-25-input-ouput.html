@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input, Output, APIs, and Data Persistence</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain,
+    .hw-link {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .tag {
+      background: #1a1a24;
+      color: #4fc4cf;
+      border: 1px solid #35354a;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">🌐</span>
+    <h1>Input, Output, APIs, and Data Persistence</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page focuses on how my game receives input, displays output, communicates with APIs,
+    handles asynchronous data, parses JSON, and stores information using localStorage.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Keyboard Input</td>
+        <td>Use event listeners for movement, attacks, and menu selection.</td>
+        <td>Testing of keyboard controls.</td>
+      </tr>
+      <tr>
+        <td>Canvas / DOM Output</td>
+        <td>Render game visuals, HUD, menus, overlays, and score displays.</td>
+        <td>Code review and gameplay demo.</td>
+      </tr>
+      <tr>
+        <td>API Integration</td>
+        <td>Use fetch calls for music or leaderboard-style data.</td>
+        <td>Review fetch calls and error handling.</td>
+      </tr>
+      <tr>
+        <td>Asynchronous I/O</td>
+        <td>Use promises or async behavior for web data.</td>
+        <td>Review <code>.then()</code>, <code>async</code>, and <code>await</code> patterns.</td>
+      </tr>
+      <tr>
+        <td>JSON Parsing</td>
+        <td>Read and store structured data for APIs, scores, and localStorage.</td>
+        <td>Review JSON parsing and stored data.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="api">
+    <div class="section-heading">
+      <div class="icon">🌐</div>
+      <h2>API Integration</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Using a Live Web API for Game Music</h3>
+
+    <p>
+      The API part of my Peppa Pig Fighting Game uses the iTunes Search API to request real music data from the internet.
+      Instead of hard-coding one song into the game, the code searches for music related to Peppa Pig, receives JSON data,
+      finds a playable preview URL, and uses that preview as background music in the game.
+    </p>
+
+    <div class="screenshot">
+      <img alt="Music API screenshot showing the iTunes Search API or music feature working" src="/images/music-api.png">
+    </div>
+
+    <p>This follows the same Web API flow used in class:</p>
+
+    <ul>
+      <li>Use <code>fetch()</code> to request data from a web server.</li>
+      <li>Check the HTTP response status before using the data.</li>
+      <li>Convert the response into JSON with <code>response.json()</code>.</li>
+      <li>Extract useful fields like <code>trackName</code>, <code>artistName</code>, and <code>previewUrl</code>.</li>
+      <li>Use the result in gameplay by playing the preview with the browser Audio API.</li>
+    </ul>
+
+    <h3>Building the API Request URL</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> filter = <span class="str">"peppa pig theme"</span>;
+<span class="kw">const</span> url = <span class="str">"https://itunes.apple.com/search?term="</span> + encodeURIComponent(filter);
+
+console.log(url);</pre>
+    </div>
+
+    <p>
+      The iTunes API needs a search term inside the URL. I use <code>encodeURIComponent()</code> because spaces
+      and special characters need to be converted into a safe URL format. For example,
+      <code>"peppa pig theme"</code> becomes <code>"peppa%20pig%20theme"</code>.
+    </p>
+
+    <h3>Fetching and Checking the API Response</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> url = <span class="str">"https://itunes.apple.com/search?term="</span> + encodeURIComponent(<span class="str">"peppa pig theme"</span>);
+
+fetch(url, { method: <span class="str">'GET'</span>, mode: <span class="str">'cors'</span> })
+  .then(response =&gt; {
+    <span class="kw">if</span> (response.status !== <span class="num">200</span>) {
+      <span class="kw">throw new</span> Error(<span class="str">'Database response error: '</span> + response.status);
+    }
+
+    <span class="kw">return</span> response.json();
+  })
+  .then(data =&gt; {
+    console.log(<span class="str">'Track count:'</span>, data.results.length);
+  })
+  .catch(err =&gt; console.error(err));</pre>
+    </div>
+
+    <p>
+      This code sends a GET request to the iTunes Search API. The most important part is checking the status code
+      before using the response. If the response is not successful, the code throws an error instead of trying to use
+      broken data.
+    </p>
+
+    <h3>Reading JSON Data from the API</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> data = {
+  results: [
+    {
+      artistName: <span class="str">'The Wiggles'</span>,
+      trackName: <span class="str">'Peppa Pig Theme'</span>,
+      artworkUrl100: <span class="str">'https://example.com/image.jpg'</span>,
+      previewUrl: <span class="str">'https://example.com/preview.mp4'</span>
+    }
+  ]
+};
+
+<span class="kw">for</span> (<span class="kw">const</span> row <span class="kw">of</span> data.results) {
+  <span class="kw">const</span> artist = row.artistName;
+  <span class="kw">const</span> track = row.trackName;
+  <span class="kw">const</span> imageUrl = row.artworkUrl100;
+  <span class="kw">const</span> previewUrl = row.previewUrl;
+
+  console.log(artist, track, imageUrl, previewUrl);
+}</pre>
+    </div>
+
+    <p>
+      JSON is the format returned by the API. After the response is parsed, the data can be used like a normal
+      JavaScript object. In this project, the most important value is <code>previewUrl</code>, because that is the
+      audio preview the game can play.
+    </p>
+
+    <h3>Playing API Music with the Audio API</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> previewUrl = <span class="str">'https://example.com/song.mp4'</span>;
+<span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+audio.volume = <span class="num">0.35</span>;
+audio.loop = <span class="kw">true</span>;
+
+audio.play().catch(err =&gt; {
+  console.warn(<span class="str">'Autoplay blocked until user gesture:'</span>, err);
+});</pre>
+    </div>
+
+    <p>
+      The Audio API lets the browser create and control sound. The game creates a new <code>Audio</code> object
+      from the API preview URL, lowers the volume, loops the track, and tries to play it. The <code>catch()</code>
+      block is important because some browsers block audio until the player clicks or presses a key.
+    </p>
+
+    <h3>Controller Class for Cleaner API Code</h3>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaMusicApiController</span> {
+  <span class="kw">constructor</span>(endpoint) {
+    <span class="prop">this</span>.endpoint = endpoint;
+  }
+
+  <span class="kw">async</span> fetchPreviewUrl() {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="prop">this</span>.endpoint);
+
+    <span class="kw">if</span> (!response.ok) {
+      <span class="kw">throw new</span> Error(<span class="str">'API request failed ('</span> + response.status + <span class="str">')'</span>);
+    }
+
+    <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+    <span class="kw">const</span> tracks = data &amp;&amp; Array.isArray(data.results) ? data.results : [];
+    <span class="kw">const</span> track = tracks.find(item =&gt; item &amp;&amp; item.previewUrl);
+
+    <span class="kw">if</span> (!track) {
+      <span class="kw">throw new</span> Error(<span class="str">'No playable preview URL found'</span>);
+    }
+
+    <span class="kw">return</span> track.previewUrl;
+  }
+
+  <span class="kw">async</span> startMusic() {
+    <span class="kw">const</span> previewUrl = <span class="kw">await</span> <span class="prop">this</span>.fetchPreviewUrl();
+    <span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+    audio.volume = <span class="num">0.35</span>;
+    audio.loop = <span class="kw">true</span>;
+
+    <span class="kw">await</span> audio.play();
+  }
+}
+
+console.log(<span class="str">'PeppaMusicApiController loaded'</span>);</pre>
+    </div>
+
+    <p>
+      This class separates the API logic from the rest of the game. The <code>fetchPreviewUrl()</code> method
+      handles the web request and JSON parsing, while <code>startMusic()</code> handles the audio playback.
+      This makes the project cleaner because the game does not need to repeat API code every time it wants to play music.
+    </p>
+
+    <h3>Error Handling</h3>
+
+    <div class="code-block">
+<pre><span class="kw">async</span> <span class="prop">startMusicSafely</span>(controller) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> previewUrl = <span class="kw">await</span> controller.fetchPreviewUrl();
+    <span class="kw">const</span> audio = <span class="kw">new</span> Audio(previewUrl);
+
+    audio.volume = <span class="num">0.35</span>;
+    audio.loop = <span class="kw">true</span>;
+
+    <span class="kw">await</span> audio.play();
+    console.log(<span class="str">'Music started successfully'</span>);
+  } <span class="kw">catch</span> (error) {
+    console.warn(<span class="str">'Failed to play music:'</span>, error);
+  }
+}</pre>
+    </div>
+
+    <p>
+      Error handling is important because APIs can fail, internet connections can break, or the browser can block autoplay.
+      With <code>try/catch</code>, the game can continue running even if the music does not play.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="storage">
+    <div class="section-heading">
+      <div class="icon">💾</div>
+      <h2>LocalStorage and Data Persistence</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Remembering Game State in the Browser</h3>
+
+    <p>
+      <code>localStorage</code> is used so the game can remember player preferences and scores after the page reloads.
+      This includes the selected game mode, player name, character choices, and local leaderboard scores.
+    </p>
+
+    <div class="tag-row">
+      <span class="tag">peppaGameMode</span>
+      <span class="tag">peppaPlayerName</span>
+      <span class="tag">peppaPlayer1CharImage</span>
+      <span class="tag">peppaPlayer2CharImage</span>
+      <span class="tag">peppa-leaderboard-levelId</span>
+    </div>
+
+    <div class="code-block">
+<pre><span class="prop">ensurePlayerName</span>() {
+    <span class="kw">if</span> (<span class="prop">this</span>.playerName &amp;&amp; <span class="prop">this</span>.playerName.trim()) <span class="kw">return</span>;
+
+    <span class="kw">const</span> savedName = localStorage.getItem(<span class="str">'peppaPlayerName'</span>);
+
+    <span class="kw">if</span> (savedName &amp;&amp; savedName.trim()) {
+        <span class="prop">this</span>.playerName = savedName.trim();
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">let</span> inputName = window.prompt(<span class="str">'Enter your name for the leaderboard:'</span>, <span class="str">''</span>);
+
+    <span class="kw">if</span> (!inputName || !inputName.trim()) inputName = <span class="str">'Player'</span>;
+
+    <span class="prop">this</span>.playerName = inputName.trim().slice(<span class="num">0</span>, <span class="num">20</span>);
+    localStorage.setItem(<span class="str">'peppaPlayerName'</span>, <span class="prop">this</span>.playerName);
+}</pre>
+    </div>
+
+    <p>
+      This method first checks whether a player name already exists, then checks browser storage, then asks the player
+      for a name only if needed. The name is limited to 20 characters before saving.
+    </p>
+
+    <h3>API Fallback to Local Leaderboard</h3>
+
+    <p>
+      The game can save scores to a backend API when <code>apiBase</code> exists. If no API is configured,
+      it automatically saves the leaderboard locally instead.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">async</span> <span class="prop">saveScore</span>(score) {
+    <span class="kw">if</span> (!<span class="prop">this</span>.apiBase) {
+        <span class="prop">this</span>.saveScoreLocal(score);
+        <span class="kw">return</span> { success: <span class="kw">true</span> };
+    }
+
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="str">`${this.apiBase}/leaderboard`</span>, {
+        method: <span class="str">'POST'</span>,
+        headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+        body: JSON.stringify({
+            name: <span class="prop">this</span>.playerName || <span class="str">'Player'</span>,
+            score: score,
+            levelId: <span class="prop">this</span>.config.levelId,
+            levelTitle: <span class="prop">this</span>.config.levelTitle
+        })
+    });
+}</pre>
+    </div>
+
+    <h3>Local Leaderboard Storage</h3>
+
+    <div class="code-block">
+<pre><span class="prop">saveScoreLocal</span>(score) {
+    <span class="kw">const</span> leaderboardKey = <span class="str">`peppa-leaderboard-${this.config.levelId}`</span>;
+    <span class="kw">const</span> existing = <span class="prop">this</span>.loadLeaderboardLocal();
+
+    existing.push({
+        name: <span class="prop">this</span>.playerName || <span class="str">'Player'</span>,
+        score: score,
+        timestamp: Date.now()
+    });
+
+    existing.sort((a, b) =&gt; (b.score ?? <span class="num">0</span>) - (a.score ?? <span class="num">0</span>));
+
+    <span class="kw">const</span> topScores = existing.slice(<span class="num">0</span>, <span class="num">10</span>);
+    localStorage.setItem(leaderboardKey, JSON.stringify(topScores));
+}</pre>
+    </div>
+
+    <p>
+      The leaderboard is stored separately for each level using a key like <code>peppa-leaderboard-lvl1</code>.
+      The game sorts scores from highest to lowest and keeps the top 10.
+    </p>
+
+    <div class="callout">
+      <p>
+        <strong>Why this is important:</strong>
+        The game still has persistent scores even without a live backend server, which makes the project more reliable
+        for demos and GitHub Pages deployment.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="io">
+    <div class="section-heading">
+      <div class="icon">⌨️</div>
+      <h2>Keyboard Input and HUD Output</h2>
+    </div>
+
+    <hr class="rule">
+
+    <div class="code-block">
+<pre>document.addEventListener(<span class="str">'keydown'</span>, <span class="prop">this</span>.boundKeyDown);
+
+<span class="prop">handleKeyDown</span>(event) {
+    <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+}
+
+<span class="prop">updateHud</span>(message = <span class="kw">null</span>) {
+    <span class="kw">const</span> playerHpEl = document.getElementById(<span class="str">`peppa-player-hp-${this.config.levelId}`</span>);
+    <span class="kw">const</span> enemyHpEl = document.getElementById(<span class="str">`peppa-enemy-hp-${this.config.levelId}`</span>);
+    <span class="kw">const</span> messageEl = document.getElementById(<span class="str">`peppa-message-${this.config.levelId}`</span>);
+}</pre>
+    </div>
+
+    <p>
+      Input comes from the keyboard. A specific example is the space bar, which triggers attacks. The game also uses
+      WASD movement through the player sprite data configuration.
+    </p>
+
+    <p>
+      Output appears through the HUD. The game updates text for player HP, enemy HP, and messages like:
+    </p>
+
+    <ul>
+      <li>"Laser hit! Peppa took damage."</li>
+      <li>"You lost. Restarting level..."</li>
+      <li>"George defeated! Score: 400. Moving to next level..."</li>
+    </ul>
+
+    <p>
+      This is important because it gives the player immediate feedback about what is happening.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="dom">
+    <div class="section-heading">
+      <div class="icon">🖥️</div>
+      <h2>DOM Manipulation</h2>
+    </div>
+
+    <hr class="rule">
+
+    <div class="code-block">
+<pre><span class="prop">updateHud</span>(message) {
+    <span class="kw">const</span> hud = document.getElementById(<span class="str">"hud"</span>);
+
+    <span class="kw">if</span> (hud) {
+        hud.textContent = message;
+    }
+}</pre>
+    </div>
+
+    <p>
+      DOM manipulation allows the game to update what the player sees on the screen outside of the canvas.
+      While the canvas handles graphics like characters and movement, the DOM is used for UI elements like score,
+      messages, and the leaderboard.
+    </p>
+
+    <p>For example, when the player scores points or defeats an enemy:</p>
+
+    <ul>
+      <li>The game calls <code>updateHud()</code></li>
+      <li>The text inside the HUD element changes</li>
+      <li>The player immediately sees feedback on screen</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> leaderboardDiv = document.getElementById(<span class="str">"leaderboard"</span>);
+
+<span class="prop">this</span>.leaderboard.forEach(entry =&gt; {
+    <span class="kw">const</span> item = document.createElement(<span class="str">"div"</span>);
+    item.textContent = <span class="str">`${entry.name}: ${entry.score}`</span>;
+    leaderboardDiv.appendChild(item);
+});</pre>
+    </div>
+
+    <p>
+      After retrieving data from the API, the game dynamically creates HTML elements and adds them to the page.
+      This makes the leaderboard update in real time without refreshing the page.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> button = document.getElementById(<span class="str">"startButton"</span>);
+
+button.addEventListener(<span class="str">"click"</span>, () =&gt; {
+    <span class="prop">this</span>.start();
+});</pre>
+    </div>
+
+    <p>
+      DOM events allow the player to interact with the game using buttons or UI elements.
+      This shows how the DOM connects user input to game logic.
+    </p>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>

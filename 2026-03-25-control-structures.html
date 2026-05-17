@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operators & Control Structures</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+
+    @media (max-width: 700px) {
+      .concept-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .concept-card {
+      background: rgba(79, 196, 207, 0.07);
+      border: 1px solid rgba(79, 196, 207, 0.25);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    .concept-card h3 {
+      margin-top: 0;
+      color: #f4f4f5;
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .hw-link {
+      background: rgba(46, 204, 113, 0.10);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      border-left: 5px solid #2ecc71;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .hw-link a {
+      color: #69e79a;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .hw-link a:hover {
+      text-decoration: underline;
+    }
+
+    .hw-link p {
+      margin-bottom: 0;
+    }
+
+    .mini-label {
+      display: inline-block;
+      background: rgba(91, 141, 238, 0.16);
+      border: 1px solid rgba(91, 141, 238, 0.32);
+      color: #9db8ff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">🔀</span>
+    <h1>Operators &amp; Control Structures</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page explains how operators, data, loops, conditionals, and nested logic control my Peppa Pig game.
+    Each section connects a programming concept to a real gameplay feature.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data and State</td>
+        <td>Use variables, strings, numbers, booleans, arrays, and objects to track gameplay.</td>
+        <td>Review stored values and game-state organization.</td>
+      </tr>
+      <tr>
+        <td>Mathematical Operators</td>
+        <td>Calculate damage, movement, distance, score, velocity, and laser life.</td>
+        <td>Code review of formulas.</td>
+      </tr>
+      <tr>
+        <td>Boolean Expressions</td>
+        <td>Use compound checks for attacks, game mode, death states, and boss defeat.</td>
+        <td>Review <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>, and comparisons.</td>
+      </tr>
+      <tr>
+        <td>Iteration</td>
+        <td>Loop through lasers, coins, objects, and update logic.</td>
+        <td>Code review of loop-based systems.</td>
+      </tr>
+      <tr>
+        <td>Conditionals</td>
+        <td>Use <code>if/else</code> for win/loss, player mode, cooldowns, and input handling.</td>
+        <td>Review conditionals and nested logic.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DATA AND STATE -->
+  <section id="data-state">
+    <div class="section-heading">
+      <div class="icon">🧩</div>
+      <h2>Game Data and State</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      My game depends on organized state. Instead of every feature being random code, important values are stored
+      in variables, arrays, and objects so the game can remember what is happening every frame. Health, score,
+      cooldowns, coins, player names, and level settings all work together to control the battle.
+    </p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <span class="mini-label">Numbers</span>
+        <h3>Health, Score, Speed, and Timers</h3>
+        <p>
+          Numbers control the actual gameplay. Health goes down after damage, laser position changes every frame,
+          cooldown timers decide when attacks can happen again, and the final score is calculated from health and coins.
+        </p>
+
+        <div class="code-block">
+<pre><span class="prop">this</span>.playerHealth = <span class="num">4</span>;
+<span class="prop">this</span>.coinValue = <span class="num">25</span>;
+<span class="prop">this</span>.attackCooldownMs = <span class="num">450</span>;
+
+<span class="kw">const</span> score = (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) + (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);</pre>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <span class="mini-label">Strings</span>
+        <h3>Names, Modes, and Messages</h3>
+        <p>
+          Strings make the game easier to customize. They store the player name, game mode, level ID, enemy name,
+          and HUD messages that appear while playing.
+        </p>
+
+        <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = <span class="str">'twoPlayer'</span>;
+<span class="prop">this</span>.playerName = <span class="str">'Player'</span>;
+<span class="prop">this</span>.updateHud(<span class="str">'Laser hit! Enemy took damage.'</span>);</pre>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <span class="mini-label">Booleans</span>
+        <h3>Game Flow Flags</h3>
+        <p>
+          Boolean values decide whether the game should keep running, whether a laser belongs to the player,
+          whether the battle has ended, and whether a player is allowed to attack.
+        </p>
+
+        <div class="code-block">
+<pre><span class="prop">this</span>.battleEnded = <span class="kw">false</span>;
+<span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+
+<span class="kw">if</span> (!<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.updateHud(<span class="str">'Battle is still active.'</span>);
+}</pre>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <span class="mini-label">Arrays and Objects</span>
+        <h3>Collections of Game Objects</h3>
+        <p>
+          Arrays let the game manage multiple lasers, coins, classes, and leaderboard entries. Objects store grouped
+          information like position, velocity, level settings, and score data.
+        </p>
+
+        <div class="code-block">
+<pre><span class="prop">this</span>.lasers = [];
+<span class="prop">this</span>.coins = [];
+
+<span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx: vx,
+    vy: vy,
+    source: <span class="str">'player1'</span>,
+    life: <span class="num">60</span>
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/lessons/variables/homework" target="_blank">
+          📚 Variables Homework
+        </a>
+        <p>
+          This connects to storing values like player health, score, cooldown timers, coin count, player names,
+          player positions, and game mode.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-variables/hw" target="_blank">
+          📚 Classes and Variables Homework
+        </a>
+        <p>
+          This connects to how my game uses class properties to store important state inside the level, player,
+          enemy, coins, lasers, and leaderboard systems.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- OPERATORS -->
+  <section id="operators">
+    <div class="section-heading">
+      <div class="icon">➕</div>
+      <h2>Operators</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Operators are what turn stored data into movement, damage, scoring, and collision checks. In my game,
+      operators are not only used for simple math. They decide how far lasers move, when cooldowns finish,
+      how health changes, and how the final score is created.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Operator Concept</th>
+          <th>Where It Appears in My Game</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Subtraction</td>
+          <td><code>this.playerHealth - 1</code></td>
+          <td>Reduces health after a laser or enemy hit.</td>
+        </tr>
+        <tr>
+          <td>Addition Assignment</td>
+          <td><code>L.x += L.vx</code> and <code>L.y += L.vy</code></td>
+          <td>Moves lasers smoothly across the screen every frame.</td>
+        </tr>
+        <tr>
+          <td>Multiplication</td>
+          <td><code>this.playerHealth * 100</code></td>
+          <td>Rewards the player for surviving with more health.</td>
+        </tr>
+        <tr>
+          <td>Comparison</td>
+          <td><code>now - this.lastAttackAt &gt;= this.attackCooldownMs</code></td>
+          <td>Checks whether enough time has passed before another attack is allowed.</td>
+        </tr>
+        <tr>
+          <td>Logical Operators</td>
+          <td><code>boss &amp;&amp; !boss.isDefeated</code></td>
+          <td>Makes sure actions only happen when the correct objects exist and the game state allows it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Score and Movement Example</h3>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
+L.x += L.vx;
+L.y += L.vy;
+L.life -= <span class="num">1</span>;
+
+<span class="kw">const</span> score = (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) + (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);</pre>
+    </div>
+
+    <p>
+      This code shows multiple operator types working together. Health is lowered, laser position is updated,
+      laser lifetime counts down, and the final score combines survival with coin collection. The use of
+      <code>Math.max()</code> also prevents health from becoming negative, which keeps the game state cleaner.
+    </p>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/boolean-hack" target="_blank">
+          📚 Boolean Homework
+        </a>
+        <p>
+          This connects to logical expressions such as <code>&amp;&amp;</code>, <code>||</code>, and <code>!</code>,
+          which are used for attacks, player modes, collision checks, and battle-ending conditions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- CONTROL STRUCTURES -->
+  <section id="control">
+    <div class="section-heading">
+      <div class="icon">🔀</div>
+      <h2>Control Structures</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Control structures decide what the game should do next. My project uses conditionals to switch between
+      single-player and two-player logic, check win and loss states, stop actions after the battle ends,
+      and make sure attacks follow cooldown rules.
+    </p>
+
+    <h3>Mode-Based Game Logic</h3>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="kw">if</span> (!player || !player2) <span class="kw">return</span>;
+} <span class="kw">else</span> {
+    <span class="kw">if</span> (!player || !boss) <span class="kw">return</span>;
+}</pre>
+    </div>
+
+    <p>
+      This condition makes the update loop smarter. In two-player mode, the game waits for both players.
+      In single-player mode, it waits for the player and boss. This prevents errors because the game does
+      not try to update objects that have not loaded yet.
+    </p>
+
+    <h3>Different Endings Based on Player State</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> player1Dead = <span class="prop">this</span>.playerHealth &lt;= <span class="num">0</span>;
+<span class="kw">const</span> player2Dead = player2 &amp;&amp; <span class="prop">this</span>.player2Health &lt;= <span class="num">0</span>;
+
+<span class="kw">if</span> ((player1Dead || player2Dead) &amp;&amp; !<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
+
+    <span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+        <span class="kw">if</span> (player1Dead &amp;&amp; player2Dead) {
+            lossMessage = <span class="str">'Draw! Both players defeated! Restarting...'</span>;
+        } <span class="kw">else if</span> (player1Dead) {
+            lossMessage = <span class="str">'Player 2 Wins! Player 1 defeated. Restarting...'</span>;
+        } <span class="kw">else</span> {
+            lossMessage = <span class="str">'Player 1 Wins! Player 2 defeated. Restarting...'</span>;
+        }
+    }
+}</pre>
+    </div>
+
+    <p>
+      This is stronger than a simple win-or-lose check because the message depends on the exact situation.
+      The game can detect a draw, a Player 1 win, or a Player 2 win. That makes the two-player mode feel
+      more complete and intentional.
+    </p>
+
+    <h3>Menu Control with Arrow Keys and Enter</h3>
+
+    <div class="code-block">
+<pre>handleKeyDown(event) {
+    if (event.key === 'ArrowUp') {
+        this.selectedOption = (this.selectedOption - 1 + this.options.length) % this.options.length;
+        this.renderOptions();
+    } else if (event.key === 'ArrowDown') {
+        this.selectedOption = (this.selectedOption + 1) % this.options.length;
+        this.renderOptions();
+    } else if (event.key === 'Enter') {
+        this.selectPower();
+    } else if (event.key === 'Escape') {
+        event.preventDefault();
+    }
+
+    event.preventDefault();
+}</pre>
+    </div>
+
+    <p>
+      This method handles several keyboard choices in one place. The modulo operator keeps the menu selection
+      inside the option list, so the player can cycle through choices without breaking the menu.
+    </p>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/javascript/constellators/conditionals-hw" target="_blank">
+          📚 Conditionals Homework
+        </a>
+        <p>
+          This connects directly to the game’s win/loss checks, mode checks, cooldown checks, collision checks,
+          and nested two-player logic.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ITERATION AND GAME LOOP -->
+  <section id="gameloop">
+    <div class="section-heading">
+      <div class="icon">🎮</div>
+      <h2>Game Loop and Iteration</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      The <code>update()</code> method is the part of the game that runs repeatedly. It acts like the engine
+      of the battle because it checks inputs, moves lasers, updates cooldowns, checks collisions, and refreshes
+      the HUD. Without the game loop, the project would only show still objects instead of an active battle.
+    </p>
+
+    <h3>Attack Cooldown Logic</h3>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.attackRequested) {
+    <span class="prop">this</span>.attackRequested = <span class="kw">false</span>;
+
+    <span class="kw">if</span> (now - <span class="prop">this</span>.lastAttackAt &gt;= <span class="prop">this</span>.attackCooldownMs) {
+        <span class="prop">this</span>.lastAttackAt = now;
+
+        <span class="kw">const</span> px = player.position.x + player.width / <span class="num">2</span>;
+        <span class="kw">const</span> py = player.position.y + player.height / <span class="num">2</span>;
+        <span class="kw">const</span> dir = player.direction || <span class="str">'right'</span>;
+
+        <span class="prop">this</span>.spawnLaserStraight(px, py, dir, <span class="kw">true</span>, <span class="str">'player1'</span>);
+    }
+}</pre>
+    </div>
+
+    <p>
+      This code prevents attack spam. The first condition checks whether the player requested an attack.
+      The second condition checks whether enough time has passed since the last attack. This creates a more
+      balanced game because the player has to time shots instead of holding one key forever.
+    </p>
+
+    <h3>Laser List Updates</h3>
+
+    <div class="code-block">
+<pre><span class="kw">for</span> (<span class="kw">let</span> i = <span class="prop">this</span>.lasers.length - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+    <span class="kw">const</span> L = <span class="prop">this</span>.lasers[i];
+
+    L.x += L.vx;
+    L.y += L.vy;
+    L.life -= <span class="num">1</span>;
+
+    <span class="kw">if</span> (L.life &lt;= <span class="num">0</span>) {
+        <span class="prop">this</span>.lasers.splice(i, <span class="num">1</span>);
+        <span class="kw">continue</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This loop updates every laser in the array. Each laser moves, loses lifetime, and gets removed when it expires.
+      Looping backward is useful because removing an item with <code>splice()</code> will not accidentally skip the
+      next laser in the list.
+    </p>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/array/homework" target="_blank">
+          📚 Array Homework
+        </a>
+        <p>
+          This connects to arrays like <code>this.lasers</code>, <code>this.coins</code>, <code>this.classes</code>,
+          and <code>this.leaderboard</code>, which store multiple game objects or records.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/functions/tinkerers-hw" target="_blank">
+          📚 Functions Homework
+        </a>
+        <p>
+          This connects to reusable game methods like <code>update()</code>, <code>spawnLaserStraight()</code>,
+          <code>updateHud()</code>, <code>generateCoins()</code>, <code>saveScore()</code>, and <code>loadLeaderboard()</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- OOP CONNECTION -->
+  <section id="oop-connection">
+    <div class="section-heading">
+      <div class="icon">🏗️</div>
+      <h2>Object-Oriented Structure</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      My project also connects to object-oriented programming because the battle logic is organized into reusable
+      classes and methods. Instead of rewriting the same gameplay code for every level, shared logic can stay in
+      a base class while each level changes its own settings, enemy health, speed, images, and title.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(config) {
+        <span class="prop">this</span>.config = config;
+        <span class="prop">this</span>.playerHealth = config.playerHealth ?? <span class="num">4</span>;
+        <span class="prop">this</span>.enemyHealth = config.enemyHealth ?? <span class="num">5</span>;
+        <span class="prop">this</span>.coinValue = config.coinValue ?? <span class="num">25</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This design makes the game easier to expand. A new level can reuse the same battle system while changing only
+      the configuration values. That is cleaner than duplicating all the movement, collision, coin, and scoring code.
+    </p>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-methods/homework" target="_blank">
+          📚 Classes and Methods Homework
+        </a>
+        <p>
+          This connects to the reusable <code>PeppaBattleLevelBase</code> class and the way methods organize repeated
+          gameplay actions like initializing the level, spawning lasers, updating the HUD, and saving scores.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>

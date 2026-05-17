@@ -63,7 +63,7 @@ Hi! My name is Pranay Kamath
 
 ### Class Progress
 
-> Here is my game progress through coding, click to see these in the browser
+> Here is my game progress through coding, click to see these in the browser.
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
     <a href="{{site.baseurl}}/snake" class="btn">
@@ -78,9 +78,64 @@ Hi! My name is Pranay Kamath
     <a href="{{site.baseurl}}/cs-pathway" class="btn" style="background-color: var(--orange);">
        CS Pathway
     </a>
-    <a href="{{site.baseurl}}/CS111-blog.html" class="btn" style="background-color: #8e44ad; color: white;">
-   CS111 Blog
+</div>
+
+<br>
+
+### CS111 Blog Sections
+
+> Click each section to view my CS111 work.
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+
+    <a href="{{site.baseurl}}/2026-03-25-college-ready-blog.html" style="text-decoration: none;">
+        <div style="background-color: #8e44ad; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            College Ready Blog
+        </div>
     </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-oop.html" style="text-decoration: none;">
+        <div style="background-color: var(--teal); color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Object-Oriented Programming 
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-coding-practices.html" style="text-decoration: none;">
+        <div style="background-color: #f39c12; color: black; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Coding Practices and SDLC
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-data-types.html" style="text-decoration: none;">
+        <div style="background-color: #3498db; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Data Types
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-control-structures.html" style="text-decoration: none;">
+        <div style="background-color: #e74c3c; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Operators & Control Structures
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-api-integration.html" style="text-decoration: none;">
+        <div style="background-color: #8e44ad; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            I/0 & API
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-documentation-debugging.html" style="text-decoration: none;">
+        <div style="background-color: #2ecc71; color: black; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Documentation & Debugging
+        </div>
+    </a>
+
+    <a href="{{site.baseurl}}/2026-03-25-additional-projects.html" style="text-decoration: none;">
+        <div style="background-color: #1abc9c; color: black; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
+            Additional Projects
+        </div>
+    </a>
+
 </div>
 
 <br>

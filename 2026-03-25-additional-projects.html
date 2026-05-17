@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Additional Projects</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain,
+    .hw-link {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">🧰</span>
+    <h1>Software Engineering Practices</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page explains how planning, checklists, comments, mini-lessons, and project organization supported my game development.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Planning Changes</td>
+        <td>Describe how the game changed over time through new features and improvements.</td>
+        <td>Review blog evidence and project history.</td>
+      </tr>
+      <tr>
+        <td>Checklists &amp; Burndown</td>
+        <td>Connect homework and milestones to the final game.</td>
+        <td>Portfolio and sprint review.</td>
+      </tr>
+      <tr>
+        <td>Mini-Lesson Documentation</td>
+        <td>Use blog-style explanations and code highlights to teach game features.</td>
+        <td>Portfolio review of explanations and examples.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="otherprojects">
+    <div class="section-heading">
+      <div class="icon">🕹️</div>
+      <h2>Additional Projects &amp; CS111 Connections</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Along with my Peppa Pig Fighting Game, I also built other projects that apply the same CS111 concepts in different ways.
+      These include a calculator and a word game, which demonstrate how programming ideas like input, output, conditionals,
+      strings, and DOM manipulation can be used across multiple applications.
+    </p>
+
+    <p>
+      <a href="https://compsciteam.github.io/student/calculator" target="_blank">▶ Calculator Project</a>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <a href="https://compsciteam.github.io/student/wordgame" target="_blank">▶ Word Game Project</a>
+    </p>
+
+    <h3>🧮 Calculator — Operators, Input, and Real-Time Output</h3>
+
+    <p>
+      The calculator project focuses on handling user input and performing mathematical operations. Each button represents
+      an input event, and the program updates the display dynamically based on what the user presses.
+    </p>
+
+    <ul>
+      <li>Clicking numbers builds an expression</li>
+      <li>Operators like <code>+</code>, <code>-</code>, <code>*</code>, and <code>÷</code> perform calculations</li>
+      <li><code>=</code> evaluates the expression</li>
+      <li><code>A/C</code> clears the screen</li>
+      <li><code>√</code> adds an extra math feature beyond the four basic operations</li>
+    </ul>
+
+    <div class="screenshot">
+      <img alt="Calculator screenshot" src="/images/calculator.png">
+    </div>
+
+    <p>
+      This project strengthens concepts like variables, operators, functions, conditionals, and DOM manipulation.
+      It also shows how event-driven programming works in a web interface.
+    </p>
+
+    <h3>⌨️ Word Game — Strings, Accuracy, and Dynamic Feedback</h3>
+
+    <p>
+      The word game focuses on string handling and real-time feedback. The user types words or phrases, and the program
+      compares their input to the expected text while calculating speed and accuracy.
+    </p>
+
+    <ul>
+      <li>Stores prompt text as a string</li>
+      <li>Reads user input continuously</li>
+      <li>Calculates WPM, which stands for words per minute</li>
+      <li>Tracks accuracy based on correct characters</li>
+      <li>Updates results live while the player is typing</li>
+    </ul>
+
+    <div class="screenshot">
+      <img alt="Word game screenshot" src="/images/wordgame.png">
+    </div>
+
+    <p>
+      Together, these projects show that I applied CS111 concepts across multiple types of programs, not just one game.
+      This demonstrates a deeper understanding of programming concepts and how they can be reused in different contexts.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="homework">
+    <div class="section-heading">
+      <div class="icon">📚</div>
+      <h2>Homework Connections</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      These assignments connect directly to the concepts used in my game project. Each one helped build the skills needed
+      for features like player movement, health systems, class design, conditionals, arrays of lasers, coins, localStorage,
+      and API integration.
+    </p>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/lessons/variables/homework" target="_blank">Variables Homework</a>
+        <p>
+          Relates to storing values like player health, score, cooldown timers, coin count, player names, and positions.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/boolean-hack" target="_blank">Boolean Homework</a>
+        <p>
+          Connects to game-state flags like <code>battleEnded</code>, <code>isPlayerLaser</code>,
+          <code>attackRequested</code>, and whether the game is in single-player or two-player mode.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-variables/hw" target="_blank">
+          Classes and Variables Homework
+        </a>
+        <p>
+          Supports the class-based structure of the game, where the level, player, enemy, coins, lasers, and leaderboard
+          data are managed through objects and class properties.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/functions/tinkerers-hw" target="_blank">Functions Homework</a>
+        <p>
+          Connects to methods like <code>initialize()</code>, <code>updateHud()</code>, <code>generateCoins()</code>,
+          <code>spawnLaser()</code>, <code>saveScore()</code>, and <code>loadLeaderboard()</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/javascript/constellators/conditionals-hw" target="_blank">
+          Conditionals Homework
+        </a>
+        <p>
+          Relates to win and lose conditions, cooldown checks, collision checks, player mode checks, and API/localStorage
+          error handling.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/csse/fall_2025/javascript/classes-and-methods/homework" target="_blank">
+          Classes and Methods Homework
+        </a>
+        <p>
+          Connects to object-oriented programming in the project, especially the reusable <code>PeppaBattleLevelBase</code>
+          class and its gameplay methods.
+        </p>
+      </div>
+    </div>
+
+    <div class="hw-link">
+      <div>
+        <a href="https://pkdev0101.github.io/student/javascript/array/homework" target="_blank">Array Homework</a>
+        <p>
+          Relates to arrays like <code>this.lasers</code>, <code>this.classes</code>, <code>this.coins</code>,
+          and <code>this.leaderboard</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>

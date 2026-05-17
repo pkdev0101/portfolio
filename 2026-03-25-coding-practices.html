@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Practices, Gameplay Systems, and SDLC</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img,
+    .section-image img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    figcaption {
+      color: #9b9b9b;
+      font-size: 0.88rem;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain,
+    .hw-link {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .feature-title {
+      color: #f4f4f5;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .challenge-card {
+      background: #101112;
+      border: 1px solid #2e2e3a;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0 24px;
+    }
+
+    .challenge-header h3 {
+      margin-top: 0;
+      color: #f4f4f5;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .editor-btn,
+    .editor-select {
+      background: #252530;
+      color: #f4f4f5;
+      border: 1px solid #3a3a48;
+      border-radius: 7px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .editor-btn.secondary {
+      color: #d4d4d8;
+    }
+
+    .editor-shell {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+    }
+
+    .line-numbers {
+      background: #181820;
+      color: #777;
+      padding: 14px 10px;
+      font-family: "IBM Plex Mono", monospace;
+      text-align: right;
+      border-right: 1px solid #2e2e3a;
+    }
+
+    .challenge-editor {
+      min-height: 220px;
+      background: #1e1e24;
+      color: #c9c9d8;
+      border: none;
+      outline: none;
+      resize: vertical;
+      padding: 14px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .editor-status {
+      color: #9b9b9b;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    .output-panel {
+      background: #0b0b0f;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .output-panel h4 {
+      margin-top: 0;
+      color: #f4f4f5;
+    }
+
+    .challenge-output {
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: "IBM Plex Mono", monospace;
+      color: #c9c9d8;
+      min-height: 40px;
+    }
+
+    .challenge-note {
+      color: #9b9b9b;
+      font-size: 14px;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">🧠</span>
+    <h1>Coding Practices, Gameplay Systems, and SDLC</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page shows coding practices from the rubric, including single responsibility, data-driven design,
+    state management, multiplayer logic, collision systems, scoring, projectile mechanics, testing,
+    deployment, and software development lifecycle practices.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Single Responsibility Principle</td>
+        <td>Separate jobs into methods for lasers, HUD, collisions, coins, and updates.</td>
+        <td>Code review of method organization.</td>
+      </tr>
+      <tr>
+        <td>Data-Driven Design</td>
+        <td>Use configuration objects, sprite data, arrays, and level settings to build gameplay.</td>
+        <td>Review object literals and level setup.</td>
+      </tr>
+      <tr>
+        <td>State Management</td>
+        <td>Track game mode, battle ending, health, score, coins, and level transitions.</td>
+        <td>Review state variables and update-loop logic.</td>
+      </tr>
+      <tr>
+        <td>Control Structures</td>
+        <td>Use conditionals and nested logic for multiplayer mode, collisions, and boundaries.</td>
+        <td>Review <code>if</code>, <code>else if</code>, and compound checks.</td>
+      </tr>
+      <tr>
+        <td>Input / Output</td>
+        <td>Use keyboard controls, HUD updates, localStorage, and code runner output.</td>
+        <td>Gameplay demo and portfolio review.</td>
+      </tr>
+      <tr>
+        <td>Software Development Lifecycle</td>
+        <td>Build, test, fix, integrate, deploy, and improve the game through multiple iterations.</td>
+        <td>Review testing notes, deployed portfolio page, and project improvements.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="sdlc-overview">
+    <div class="section-heading">
+      <div class="icon">🔄</div>
+      <h2>Software Development Lifecycle Overview</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      This project connects to the software development lifecycle because it was not built all at once.
+      The game went through planning, coding, testing, debugging, integration, and improvement. Each new feature,
+      such as multiplayer mode, character selection, coins, scoring, localStorage, and leaderboard behavior,
+      had to be added, tested, and adjusted so it worked with the rest of the game.
+    </p>
+
+    <p>
+      The project is a JavaScript-based boss battle game where the player controls Ishan Jha and fights Peppa Pig
+      characters in different levels. The code handles movement, attacks, lasers, health, collision detection,
+      HUD updates, win and lose screens, localStorage, character selection, multiplayer mode, and a leaderboard system.
+    </p>
+
+    <p>
+      The game is organized around a level class called <code>PeppaBattleLevelBase</code>, which manages the main gameplay
+      systems for each fight. This makes the project more advanced than a simple one-screen game because it keeps track
+      of many systems at the same time, such as player health, enemy health, attack cooldowns, API calls, and visual updates.
+    </p>
+
+    <h3>Reusable Level Setup</h3>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(gameEnv, config) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.config = config;
+
+        <span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;
+        <span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+        <span class="prop">this</span>.playerDamageCooldownMs = config.playerDamageCooldownMs ?? <span class="num">650</span>;
+        <span class="prop">this</span>.attackCooldownMs = config.attackCooldownMs ?? <span class="num">450</span>;
+        <span class="prop">this</span>.laserSpeed = config.laserSpeed ?? <span class="num">14</span>;
+
+        <span class="prop">this</span>.apiBase = config.apiBase || <span class="kw">null</span>;
+        <span class="prop">this</span>.playerName = config.playerName || <span class="str">'Ishan'</span>;
+        <span class="prop">this</span>.levelScore = <span class="num">0</span>;
+        <span class="prop">this</span>.leaderboard = [];
+    }
+}</pre>
+    </div>
+
+    <p>
+      This code shows how the game stores important information at the start of the level. If no custom player health
+      is provided, the game automatically uses <code>5</code>. If no player name is given, it defaults to
+      <code>"Ishan"</code>. This makes the code more flexible and reusable.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="multiplayer">
+    <div class="section-heading">
+      <div class="icon">👥</div>
+      <h2>Multiplayer Mode</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>2-Player Mode with Separate Controls</h3>
+
+    <p>
+      The updated code supports both <code>singlePlayer</code> and <code>twoPlayer</code> mode.
+      The mode can come from the level config, from <code>localStorage</code>, or default to single-player
+      if nothing was saved.
+    </p>
+
+    <figure class="hero-preview section-image">
+      <img alt="Game mode selection screen with Single Player and 2 Players options" src="/images/game-mode-screen.png">
+    </figure>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-title">Player 1</div>
+        <p>Player 1 uses <code>WASD</code> to move and <code>Space</code> to fire a cyan laser.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-title">Player 2</div>
+        <p>Player 2 uses the arrow keys to move and <code>Enter</code> to fire a green laser.</p>
+      </div>
+    </div>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>;</pre>
+    </div>
+
+    <p>
+      The level also creates different game objects depending on the mode. In <code>twoPlayer</code> mode,
+      it adds Player 2. In single-player mode, it adds the boss enemy.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
+}</pre>
+    </div>
+
+    <p>
+      The HUD changes too. In two-player mode, it becomes wider, shows Player 2 health,
+      and displays both control schemes.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="characters">
+    <div class="section-heading">
+      <div class="icon">🎭</div>
+      <h2>Character Selection</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Saving Player Character Choices</h3>
+
+    <p>
+      The game also supports character swapping. Before the battle starts, players can choose character images
+      and names. Those choices are saved so the battle level can load the correct player sprites.
+    </p>
+
+    <figure class="hero-preview section-image">
+      <img alt="Character selection screen showing Player 1 and Player 2 character choices" src="/images/multiplayer-screen.png">
+      <figcaption>
+        Multiplayer character selection screen where Player 1 and Player 2 choose their characters before starting.
+      </figcaption>
+    </figure>
+
+    <div class="code-block">
+<pre><span class="cmt">// Read character selections saved by the welcome/character-select screen</span>
+<span class="kw">const</span> p1CharImage = localStorage.getItem(<span class="str">'peppaPlayer1CharImage'</span>) || <span class="str">'ishan-jha.png'</span>;
+<span class="kw">const</span> p1CharName  = localStorage.getItem(<span class="str">'peppaPlayer1CharName'</span>)  || <span class="str">'Ishan'</span>;
+<span class="kw">const</span> p2CharImage = localStorage.getItem(<span class="str">'peppaPlayer2CharImage'</span>) || <span class="str">'ishan-jha.png'</span>;
+<span class="kw">const</span> p2CharName  = localStorage.getItem(<span class="str">'peppaPlayer2CharName'</span>)  || <span class="str">'Player 2'</span>;
+
+<span class="kw">const</span> p1Image = <span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span> ? p1CharImage : <span class="str">'ishan-jha.png'</span>;
+<span class="kw">const</span> p1Name  = <span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span> ? p1CharName  : <span class="str">'Ishan'</span>;</pre>
+    </div>
+
+    <p>
+      This code checks saved character data. If no character was saved, the game uses safe default values
+      like <code>ishan-jha.png</code> and <code>Ishan</code>.
+    </p>
+
+    <div class="code-block">
+<pre>selectCharacter(char, playerNum, accentColor) {
+    <span class="kw">const</span> charData = {
+        image: char.image,
+        name: char.name,
+        accentColor: accentColor
+    };
+
+    <span class="kw">if</span> (playerNum === <span class="num">1</span>) {
+        <span class="prop">this</span>.p1Character = charData;
+        localStorage.setItem(<span class="str">'peppaPlayer1CharImage'</span>, char.image);
+        localStorage.setItem(<span class="str">'peppaPlayer1CharName'</span>, char.name);
+    } <span class="kw">else</span> {
+        <span class="prop">this</span>.p2Character = charData;
+        localStorage.setItem(<span class="str">'peppaPlayer2CharImage'</span>, char.image);
+        localStorage.setItem(<span class="str">'peppaPlayer2CharName'</span>, char.name);
+    }
+
+    <span class="prop">this</span>.updateStartButton();
+}</pre>
+    </div>
+
+    <p>
+      This is a strong example of data persistence because the game stores each player's character name
+      and image in the browser, then uses those values later during gameplay.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="collisions">
+    <div class="section-heading">
+      <div class="icon">🎯</div>
+      <h2>Collision System</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Laser Hitboxes and Damage</h3>
+
+    <p>
+      The collision system checks whether laser hitboxes overlap with players or the boss. The updated laser objects
+      also store a <code>source</code>, so the game knows whether the laser came from Player 1, Player 2, or the boss.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="kw">if</span> (L.source === <span class="str">'player1'</span> &amp;&amp; player2) {
+        <span class="cmt">// Player 1 laser can hit Player 2</span>
+        <span class="prop">this</span>.player2Health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.player2Health - <span class="num">1</span>);
+    } <span class="kw">else if</span> (L.source === <span class="str">'player2'</span> &amp;&amp; player) {
+        <span class="cmt">// Player 2 laser can hit Player 1</span>
+        <span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
+    }
+}</pre>
+    </div>
+
+    <p>
+      In two-player mode, Player 1 and Player 2 can damage each other with lasers.
+      The game uses cooldown timers like <code>lastPlayerHitAt</code> and <code>lastPlayer2HitAt</code>
+      so damage does not happen too quickly.
+    </p>
+
+    <h3>Bounding Box Collision</h3>
+
+    <div class="code-block">
+<pre><span class="prop">areColliding</span>(a, b) {
+    <span class="kw">if</span> (!a || !b) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="kw">return</span> (
+        a.position.x &lt; b.position.x + b.width &amp;&amp;
+        a.position.x + a.width &gt; b.position.x &amp;&amp;
+        a.position.y &lt; b.position.y + b.height &amp;&amp;
+        a.position.y + a.height &gt; b.position.y
+    );
+}</pre>
+    </div>
+
+    <p>
+      This method checks whether two rectangles overlap. It is used for physical collision checks
+      like the player touching the boss in single-player mode.
+    </p>
+
+    <h3>Floor Barriers</h3>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (player &amp;&amp; player.height) {
+    <span class="kw">if</span> (player.position.y &lt; floorY) {
+        player.position.y = floorY;
+        player.velocity.y = <span class="num">0</span>;
+    }
+
+    <span class="kw">if</span> (player.position.y + player.height &gt; height) {
+        player.position.y = height - player.height;
+        player.velocity.y = <span class="num">0</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      The floor barrier logic keeps players and bosses inside the visible arena. This prevents characters from
+      floating too high, falling out of bounds, or leaving the playable area.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="scoring">
+    <div class="section-heading">
+      <div class="icon">🪙</div>
+      <h2>Coins and Scoring</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Coin Generation and Collection</h3>
+
+    <p>
+      The updated code adds collectible coins. Coins spawn randomly inside the playable arena,
+      avoid spawning too close to the player or enemy, and increase the final score when collected.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.coins = [];
+<span class="prop">this</span>.coinCount = <span class="num">0</span>;
+<span class="prop">this</span>.coinValue = config.coinValue ?? <span class="num">25</span>;
+<span class="prop">this</span>.coinRadius = config.coinRadius ?? <span class="num">14</span>;
+<span class="prop">this</span>.coinTotal = config.coinTotal ?? <span class="num">8</span>;</pre>
+    </div>
+
+    <p>
+      These values control how many coins appear, how large they are, and how many points each coin is worth.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (distance &lt;= collectRadius) {
+    coin.collected = <span class="kw">true</span>;
+    <span class="prop">this</span>.coinCount += <span class="num">1</span>;
+    <span class="prop">this</span>.updateHud(<span class="str">`Coin collected! +${this.coinValue} score`</span>);
+}</pre>
+    </div>
+
+    <p>
+      When the player is close enough to a coin, the coin becomes collected, the coin count increases,
+      and the HUD shows immediate feedback.
+    </p>
+
+    <h3>Final Score and Victory Screen</h3>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> score = (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) + (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);
+<span class="prop">this</span>.levelScore = score;
+
+<span class="prop">this</span>.saveScore(score)
+    .then(() =&gt; <span class="prop">this</span>.loadLeaderboard())
+    .then(() =&gt; <span class="prop">this</span>.renderLeaderboard());</pre>
+    </div>
+
+    <p>
+      The final score combines remaining health with the coin bonus. After calculating it,
+      the game saves the score, reloads the leaderboard, and re-renders the leaderboard on the HUD.
+    </p>
+
+    <div class="callout">
+      <p>
+        <strong>Improvement from the original version:</strong>
+        The game now rewards exploration and survival instead of only counting boss defeat.
+        Coins make the arena more interactive.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="gameplay">
+    <div class="section-heading">
+      <div class="icon">💥</div>
+      <h2>Gameplay Mechanics</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3>Projectile Motion and Hit Detection</h3>
+
+    <div class="code-block">
+<pre><span class="prop">spawnLaserStraight</span>(fromX, fromY, direction, isPlayerLaser) {
+    <span class="kw">const</span> [vx, vy] = <span class="prop">this</span>.directionToVelocity(direction);
+
+    <span class="prop">this</span>.lasers.push({
+        x: fromX,
+        y: fromY,
+        vx,
+        vy,
+        isPlayerLaser,
+        life: <span class="num">60</span>,
+        maxLife: <span class="num">60</span>
+    });
+}</pre>
+    </div>
+
+    <p>
+      One of the most specific gameplay systems in the code is the laser system. When the player attacks,
+      the game creates a new laser object with x and y position, velocity, type, and lifetime.
+      The projectile actually stores its own position and speed values and updates over time.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (L.isPlayerLaser &amp;&amp; boss &amp;&amp; !boss.isDefeated) {
+    <span class="kw">if</span> (
+        hitLeft        &lt; boss.position.x + boss.width  &amp;&amp;
+        hitLeft + hitW &gt; boss.position.x               &amp;&amp;
+        hitTop         &lt; boss.position.y + boss.height &amp;&amp;
+        hitTop + hitH  &gt; boss.position.y
+    ) {
+        boss.takeDamage(<span class="num">1</span>);
+        <span class="prop">this</span>.updateHud(<span class="str">`Laser hit! ${this.config.enemyName} took damage.`</span>);
+        <span class="prop">this</span>.lasers.splice(i, <span class="num">1</span>);
+    }
+}</pre>
+    </div>
+
+    <p>
+      This collision code checks whether a player laser overlaps the boss hitbox. If it does,
+      the boss takes damage and the laser is removed. The updated version also uses laser sources
+      so Player 1 lasers can be cyan, Player 2 lasers can be green, and boss lasers can be red.
+      This makes the gameplay easier to understand visually.
+    </p>
+  </section>
+
+ 
+
+<a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>

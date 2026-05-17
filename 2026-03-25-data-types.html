@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Types</title>
+
+  <style>
+    body {
+      background: #0b0b0f;
+      color: #d4d4d8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 40px;
+    }
+
+    .page-nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      margin: 30px 0 60px;
+      font-size: 20px;
+    }
+
+    .page-nav a {
+      text-decoration: none;
+      color: #4d9aff;
+      font-weight: 500;
+    }
+
+    .page-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .page-title-row h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      margin: 0;
+    }
+
+    .page-icon {
+      font-size: 34px;
+    }
+
+    .objective-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 24px;
+    }
+
+    .objective-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 44px;
+      font-size: 17px;
+    }
+
+    .objective-table th {
+      background: #1d1d1f;
+      color: #9b9b9b;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      text-align: left;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .objective-table td {
+      background: #101112;
+      color: #b8b8b8;
+      border: 1px solid #2d5bd1;
+      padding: 17px 18px;
+      vertical-align: top;
+    }
+
+    .objective-table td:first-child {
+      font-weight: 700;
+      color: #a8a8a8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 38px 0 16px;
+    }
+
+    .section-heading .icon {
+      width: 28px;
+      height: 28px;
+      background: #252530;
+      border: 1px solid #3a3a48;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f4f4f5;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .rule,
+    .section-divider {
+      border: none;
+      border-top: 1px solid #2e2e3a;
+      margin: 0 0 28px;
+    }
+
+    .section-divider {
+      margin: 52px 0 40px;
+    }
+
+    .code-block {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 18px 0 24px;
+    }
+
+    .code-block pre {
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    pre {
+      background: #1e1e24;
+      border: 1px solid #2e2e3a;
+      border-radius: 10px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #c9c9d8;
+      white-space: pre;
+    }
+
+    pre code {
+      background: transparent;
+      border: none;
+      color: #c9c9d8;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82em;
+      color: #4fc4cf;
+      background: #1a1a24;
+      border: 1px solid #35354a;
+      border-radius: 5px;
+      padding: 1px 7px;
+    }
+
+    .kw {
+      color: #4fc4cf;
+    }
+
+    .cls {
+      color: #e8823a;
+      font-weight: 600;
+    }
+
+    .str {
+      color: #3ecf8e;
+    }
+
+    .cmt {
+      color: #606078;
+      font-style: italic;
+    }
+
+    .num {
+      color: #bd93f9;
+    }
+
+    .prop {
+      color: #5b8dee;
+    }
+
+    .screenshot img,
+    .hero-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #2e2e3a;
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.88rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e3a;
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #252530;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+
+    @media (max-width: 700px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card,
+    .callout,
+    .challenge-explain,
+    .hw-link {
+      background: rgba(91, 141, 238, 0.07);
+      border: 1px solid rgba(91, 141, 238, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0 24px;
+    }
+
+    .back-bottom {
+      display: inline-block;
+      margin: 35px 0 15px;
+      color: #4d9aff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-bottom:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-nav">
+    <a href="/2026-03-25-college-ready-blog.html/">← College Ready Blog</a>
+    <a href="/">Home</a>
+  </div>
+
+  <div class="page-title-row">
+    <span class="page-icon">🔢</span>
+    <h1>Data Types</h1>
+  </div>
+
+  <p class="objective-intro">
+    This page covers numbers, strings, booleans, arrays, and objects from my game code.
+  </p>
+
+  <table class="objective-table">
+    <thead>
+      <tr>
+        <th>Learning Objective</th>
+        <th>Project Evidence Required</th>
+        <th>Assessment Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Numbers</td>
+        <td>Use numbers for health, score, speed, cooldowns, positions, and coin values.</td>
+        <td>Code review of numeric properties.</td>
+      </tr>
+      <tr>
+        <td>Strings</td>
+        <td>Use strings for game mode, player names, sprite paths, and HUD messages.</td>
+        <td>Review string usage and template literals.</td>
+      </tr>
+      <tr>
+        <td>Booleans</td>
+        <td>Use flags such as <code>battleEnded</code>, <code>attackRequested</code>, and <code>isDefeated</code>.</td>
+        <td>Review boolean logic.</td>
+      </tr>
+      <tr>
+        <td>Arrays</td>
+        <td>Store lasers, coins, classes, and leaderboard entries.</td>
+        <td>Review array operations.</td>
+      </tr>
+      <tr>
+        <td>Objects / JSON</td>
+        <td>Use configuration objects, sprite data, spawn points, and stored score data.</td>
+        <td>Review object literals and JSON-style data.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="specific-definitions">
+    <div class="section-heading">
+      <div class="icon">🧩</div>
+      <h2>Specific Code Definitions</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      This section makes the blog stronger because it does not only say that the game uses arrays, numbers,
+      booleans, and objects. It explains the exact variables that are defined in my code, what each one stores,
+      and why each one matters during gameplay.
+    </p>
+
+    <h3>Important Variables Defined in the Battle Level</h3>
+
+    <p>
+      Most of the important game state is defined inside the constructor of <code>PeppaBattleLevelBase</code>.
+      These definitions are important because the constructor runs once when the level starts, so it sets the
+      starting rules for health, lasers, coins, multiplayer mode, cooldowns, score, and the leaderboard.
+    </p>
+
+    <pre><code>this.gameMode = config.gameMode ?? localStorage.getItem('peppaGameMode') ?? 'singlePlayer';
+
+this.playerMaxHealth = config.playerHealth ?? 5;
+this.playerHealth = this.playerMaxHealth;
+this.player2MaxHealth = config.playerHealth ?? 5;
+this.player2Health = this.player2MaxHealth;
+
+this.attackCooldownMs = config.attackCooldownMs ?? 450;
+this.lastAttackAt = 0;
+this.lastPlayer2AttackAt = 0;
+this.enemyLaserIntervalMs = config.enemyLaserIntervalMs ?? 1100;
+
+this.lasers = [];
+this.coins = [];
+this.coinCount = 0;
+this.coinValue = config.coinValue ?? 25;
+this.leaderboard = [];
+this.battleEnded = false;</code></pre>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Definition</th>
+          <th>Type</th>
+          <th>What It Controls</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>this.gameMode</code></td>
+          <td>String</td>
+          <td>Stores whether the game is in <code>singlePlayer</code> or <code>twoPlayer</code> mode.</td>
+          <td>This controls whether the level creates only Player 1 and the boss, or creates both Player 1 and Player 2 for multiplayer.</td>
+        </tr>
+        <tr>
+          <td><code>this.playerHealth</code> and <code>this.player2Health</code></td>
+          <td>Number</td>
+          <td>Stores the current HP for Player 1 and Player 2.</td>
+          <td>These values decide when a player loses. When health reaches <code>0</code>, the lose screen or multiplayer winner message is triggered.</td>
+        </tr>
+        <tr>
+          <td><code>this.attackCooldownMs</code></td>
+          <td>Number</td>
+          <td>Stores the required delay between laser attacks.</td>
+          <td>This prevents the player from holding the attack key and firing unlimited lasers every frame.</td>
+        </tr>
+        <tr>
+          <td><code>this.lastAttackAt</code> and <code>this.lastPlayer2AttackAt</code></td>
+          <td>Number</td>
+          <td>Stores the timestamp of the last attack for each player.</td>
+          <td>The code compares <code>Date.now()</code> to these timestamps to decide whether the cooldown has passed.</td>
+        </tr>
+        <tr>
+          <td><code>this.enemyLaserIntervalMs</code></td>
+          <td>Number</td>
+          <td>Controls how often the boss fires a laser.</td>
+          <td>Lower values make the boss attack faster, which makes the level harder without changing the rest of the code.</td>
+        </tr>
+        <tr>
+          <td><code>this.lasers</code></td>
+          <td>Array</td>
+          <td>Stores every active laser projectile currently moving across the screen.</td>
+          <td>Each laser is pushed into this array when fired, updated every frame, and removed when it expires or hits something.</td>
+        </tr>
+        <tr>
+          <td><code>this.coins</code></td>
+          <td>Array</td>
+          <td>Stores every coin object placed in the level.</td>
+          <td>The game loops through this array to draw coins and check whether the player collected one.</td>
+        </tr>
+        <tr>
+          <td><code>this.coinCount</code> and <code>this.coinValue</code></td>
+          <td>Number</td>
+          <td>Tracks how many coins were collected and how much each coin is worth.</td>
+          <td>These values are used in the final score calculation: health points plus coin bonus.</td>
+        </tr>
+        <tr>
+          <td><code>this.leaderboard</code></td>
+          <td>Array</td>
+          <td>Stores score entries loaded from an API or from localStorage.</td>
+          <td>This lets the HUD display top scores without hard-coding them into the page.</td>
+        </tr>
+        <tr>
+          <td><code>this.battleEnded</code></td>
+          <td>Boolean</td>
+          <td>Stores whether the current fight is already over.</td>
+          <td>This stops the update loop from continuing after a win or loss, preventing extra lasers, damage, or repeated transitions.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>How <code>this.lasers</code> Actually Works</h3>
+
+    <p>
+      The <code>this.lasers</code> array is one of the most important definitions in the project.
+      It starts empty, but every time a player or boss fires, a new laser object is added with its position,
+      velocity, owner, and lifetime.
+    </p>
+
+    <pre><code>this.lasers.push({
+  x: fromX,
+  y: fromY,
+  vx: (dx / len) * this.laserSpeed,
+  vy: (dy / len) * this.laserSpeed,
+  isPlayerLaser,
+  source: sourceId,
+  life: 60,
+  maxLife: 60
+});</code></pre>
+
+    <p>
+      Each laser object stores everything the game needs to move and draw the laser. <code>x</code> and
+      <code>y</code> are the current position. <code>vx</code> and <code>vy</code> are the movement speed in
+      the x and y directions. <code>source</code> tells the game who fired it, such as <code>player1</code>,
+      <code>player2</code>, or <code>boss</code>. <code>life</code> counts down every frame so old lasers
+      disappear instead of staying forever.
+    </p>
+
+    <h3>Specific Variables in the Boss Enemy Class</h3>
+
+    <p>
+      The <code>PeppaBossEnemy</code> constructor defines boss-specific state. These variables make the boss
+      different from a normal engine enemy because the boss can chase the player, take damage, and become defeated.
+    </p>
+
+    <pre><code>this.health = data?.health ?? 3;
+this.maxHealth = this.health;
+this.moveSpeed = data?.moveSpeed ?? 0.8;
+this.isDefeated = false;</code></pre>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Boss Variable</th>
+          <th>What It Does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>this.health</code></td>
+          <td>Stores how many hits the boss can still take before losing.</td>
+        </tr>
+        <tr>
+          <td><code>this.maxHealth</code></td>
+          <td>Stores the original health value so the HUD can show health as current HP out of max HP.</td>
+        </tr>
+        <tr>
+          <td><code>this.moveSpeed</code></td>
+          <td>Controls how many pixels the boss moves toward the player each frame.</td>
+        </tr>
+        <tr>
+          <td><code>this.isDefeated</code></td>
+          <td>Acts as a boolean state flag. When it becomes <code>true</code>, the boss stops moving and the level can transition to the next stage.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Specific Variables in the Power-Up Menu</h3>
+
+    <p>
+      The power-up menu also has important definitions. This class does not control lasers directly,
+      but it controls the player's choice before the next battle.
+    </p>
+
+    <pre><code>this.selectedOption = 0;
+this.options = [
+  { name: 'Extra Speed', description: 'Move faster in battle' },
+  { name: 'Extra Health', description: 'Start with more health' },
+  { name: 'Extra Damage', description: 'Deal more damage per laser' }
+];
+this.chosenPower = null;</code></pre>
+
+    <p>
+      <code>this.selectedOption</code> stores which menu option is currently highlighted.
+      <code>this.options</code> is an array of objects, where each object has a <code>name</code> and
+      <code>description</code>. <code>this.chosenPower</code> starts as <code>null</code> because the player
+      has not picked anything yet. After pressing Enter, the selected power-up is stored in
+      <code>this.gameEnv.gameControl.chosenPower</code> so the game can remember the choice across levels.
+    </p>
+
+<hr class="section-divider">
+
+  <section id="datatypes">
+    <div class="section-heading">
+      <div class="icon">🔢</div>
+      <h2>Data Types</h2>
+    </div>
+
+    <hr class="rule">
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>; <span class="cmt">// String</span>
+<span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;      <span class="cmt">// Number</span>
+<span class="prop">this</span>.player2Health = <span class="prop">this</span>.player2MaxHealth;          <span class="cmt">// Number</span>
+<span class="prop">this</span>.attackRequested = <span class="kw">false</span>;                      <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.player2AttackRequested = <span class="kw">false</span>;               <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.lasers = [];                                     <span class="cmt">// Array</span>
+<span class="prop">this</span>.coins = [];                                      <span class="cmt">// Array</span>
+<span class="prop">this</span>.playerSpawn = { x: width * <span class="num">0.12</span>, y: height * <span class="num">0.72</span> }; <span class="cmt">// Object</span></pre>
+    </div>
+
+    <p>
+      The updated game uses many JavaScript data types. Strings store the game mode and player names,
+      numbers store health and score values, booleans track whether attacks were requested, arrays store lasers
+      and coins, and objects store spawn positions and sprite data.
+    </p>
+
+    <p>
+      A strong example is <code>this.gameMode</code>. It can be <code>'singlePlayer'</code> or
+      <code>'twoPlayer'</code>, and the rest of the code changes behavior based on that string.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="arrays">
+    <div class="section-heading">
+      <div class="icon">🔁</div>
+      <h2>Arrays and Collections</h2>
+    </div>
+
+    <hr class="rule">
+
+    <p>
+      Arrays are used to store multiple game objects, lasers, coins, and leaderboard entries.
+      This lets the game update many items every frame without needing separate variables for each one.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.classes = [
+    { <span class="kw">class</span>: <span class="cls">GameEnvBackground</span>, data: image_data_background },
+    { <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_ishan }
+];
+
+<span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
+}</pre>
+    </div>
+
+    <p>
+      This is important because the game builds a different class list depending on the selected mode.
+      Two-player mode adds a second player, while single-player mode adds the boss enemy.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx,
+    vy,
+    isPlayerLaser,
+    source: sourceId,
+    life: <span class="num">60</span>,
+    maxLife: <span class="num">60</span>
+});</pre>
+    </div>
+
+    <p>
+      The <code>source</code> property makes the laser system more flexible. A laser can come from
+      <code>player1</code>, <code>player2</code>, or the <code>boss</code>, so the collision system knows
+      who should be damaged.
+    </p>
+  </section>
+
+  <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
+
+</body>
+</html>
