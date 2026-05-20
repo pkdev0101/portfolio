@@ -248,6 +248,28 @@
       text-decoration: none;
     }
 
+
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: #4fc4cf;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom:hover {
       text-decoration: underline;
     }
@@ -283,35 +305,34 @@
     <tbody>
       <tr>
         <td>Writing Classes</td>
-        <td>Create custom classes for the battle level, boss enemy, and power-up menu.</td>
+        <td>Section 1 explains custom classes for the battle level, boss enemy, and power-up menu.</td>
         <td>Code review of class files.</td>
       </tr>
       <tr>
         <td>Methods &amp; Parameters</td>
         <td>
-          Use methods such as <code>initialize()</code>, <code>destroy()</code>,
-          <code>handleKeyDown(event)</code>, and <code>takeDamage(amount)</code>.
+          Section 2 explains methods such as <code>initialize()</code>, <code>destroy()</code>, <code>handleKeyDown(event)</code>, and <code>takeDamage(amount)</code>.
         </td>
         <td>Review method signatures and how parameters are used.</td>
       </tr>
       <tr>
         <td>Instantiation &amp; Objects</td>
-        <td>Use configuration objects and class properties to create level, boss, menu, and gameplay objects.</td>
+        <td>Section 3 explains object instantiation with <code>new</code> and object literals for boss settings and power-up data.</td>
         <td>Review object literals and class setup.</td>
       </tr>
       <tr>
         <td>Inheritance</td>
-        <td>Extend base game engine classes such as <code>Enemy</code>.</td>
+        <td>Section 4 explains how <code>PeppaBossEnemy</code> extends the parent <code>Enemy</code> class.</td>
         <td>Code review of <code>extends</code> usage.</td>
       </tr>
       <tr>
         <td>Method Overriding</td>
-        <td>Override update-style behavior for custom game objects.</td>
+        <td>Section 5 explains how <code>PeppaBossEnemy</code> overrides the parent <code>update()</code> behavior.</td>
         <td>Code review of polymorphic methods.</td>
       </tr>
       <tr>
         <td>Constructor Chaining</td>
-        <td>Use <code>super(data, gameEnv)</code> to connect child classes to parent constructors.</td>
+        <td>Section 6 explains constructor chaining with <code>super(data, gameEnv)</code>.</td>
         <td>Review constructor setup.</td>
       </tr>
     </tbody>
@@ -448,6 +469,111 @@ export default PeppaBossEnemy;</pre>
       player, calculates distance using <code>Math.hypot()</code>, and moves toward the player with normalized
       movement. The <code>takeDamage(amount)</code> method gives the boss its battle logic.
     </p>
+
+
+    <h3>Method Overriding in the Boss Enemy</h3>
+
+    <p>
+      Method overriding happens when a child class creates its own version of a method that already exists
+      in the parent class. In this project, <code>PeppaBossEnemy</code> extends the engine's
+      <code>Enemy</code> class, but it writes its own <code>update()</code> method. That means the boss does
+      not only use the default enemy behavior. Instead, it uses custom logic to redraw itself, find the player,
+      calculate distance, move toward the player, and stay inside the canvas.
+    </p>
+
+    <div class="code-block">
+<pre>import Enemy from '@assets/js/GameEnginev1.1/essentials/Enemy.js';
+
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+    <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+        <span class="kw">super</span>(data, gameEnv);
+        <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+        <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+        <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+    }
+
+    <span class="cmt">// This overrides the parent Enemy update method.</span>
+    update() {
+        <span class="prop">this</span>.draw();
+
+        <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) {
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">const</span> player = <span class="prop">this</span>.gameEnv.gameObjects.find(
+            obj =&gt; obj?.constructor?.name === <span class="str">'Player'</span>
+        );
+
+        <span class="kw">if</span> (!player) {
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">const</span> dx = player.position.x - <span class="prop">this</span>.position.x;
+        <span class="kw">const</span> dy = player.position.y - <span class="prop">this</span>.position.y;
+        <span class="kw">const</span> distance = Math.hypot(dx, dy);
+
+        <span class="kw">if</span> (distance &gt; <span class="num">1</span>) {
+            <span class="prop">this</span>.position.x += (dx / distance) * <span class="prop">this</span>.moveSpeed;
+            <span class="prop">this</span>.position.y += (dy / distance) * <span class="prop">this</span>.moveSpeed;
+        }
+
+        <span class="prop">this</span>.stayWithinCanvas();
+    }
+}</pre>
+    </div>
+
+    <p>
+      This counts as method overriding because the child class keeps the same method name,
+      <code>update()</code>, but changes what the method does. The parent <code>Enemy</code> class gives the
+      boss a basic game-object structure, while the child <code>PeppaBossEnemy</code> class customizes the
+      frame-by-frame behavior for a boss fight.
+    </p>
+
+
+
+    <h3>Instantiation and Objects in the Level Setup</h3>
+
+    <p>
+      Instantiation means creating an object from a class. In this project, each Peppa level can be made
+      from a class using the <code>new</code> keyword. The class is the blueprint, and the object is the
+      actual level or boss that appears while the game is running.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> levelOne = <span class="kw">new</span> <span class="cls">PeppaLevel1</span>(gameEnv);
+<span class="kw">const</span> boss = <span class="kw">new</span> <span class="cls">PeppaBossEnemy</span>({
+    name: <span class="str">'George Pig'</span>,
+    health: <span class="num">5</span>,
+    moveSpeed: <span class="num">1.0</span>
+}, gameEnv);</pre>
+    </div>
+
+    <p>
+      The example above shows two objects being created. <code>levelOne</code> is an object made from
+      <code>PeppaLevel1</code>, and <code>boss</code> is an object made from <code>PeppaBossEnemy</code>.
+      The boss also receives a configuration object with properties like <code>name</code>,
+      <code>health</code>, and <code>moveSpeed</code>.
+    </p>
+
+    <p>
+      Objects are also used in the power-up menu. The <code>options</code> array stores multiple object
+      literals, where each object has a <code>name</code> and <code>description</code>. This makes each
+      power-up easy to display and select.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.options = [
+    { name: <span class="str">'Extra Speed'</span>, description: <span class="str">'Move faster in battle'</span> },
+    { name: <span class="str">'Extra Health'</span>, description: <span class="str">'Start with more health'</span> },
+    { name: <span class="str">'Extra Damage'</span>, description: <span class="str">'Deal more damage per laser'</span> }
+];</pre>
+    </div>
+
+    <p>
+      This proves instantiation and objects because the game creates actual playable objects from classes,
+      and it also uses object literals to store organized game data.
+    </p>
+
 
     <h3>Power-Up Menu Class</h3>
 
@@ -619,6 +745,224 @@ export default PeppaPowerUpMenu;</pre>
       and return value in one organized place.
     </p>
   </section>
+
+
+  <hr class="section-divider">
+
+  <section id="specific-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific CS111 OOP Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="writing-classes">1. Writing Classes</h3>
+    <span class="requirement-tag">Requirement: Writing custom classes</span>
+
+    <p>
+      This project uses custom JavaScript classes to separate the game into organized parts. Instead of putting
+      all gameplay code into one file, the project uses classes for the battle level, boss enemy, and power-up menu.
+      Each class has a different job, which makes the project easier to understand, test, and expand.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>PeppaBattleLevelBase</code> controls the main battle level system.</li>
+      <li><code>PeppaBossEnemy</code> controls the boss enemy behavior.</li>
+      <li><code>PeppaPowerUpMenu</code> controls the between-level power-up screen.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBattleLevelBase</span> {
+    <span class="kw">constructor</span>(gameEnv, config) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.config = config;
+    }
+}
+
+<span class="kw">class</span> <span class="cls">PeppaPowerUpMenu</span> {
+    <span class="kw">constructor</span>(gameEnv) {
+        <span class="prop">this</span>.gameEnv = gameEnv;
+        <span class="prop">this</span>.selectedOption = <span class="num">0</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves the writing classes requirement because the project creates multiple original classes that
+      organize different parts of the game.
+    </p>
+
+    <h3 id="methods-parameters">2. Methods and Parameters</h3>
+    <span class="requirement-tag">Requirement: Methods with parameters</span>
+
+    <p>
+      Methods are functions that belong to a class. This project uses methods to keep each action separate.
+      Some methods receive parameters, which are values passed into the method so it can complete a specific task.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>initialize()</code> starts a level or menu.</li>
+      <li><code>destroy()</code> cleans up the current level or menu.</li>
+      <li><code>handleKeyDown(event)</code> uses the <code>event</code> parameter to check which key was pressed.</li>
+      <li><code>takeDamage(amount)</code> uses the <code>amount</code> parameter to subtract health from the boss.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">handleKeyDown</span>(event) {
+    <span class="kw">if</span> (event.code === <span class="str">'Space'</span>) {
+        <span class="prop">this</span>.attackRequested = <span class="kw">true</span>;
+        event.preventDefault();
+    }
+}
+
+takeDamage(amount = <span class="num">1</span>) {
+    <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+    <span class="kw">return</span> <span class="prop">this</span>.health === <span class="num">0</span>;
+}</pre>
+    </div>
+
+    <p>
+      This proves the methods and parameters requirement because the project uses class methods to perform
+      specific game actions, and some methods use parameters to customize what happens.
+    </p>
+
+    <h3 id="instantiation-objects">3. Instantiation and Objects</h3>
+    <span class="requirement-tag">Requirement: Creating objects from classes</span>
+
+    <p>
+      Instantiation means creating an object from a class. A class is like a blueprint, and the object is the
+      actual thing created from that blueprint. In this game, levels, bosses, and menus can be created as objects.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> levelOne = <span class="kw">new</span> <span class="cls">PeppaLevel1</span>(gameEnv);
+
+<span class="kw">const</span> boss = <span class="kw">new</span> <span class="cls">PeppaBossEnemy</span>({
+    name: <span class="str">'George Pig'</span>,
+    health: <span class="num">5</span>,
+    moveSpeed: <span class="num">1.0</span>
+}, gameEnv);</pre>
+    </div>
+
+    <p>
+      The project also uses object literals to store structured data. For example, each power-up is stored as an
+      object with a <code>name</code> and <code>description</code>.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.options = [
+    { name: <span class="str">'Extra Speed'</span>, description: <span class="str">'Move faster in battle'</span> },
+    { name: <span class="str">'Extra Health'</span>, description: <span class="str">'Start with more health'</span> },
+    { name: <span class="str">'Extra Damage'</span>, description: <span class="str">'Deal more damage per laser'</span> }
+];</pre>
+    </div>
+
+    <p>
+      This proves the instantiation and objects requirement because the project creates objects from classes and
+      uses object literals to organize game settings.
+    </p>
+
+    <h3 id="inheritance">4. Inheritance</h3>
+    <span class="requirement-tag">Requirement: Extending a parent class</span>
+
+    <p>
+      Inheritance happens when one class gets behavior from another class. In this project,
+      <code>PeppaBossEnemy</code> inherits from the game engine's <code>Enemy</code> class by using
+      <code>extends</code>. This lets the boss reuse engine features while still adding its own custom boss logic.
+    </p>
+
+    <div class="code-block">
+<pre>import Enemy from '@assets/js/GameEnginev1.1/essentials/Enemy.js';
+
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+    <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+        <span class="kw">super</span>(data, gameEnv);
+        <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves the inheritance requirement because <code>PeppaBossEnemy</code> is a child class that extends
+      the parent <code>Enemy</code> class.
+    </p>
+
+    <h3 id="method-overriding">5. Method Overriding</h3>
+    <span class="requirement-tag">Requirement: Replacing inherited behavior</span>
+
+    <p>
+      Method overriding happens when a child class writes its own version of a method that already exists in the
+      parent class. In this project, <code>PeppaBossEnemy</code> overrides <code>update()</code> so the boss can
+      move toward the player instead of only using the default enemy behavior.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+    <span class="cmt">// This custom update method overrides the parent Enemy update behavior.</span>
+    update() {
+        <span class="prop">this</span>.draw();
+
+        <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) {
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">const</span> player = <span class="prop">this</span>.gameEnv.gameObjects.find(
+            obj =&gt; obj?.constructor?.name === <span class="str">'Player'</span>
+        );
+
+        <span class="kw">if</span> (!player) {
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">const</span> dx = player.position.x - <span class="prop">this</span>.position.x;
+        <span class="kw">const</span> dy = player.position.y - <span class="prop">this</span>.position.y;
+        <span class="kw">const</span> distance = Math.hypot(dx, dy);
+
+        <span class="kw">if</span> (distance &gt; <span class="num">1</span>) {
+            <span class="prop">this</span>.position.x += (dx / distance) * <span class="prop">this</span>.moveSpeed;
+            <span class="prop">this</span>.position.y += (dy / distance) * <span class="prop">this</span>.moveSpeed;
+        }
+
+        <span class="prop">this</span>.stayWithinCanvas();
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves method overriding because the child class keeps the method name <code>update()</code>, but
+      changes what the method does for the boss enemy.
+    </p>
+
+    <h3 id="constructor-chaining">6. Constructor Chaining</h3>
+    <span class="requirement-tag">Requirement: Calling the parent constructor with super()</span>
+
+    <p>
+      Constructor chaining means the child class calls the parent class constructor before adding its own
+      properties. In JavaScript, this is done with <code>super()</code>. In this project,
+      <code>PeppaBossEnemy</code> calls <code>super(data, gameEnv)</code> so the parent <code>Enemy</code>
+      setup runs first.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+    <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+        <span class="kw">super</span>(data, gameEnv);
+
+        <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+        <span class="prop">this</span>.maxHealth = <span class="prop">this</span>.health;
+        <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+        <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves constructor chaining because the boss constructor first calls the parent constructor with
+      <code>super(data, gameEnv)</code>, then adds boss-specific properties like health, speed, and defeated state.
+    </p>
+  </section>
+
 
   <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
 
