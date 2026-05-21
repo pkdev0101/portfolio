@@ -246,6 +246,28 @@
 
     .callout strong { color: var(--accent-green); }
 
+
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: var(--accent-cyan);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom {
       display: inline-block;
       margin: 35px 0 15px;
@@ -287,36 +309,284 @@
     <tbody>
       <tr>
         <td>Code Documentation</td>
-        <td>Use comments and JSDoc to explain classes, constructors, parameters, return values, and important logic.</td>
+        <td>Section 1 explains comments and JSDoc for classes, constructors, parameters, return values, and important logic.</td>
         <td>Review code comments, method headers, and portfolio explanations.</td>
       </tr>
       <tr>
         <td>Console Debugging</td>
-        <td>Use <code>console.log()</code>, <code>console.warn()</code>, and <code>console.error()</code> to track game state.</td>
+        <td>Section 2 explains <code>console.log()</code>, <code>console.warn()</code>, and <code>console.error()</code> for tracking game state.</td>
         <td>Demo console output while testing the game.</td>
       </tr>
       <tr>
         <td>Hitbox Debugging</td>
-        <td>Use a visible hitbox rectangle to verify collision boundaries.</td>
+        <td>Section 3 explains visible hitbox rectangles for verifying collision boundaries.</td>
         <td>Compare visual sprite location to collision rectangle.</td>
       </tr>
       <tr>
         <td>Network Debugging</td>
-        <td>Inspect API requests, status codes, and JSON payloads in the Network tab.</td>
+        <td>Section 4 explains inspecting API requests, status codes, and JSON payloads in the Network tab.</td>
         <td>Review fetch calls and response handling.</td>
       </tr>
       <tr>
         <td>Application Debugging</td>
-        <td>Check localStorage values for player name, game mode, selected characters, and leaderboard data.</td>
+        <td>Section 5 explains checking localStorage values for player name, game mode, selected characters, and leaderboard data.</td>
         <td>Inspect Application tab storage values after gameplay.</td>
       </tr>
       <tr>
         <td>Testing and Verification</td>
-        <td>Test player attacks, boss damage, win/loss conditions, leaderboard behavior, and error handling.</td>
+        <td>Section 6 explains testing player attacks, boss damage, win/loss conditions, leaderboard behavior, and error handling.</td>
         <td>Live demo and test explanation.</td>
       </tr>
     </tbody>
   </table>
+
+
+  <hr class="section-divider">
+
+  <section id="specific-documentation-debugging-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific Documentation and Debugging Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="code-documentation-specific">1. Code Documentation</h3>
+    <span class="requirement-tag">Requirement: Use comments and JSDoc to explain classes, constructors, parameters, return values, and important logic</span>
+
+    <p>
+      Code documentation explains what the program does before someone reads every line of code. In my project,
+      documentation is used to explain the boss class, constructor parameters, method behavior, return values,
+      and important game logic. This makes the game easier to review because the reader can understand the purpose
+      of each class and method.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Class comments explain what <code>PeppaBossEnemy</code> does.</li>
+      <li><code>@class</code> and <code>@extends</code> show the class relationship.</li>
+      <li><code>@param</code> explains constructor and method inputs.</li>
+      <li><code>@returns</code> explains what a method sends back.</li>
+      <li>Inline comments explain special logic like hitbox debugging and API error handling.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * PeppaBossEnemy — custom boss class extending the Enemy base.
+ * Adds health system, defeat state, movement AI, and hitbox debugging.
+ *
+ * @class PeppaBossEnemy
+ * @extends Enemy
+ */</span>
+<span class="kw">class</span> <span class="cls">PeppaBossEnemy</span> <span class="kw">extends</span> <span class="cls">Enemy</span> {
+  <span class="cmt">/**
+   * @param {Object} data - Sprite and config data for this enemy.
+   * @param {number} data.health - Starting HP for this boss.
+   * @param {number} data.moveSpeed - Pixels per frame toward the player.
+   * @param {Object} gameEnv - Shared game environment reference.
+   */</span>
+  <span class="kw">constructor</span>(data = <span class="kw">null</span>, gameEnv = <span class="kw">null</span>) {
+    <span class="kw">super</span>(data, gameEnv);
+    <span class="prop">this</span>.health = data?.health ?? <span class="num">3</span>;
+    <span class="prop">this</span>.maxHealth = <span class="prop">this</span>.health;
+    <span class="prop">this</span>.moveSpeed = data?.moveSpeed ?? <span class="num">0.8</span>;
+    <span class="prop">this</span>.isDefeated = <span class="kw">false</span>;
+  }
+}</pre>
+    </div>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * Applies damage to the boss.
+ *
+ * @param {number} amount - HP to subtract from the boss.
+ * @returns {boolean} true if this hit defeated the boss.
+ */</span>
+takeDamage(amount = <span class="num">1</span>) {
+    <span class="kw">if</span> (<span class="prop">this</span>.isDefeated) <span class="kw">return</span> <span class="kw">true</span>;
+
+    <span class="prop">this</span>.health = Math.max(<span class="num">0</span>, <span class="prop">this</span>.health - amount);
+    <span class="kw">return</span> <span class="prop">this</span>.health === <span class="num">0</span>;
+}</pre>
+    </div>
+
+    <p>
+      This proves code documentation because the project uses comments and JSDoc to explain classes, parameters,
+      return values, and the purpose of important gameplay methods.
+    </p>
+
+    <h3 id="console-debugging-specific">2. Console Debugging</h3>
+    <span class="requirement-tag">Requirement: Use console.log(), console.warn(), and console.error() to track game state</span>
+
+    <p>
+      Console debugging helps check what the game is doing while it runs. My project uses console output to track
+      boss spawning, HP changes, laser hits, defeated state, hitbox positions, leaderboard saving, and API errors.
+      This helps find bugs without needing to guess what happened.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>console.log()</code> tracks normal events like boss spawn, HP changes, and score saving.</li>
+      <li><code>console.warn()</code> shows warnings like ignored damage or failed music playback.</li>
+      <li><code>console.error()</code> records serious issues like failed leaderboard API requests.</li>
+      <li>Console logs help verify that methods are running in the expected order.</li>
+    </ul>
+
+    <div class="code-block">
+<pre>console.log(<span class="str">`[PeppaBossEnemy] Spawned: ${data?.id} with ${this.health} HP`</span>);
+console.log(<span class="str">`[Boss] Hit! HP: ${this.health}/${this.maxHealth}`</span>);
+console.log(<span class="str">`[Boss] Defeated!`</span>);
+console.warn(<span class="str">`[Boss] Invulnerable, ignoring damage.`</span>);
+console.log(<span class="str">`[Hitbox] pos=(${Math.round(this.position.x)},${Math.round(this.position.y)})`</span>);
+console.log(<span class="str">`[Leaderboard] Score saved:`</span>, data);
+console.error(<span class="str">`[Leaderboard] POST failed:`</span>, error.message);</pre>
+    </div>
+
+    <p>
+      This proves console debugging because the project uses console messages to inspect game state, confirm
+      behavior, and identify errors during testing.
+    </p>
+
+    <h3 id="hitbox-debugging-specific">3. Hitbox Debugging</h3>
+    <span class="requirement-tag">Requirement: Use a visible hitbox rectangle to verify collision boundaries</span>
+
+    <p>
+      Hitbox debugging makes collision detection visible. In the game, the player sees sprite images, but the
+      collision system checks rectangles. Drawing a visible rectangle over the boss helps verify whether the
+      collision area matches the visible character.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>ctx.strokeRect()</code> draws the visible hitbox outline.</li>
+      <li><code>ctx.fillRect()</code> lightly fills the collision area.</li>
+      <li><code>position.x</code>, <code>position.y</code>, <code>width</code>, and <code>height</code> define the hitbox.</li>
+      <li>This helps fix unfair hits where the sprite and hitbox do not match.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">/**
+ * Draws a red rectangle over the boss sprite for collision debugging.
+ */</span>
+drawHitbox() {
+    <span class="kw">const</span> ctx = <span class="prop">this</span>.gameEnv?.ctx;
+    <span class="kw">if</span> (!ctx) <span class="kw">return</span>;
+
+    ctx.save();
+    ctx.strokeStyle = <span class="str">'rgba(255, 0, 0, 0.85)'</span>;
+    ctx.lineWidth = <span class="num">2</span>;
+    ctx.strokeRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.fillStyle = <span class="str">'rgba(255, 0, 0, 0.08)'</span>;
+    ctx.fillRect(<span class="prop">this</span>.position.x, <span class="prop">this</span>.position.y, <span class="prop">this</span>.width, <span class="prop">this</span>.height);
+    ctx.restore();
+}</pre>
+    </div>
+
+    <p>
+      This proves hitbox debugging because the project includes a visual debugging tool for checking collision
+      boundaries against the visible sprite.
+    </p>
+
+    <h3 id="network-debugging-specific">4. Network Debugging</h3>
+    <span class="requirement-tag">Requirement: Inspect API requests, status codes, and JSON payloads in the Network tab</span>
+
+    <p>
+      Network debugging is used when the game communicates with an API. API requests can fail because of a bad
+      URL, server errors, CORS issues, wrong request data, or connection problems. The Network tab helps verify
+      the request URL, method, status code, request body, and JSON response.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Check the <code>fetch()</code> request URL and method.</li>
+      <li>Inspect status codes such as <code>200</code>, <code>404</code>, or <code>500</code>.</li>
+      <li>Review JSON response data before using it in the game.</li>
+      <li>Use <code>try/catch</code> to prevent API failures from crashing the game.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">// API error handling pattern</span>
+<span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> fetch(url, fetchOptions);
+
+    <span class="kw">if</span> (!response.ok) {
+        <span class="kw">throw new</span> Error(<span class="str">`HTTP ${response.status}`</span>);
+    }
+
+    <span class="kw">const</span> data = <span class="kw">await</span> response.json();
+    <span class="kw">return</span> data;
+} <span class="kw">catch</span> (error) {
+    console.error(<span class="str">`[API] Request failed: ${error.message}`</span>);
+    <span class="kw">return</span> <span class="kw">null</span>;
+}</pre>
+    </div>
+
+    <p>
+      This proves network debugging because the project checks API responses, handles failed requests, and uses
+      browser tools to inspect web traffic.
+    </p>
+
+    <h3 id="application-debugging-specific">5. Application Debugging</h3>
+    <span class="requirement-tag">Requirement: Check localStorage values for player name, game mode, characters, and leaderboard data</span>
+
+    <p>
+      Application debugging focuses on browser storage. My game uses <code>localStorage</code> to save player
+      names, game mode, selected characters, and leaderboard scores. The Application tab in DevTools lets me
+      check whether the correct keys and values were saved after gameplay.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>peppaGameMode</code> stores the selected mode.</li>
+      <li><code>peppaPlayerName</code> stores the leaderboard name.</li>
+      <li><code>peppaPlayer1CharImage</code> stores Player 1's character image.</li>
+      <li><code>peppaPlayer2CharImage</code> stores Player 2's character image.</li>
+      <li><code>peppa-leaderboard-levelId</code> stores local leaderboard data.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> savedName = localStorage.getItem(<span class="str">'peppaPlayerName'</span>);
+<span class="kw">const</span> savedMode = localStorage.getItem(<span class="str">'peppaGameMode'</span>);
+<span class="kw">const</span> savedScores = localStorage.getItem(<span class="str">'peppa-leaderboard-lvl1'</span>);
+
+console.log(<span class="str">'Saved player name:'</span>, savedName);
+console.log(<span class="str">'Saved game mode:'</span>, savedMode);
+console.log(<span class="str">'Saved leaderboard:'</span>, savedScores);</pre>
+    </div>
+
+    <p>
+      This proves application debugging because the project checks stored browser data to verify that reload
+      behavior, character choices, game mode, and leaderboard saving work correctly.
+    </p>
+
+    <h3 id="testing-verification-specific">6. Testing and Verification</h3>
+    <span class="requirement-tag">Requirement: Test player attacks, boss damage, win/loss conditions, leaderboard behavior, and error handling</span>
+
+    <p>
+      Testing and verification means checking that each feature works the way it is supposed to work. My project
+      is tested by playing through important game systems and comparing the actual result to the expected result.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Test <code>Space</code> to make sure Player 1 can attack.</li>
+      <li>Test <code>Enter</code> to make sure Player 2 can attack in two-player mode.</li>
+      <li>Test laser collision to make sure boss health decreases.</li>
+      <li>Test win/loss conditions when health reaches <code>0</code>.</li>
+      <li>Test the HUD to make sure health, messages, score, and leaderboard output update.</li>
+      <li>Test localStorage after reload to make sure saved data persists.</li>
+      <li>Test API error handling to make sure failed requests do not crash the game.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">// Manual testing checklist example</span>
+console.log(<span class="str">'TEST: Press Space and confirm Player 1 laser spawns.'</span>);
+console.log(<span class="str">'TEST: Press Enter in two-player mode and confirm Player 2 laser spawns.'</span>);
+console.log(<span class="str">'TEST: Hit boss and confirm boss HP decreases.'</span>);
+console.log(<span class="str">'TEST: Reload page and confirm localStorage values still exist.'</span>);
+console.log(<span class="str">'TEST: Turn off API endpoint and confirm try/catch handles the error.'</span>);</pre>
+    </div>
+
+    <p>
+      This proves testing and verification because the project checks gameplay behavior, saved data, API errors,
+      and user-visible output during a live demo.
+    </p>
+  </section>
+
 
   <section id="documentation">
     <div class="section-heading">

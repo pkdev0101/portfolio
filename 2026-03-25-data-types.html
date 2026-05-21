@@ -254,6 +254,28 @@
       margin: 18px 0 24px;
     }
 
+
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: #4fc4cf;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom {
       display: inline-block;
       margin: 35px 0 15px;
@@ -295,27 +317,27 @@
     <tbody>
       <tr>
         <td>Numbers</td>
-        <td>Use numbers for health, score, speed, cooldowns, positions, and coin values.</td>
+        <td>Section 1 explains numbers for health, score, speed, cooldowns, positions, and coin values.</td>
         <td>Code review of numeric properties.</td>
       </tr>
       <tr>
         <td>Strings</td>
-        <td>Use strings for game mode, player names, sprite paths, and HUD messages.</td>
+        <td>Section 2 explains strings for game mode, player names, sprite paths, and HUD messages.</td>
         <td>Review string usage and template literals.</td>
       </tr>
       <tr>
         <td>Booleans</td>
-        <td>Use flags such as <code>battleEnded</code>, <code>attackRequested</code>, and <code>isDefeated</code>.</td>
+        <td>Section 3 explains boolean flags such as <code>battleEnded</code>, <code>attackRequested</code>, and <code>isDefeated</code>.</td>
         <td>Review boolean logic.</td>
       </tr>
       <tr>
         <td>Arrays</td>
-        <td>Store lasers, coins, classes, and leaderboard entries.</td>
+        <td>Section 4 explains arrays that store lasers, coins, classes, power-ups, and leaderboard entries.</td>
         <td>Review array operations.</td>
       </tr>
       <tr>
         <td>Objects / JSON</td>
-        <td>Use configuration objects, sprite data, spawn points, and stored score data.</td>
+        <td>Section 5 explains objects / JSON for configuration objects, sprite data, spawn points, and stored score data.</td>
         <td>Review object literals and JSON-style data.</td>
       </tr>
     </tbody>
@@ -523,6 +545,204 @@ this.chosenPower = null;</code></pre>
       has not picked anything yet. After pressing Enter, the selected power-up is stored in
       <code>this.gameEnv.gameControl.chosenPower</code> so the game can remember the choice across levels.
     </p>
+
+
+  <hr class="section-divider">
+
+  <section id="specific-data-type-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific Data Type Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="numbers">1. Numbers</h3>
+    <span class="requirement-tag">Requirement: Use numbers for health, score, speed, cooldowns, positions, and coins</span>
+
+    <p>
+      Numbers are used throughout the game for values that can be counted, measured, compared, or calculated.
+      In my game, numbers control player health, boss health, attack cooldowns, laser speed, coin value,
+      score, position, and movement.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>this.playerMaxHealth</code> stores the maximum health for the player.</li>
+      <li><code>this.playerHealth</code> stores the current health during the battle.</li>
+      <li><code>this.attackCooldownMs</code> stores the number of milliseconds between attacks.</li>
+      <li><code>this.laserSpeed</code> controls how fast the laser moves.</li>
+      <li><code>this.coinValue</code> controls how many points each coin is worth.</li>
+      <li><code>this.levelScore</code> stores the final score for the level.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;
+<span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+<span class="prop">this</span>.attackCooldownMs = config.attackCooldownMs ?? <span class="num">450</span>;
+<span class="prop">this</span>.laserSpeed = config.laserSpeed ?? <span class="num">14</span>;
+<span class="prop">this</span>.coinValue = config.coinValue ?? <span class="num">25</span>;
+<span class="prop">this</span>.levelScore = <span class="num">0</span>;</pre>
+    </div>
+
+    <p>
+      This proves the numbers requirement because the game uses numeric values to control health, timing,
+      projectile movement, coin rewards, and score calculation.
+    </p>
+
+    <h3 id="strings">2. Strings</h3>
+    <span class="requirement-tag">Requirement: Use strings for names, modes, paths, and messages</span>
+
+    <p>
+      Strings are text values. In my game, strings are used for the selected game mode, player names,
+      sprite image paths, localStorage keys, enemy names, and HUD messages.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>'singlePlayer'</code> and <code>'twoPlayer'</code> are string values for game mode.</li>
+      <li><code>'Ishan'</code> and <code>'Player 2'</code> are default player-name strings.</li>
+      <li><code>'ishan-jha.png'</code> is a sprite image path string.</li>
+      <li><code>'peppaGameMode'</code> and <code>'peppaPlayer1CharName'</code> are localStorage key strings.</li>
+      <li>Template literals create HUD messages such as coin collection and laser hit feedback.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>;
+<span class="prop">this</span>.playerName = config.playerName || <span class="str">'Ishan'</span>;
+
+<span class="kw">const</span> p1CharImage = localStorage.getItem(<span class="str">'peppaPlayer1CharImage'</span>) || <span class="str">'ishan-jha.png'</span>;
+<span class="kw">const</span> p2CharName = localStorage.getItem(<span class="str">'peppaPlayer2CharName'</span>) || <span class="str">'Player 2'</span>;
+
+<span class="prop">this</span>.updateHud(<span class="str">`Coin collected! +${this.coinValue} score`</span>);</pre>
+    </div>
+
+    <p>
+      This proves the strings requirement because the game uses text values to store modes, names, file paths,
+      browser storage keys, and player-facing messages.
+    </p>
+
+    <h3 id="booleans">3. Booleans</h3>
+    <span class="requirement-tag">Requirement: Use true / false flags for game state</span>
+
+    <p>
+      Booleans are values that are either <code>true</code> or <code>false</code>. In my game, booleans are used
+      as flags to track whether the battle is over, whether an attack was requested, whether a laser belongs
+      to a player, whether a coin was collected, and whether the boss has been defeated.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>this.battleEnded</code> prevents the game from continuing after a win or loss.</li>
+      <li><code>this.attackRequested</code> tracks whether Player 1 pressed the attack key.</li>
+      <li><code>this.player2AttackRequested</code> tracks whether Player 2 pressed the attack key.</li>
+      <li><code>isPlayerLaser</code> identifies whether a laser belongs to a player.</li>
+      <li><code>this.isDefeated</code> tracks whether the boss has been defeated.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.battleEnded = <span class="kw">false</span>;
+<span class="prop">this</span>.attackRequested = <span class="kw">false</span>;
+<span class="prop">this</span>.player2AttackRequested = <span class="kw">false</span>;
+
+<span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    isPlayerLaser,
+    life: <span class="num">60</span>
+});
+
+<span class="prop">this</span>.isDefeated = <span class="kw">false</span>;</pre>
+    </div>
+
+    <p>
+      This proves the booleans requirement because the game uses true-or-false values to control decisions,
+      stop repeated actions, and track whether events have happened.
+    </p>
+
+    <h3 id="arrays-specific">4. Arrays</h3>
+    <span class="requirement-tag">Requirement: Store multiple related values in lists</span>
+
+    <p>
+      Arrays are lists of values. In my game, arrays store active lasers, coins, game classes, power-up options,
+      and leaderboard entries. This lets the game handle many objects without creating a separate variable for
+      every single laser, coin, or leaderboard score.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>this.lasers</code> stores all active laser projectiles.</li>
+      <li><code>this.coins</code> stores all collectible coins.</li>
+      <li><code>this.classes</code> stores the game objects that should be created for the level.</li>
+      <li><code>this.leaderboard</code> stores score entries.</li>
+      <li><code>this.options</code> stores power-up choices.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.lasers = [];
+<span class="prop">this</span>.coins = [];
+<span class="prop">this</span>.leaderboard = [];
+
+<span class="prop">this</span>.classes = [
+    { <span class="kw">class</span>: <span class="cls">GameEnvBackground</span>, data: image_data_background },
+    { <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_ishan }
+];
+
+<span class="prop">this</span>.options = [
+    { name: <span class="str">'Extra Speed'</span>, description: <span class="str">'Move faster in battle'</span> },
+    { name: <span class="str">'Extra Health'</span>, description: <span class="str">'Start with more health'</span> },
+    { name: <span class="str">'Extra Damage'</span>, description: <span class="str">'Deal more damage per laser'</span> }
+];</pre>
+    </div>
+
+    <p>
+      This proves the arrays requirement because the game uses arrays to store and update collections of
+      lasers, coins, class definitions, leaderboard scores, and power-up choices.
+    </p>
+
+    <h3 id="objects-json">5. Objects / JSON</h3>
+    <span class="requirement-tag">Requirement: Use object literals and JSON-style data</span>
+
+    <p>
+      Objects store related information using key-value pairs. In my game, objects are used for configuration
+      settings, sprite data, laser data, character data, spawn positions, leaderboard entries, and power-up data.
+      These objects are similar to JSON because they organize data with property names and values.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>config</code> is an object that controls level settings.</li>
+      <li><code>charData</code> stores a character's image, name, and accent color.</li>
+      <li>Laser objects store position, velocity, source, and lifetime.</li>
+      <li><code>this.playerSpawn</code> stores x and y spawn coordinates.</li>
+      <li>Power-up objects store a <code>name</code> and <code>description</code>.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> charData = {
+    image: char.image,
+    name: char.name,
+    accentColor: accentColor
+};
+
+<span class="prop">this</span>.playerSpawn = {
+    x: width * <span class="num">0.12</span>,
+    y: height * <span class="num">0.72</span>
+};
+
+<span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx,
+    vy,
+    isPlayerLaser,
+    source: sourceId,
+    life: <span class="num">60</span>,
+    maxLife: <span class="num">60</span>
+});</pre>
+    </div>
+
+    <p>
+      This proves the objects / JSON requirement because the game uses object literals to group related data
+      together and pass structured information between different parts of the game.
+    </p>
+  </section>
+
 
 <hr class="section-divider">
 

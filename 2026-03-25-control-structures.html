@@ -280,6 +280,28 @@
       margin-bottom: 10px;
     }
 
+
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: #4fc4cf;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom {
       display: inline-block;
       margin: 35px 0 15px;
@@ -322,31 +344,233 @@
     <tbody>
       <tr>
         <td>Data and State</td>
-        <td>Use variables, strings, numbers, booleans, arrays, and objects to track gameplay.</td>
+        <td>Section 1 explains variables, strings, numbers, booleans, arrays, and objects used to track gameplay.</td>
         <td>Review stored values and game-state organization.</td>
       </tr>
       <tr>
         <td>Mathematical Operators</td>
-        <td>Calculate damage, movement, distance, score, velocity, and laser life.</td>
+        <td>Section 2 explains operators that calculate damage, movement, distance, score, velocity, and laser life.</td>
         <td>Code review of formulas.</td>
       </tr>
       <tr>
         <td>Boolean Expressions</td>
-        <td>Use compound checks for attacks, game mode, death states, and boss defeat.</td>
+        <td>Section 3 explains boolean expressions for attacks, game mode, death states, and boss defeat.</td>
         <td>Review <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>, and comparisons.</td>
       </tr>
       <tr>
         <td>Iteration</td>
-        <td>Loop through lasers, coins, objects, and update logic.</td>
+        <td>Section 4 explains loops that update lasers, coins, objects, and game logic.</td>
         <td>Code review of loop-based systems.</td>
       </tr>
       <tr>
         <td>Conditionals</td>
-        <td>Use <code>if/else</code> for win/loss, player mode, cooldowns, and input handling.</td>
+        <td>Section 5 explains <code>if/else</code> logic for win/loss, player mode, cooldowns, and input handling.</td>
         <td>Review conditionals and nested logic.</td>
       </tr>
     </tbody>
   </table>
+
+
+  <hr class="section-divider">
+
+  <section id="specific-operator-control-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific Operators &amp; Control Structures Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="data-and-state-specific">1. Data and State</h3>
+    <span class="requirement-tag">Requirement: Use variables, strings, numbers, booleans, arrays, and objects</span>
+
+    <p>
+      Data and state are the stored values that let the game remember what is happening. My game uses variables
+      to track health, score, cooldowns, lasers, coins, game mode, battle status, player names, and object data.
+      These values change during gameplay, which is why they are important game state.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>this.playerHealth</code> and <code>this.enemyHealth</code> store numeric health values.</li>
+      <li><code>this.gameMode</code> stores a string such as <code>'singlePlayer'</code> or <code>'twoPlayer'</code>.</li>
+      <li><code>this.battleEnded</code> stores a boolean true/false state.</li>
+      <li><code>this.lasers</code> and <code>this.coins</code> store arrays of active objects.</li>
+      <li>Laser objects store position, velocity, source, and lifetime.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = <span class="str">'twoPlayer'</span>;       <span class="cmt">// String</span>
+<span class="prop">this</span>.playerHealth = <span class="num">4</span>;             <span class="cmt">// Number</span>
+<span class="prop">this</span>.battleEnded = <span class="kw">false</span>;          <span class="cmt">// Boolean</span>
+<span class="prop">this</span>.lasers = [];                  <span class="cmt">// Array</span>
+
+<span class="prop">this</span>.lasers.push({
+    x: fromX,
+    y: fromY,
+    vx: vx,
+    vy: vy,
+    source: <span class="str">'player1'</span>,
+    life: <span class="num">60</span>
+});</pre>
+    </div>
+
+    <p>
+      This proves the data and state requirement because the game uses different data types to store and update
+      gameplay information every frame.
+    </p>
+
+    <h3 id="mathematical-operators-specific">2. Mathematical Operators</h3>
+    <span class="requirement-tag">Requirement: Calculate damage, movement, score, velocity, and laser life</span>
+
+    <p>
+      Mathematical operators are used when the game changes numbers. My project uses subtraction for health and
+      laser life, addition assignment for movement, multiplication for score, division for player center position,
+      and comparison operators for cooldowns.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>this.playerHealth - 1</code> subtracts damage from health.</li>
+      <li><code>L.x += L.vx</code> and <code>L.y += L.vy</code> move lasers each frame.</li>
+      <li><code>L.life -= 1</code> lowers the laser lifetime.</li>
+      <li><code>this.playerHealth * 100</code> rewards remaining health in the final score.</li>
+      <li><code>this.coinCount * this.coinValue</code> adds a coin bonus to the score.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.playerHealth = Math.max(<span class="num">0</span>, <span class="prop">this</span>.playerHealth - <span class="num">1</span>);
+
+L.x += L.vx;
+L.y += L.vy;
+L.life -= <span class="num">1</span>;
+
+<span class="kw">const</span> score =
+    (<span class="prop">this</span>.playerHealth * <span class="num">100</span>) +
+    (<span class="prop">this</span>.coinCount * <span class="prop">this</span>.coinValue);</pre>
+    </div>
+
+    <p>
+      This proves the mathematical operators requirement because the game uses operators to calculate health,
+      laser movement, projectile lifetime, and the final score.
+    </p>
+
+    <h3 id="boolean-expressions-specific">3. Boolean Expressions</h3>
+    <span class="requirement-tag">Requirement: Use comparisons, compound checks, and logical operators</span>
+
+    <p>
+      Boolean expressions are conditions that evaluate to <code>true</code> or <code>false</code>. My game uses
+      boolean expressions to decide whether objects exist, whether the battle is over, whether a boss is defeated,
+      whether a player is dead, and whether the correct game mode is active.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>&amp;&amp;</code> checks that multiple conditions are true.</li>
+      <li><code>||</code> checks if at least one condition is true.</li>
+      <li><code>!</code> flips a boolean value, such as <code>!this.battleEnded</code>.</li>
+      <li><code>&lt;=</code>, <code>&gt;=</code>, and <code>===</code> compare values.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> player1Dead = <span class="prop">this</span>.playerHealth &lt;= <span class="num">0</span>;
+<span class="kw">const</span> player2Dead = player2 &amp;&amp; <span class="prop">this</span>.player2Health &lt;= <span class="num">0</span>;
+
+<span class="kw">if</span> ((player1Dead || player2Dead) &amp;&amp; !<span class="prop">this</span>.battleEnded) {
+    <span class="prop">this</span>.battleEnded = <span class="kw">true</span>;
+}
+
+<span class="kw">if</span> (boss &amp;&amp; !boss.isDefeated) {
+    <span class="prop">this</span>.updateHud(<span class="str">'Boss is still active.'</span>);
+}</pre>
+    </div>
+
+    <p>
+      This proves the boolean expressions requirement because the game uses logical operators and comparisons
+      to control attacks, death checks, boss defeat, and battle-ending behavior.
+    </p>
+
+    <h3 id="iteration-specific">4. Iteration</h3>
+    <span class="requirement-tag">Requirement: Loop through lasers, coins, objects, and update logic</span>
+
+    <p>
+      Iteration means repeating code, usually with a loop. My game uses iteration to update every active laser,
+      check collections like coins, and process lists of game objects. This is important because there can be
+      many lasers or coins on screen at the same time.
+    </p>
+
+    <ul class="evidence-list">
+      <li>The laser loop moves every laser in <code>this.lasers</code>.</li>
+      <li>The loop lowers each laser's <code>life</code> value.</li>
+      <li>Expired lasers are removed with <code>splice()</code>.</li>
+      <li>Looping backward prevents skipped items when removing from the array.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">for</span> (<span class="kw">let</span> i = <span class="prop">this</span>.lasers.length - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+    <span class="kw">const</span> L = <span class="prop">this</span>.lasers[i];
+
+    L.x += L.vx;
+    L.y += L.vy;
+    L.life -= <span class="num">1</span>;
+
+    <span class="kw">if</span> (L.life &lt;= <span class="num">0</span>) {
+        <span class="prop">this</span>.lasers.splice(i, <span class="num">1</span>);
+        <span class="kw">continue</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves the iteration requirement because the game repeatedly updates every laser in the array instead
+      of writing separate movement code for each laser.
+    </p>
+
+    <h3 id="conditionals-specific">5. Conditionals</h3>
+    <span class="requirement-tag">Requirement: Use if / else logic for modes, cooldowns, input, wins, and losses</span>
+
+    <p>
+      Conditionals decide which branch of code should run. My game uses conditionals for single-player versus
+      two-player mode, attack cooldowns, menu controls, win/loss messages, collision checks, and preventing errors
+      when game objects are not loaded yet.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Mode checks decide whether the game needs Player 2 or the boss.</li>
+      <li>Nested conditionals choose the correct multiplayer ending message.</li>
+      <li>Cooldown conditionals prevent attack spam.</li>
+      <li>Menu conditionals react to ArrowUp, ArrowDown, Enter, and Escape.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="kw">if</span> (!player || !player2) <span class="kw">return</span>;
+} <span class="kw">else</span> {
+    <span class="kw">if</span> (!player || !boss) <span class="kw">return</span>;
+}</pre>
+    </div>
+
+    <div class="code-block">
+<pre>handleKeyDown(event) {
+    <span class="kw">if</span> (event.key === <span class="str">'ArrowUp'</span>) {
+        <span class="prop">this</span>.selectedOption = (<span class="prop">this</span>.selectedOption - <span class="num">1</span> + <span class="prop">this</span>.options.length) % <span class="prop">this</span>.options.length;
+        <span class="prop">this</span>.renderOptions();
+    } <span class="kw">else if</span> (event.key === <span class="str">'ArrowDown'</span>) {
+        <span class="prop">this</span>.selectedOption = (<span class="prop">this</span>.selectedOption + <span class="num">1</span>) % <span class="prop">this</span>.options.length;
+        <span class="prop">this</span>.renderOptions();
+    } <span class="kw">else if</span> (event.key === <span class="str">'Enter'</span>) {
+        <span class="prop">this</span>.selectPower();
+    } <span class="kw">else if</span> (event.key === <span class="str">'Escape'</span>) {
+        event.preventDefault();
+    }
+
+    event.preventDefault();
+}</pre>
+    </div>
+
+    <p>
+      This proves the conditionals requirement because the game uses <code>if</code>, <code>else if</code>, and
+      nested logic to decide how the game should respond to different situations.
+    </p>
+  </section>
+
 
   <!-- DATA AND STATE -->
   <section id="data-state">

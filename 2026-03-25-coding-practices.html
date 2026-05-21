@@ -349,6 +349,27 @@
       font-size: 14px;
     }
 
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: #4fc4cf;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom {
       display: inline-block;
       margin: 35px 0 15px;
@@ -392,32 +413,32 @@
     <tbody>
       <tr>
         <td>Single Responsibility Principle</td>
-        <td>Separate jobs into methods for lasers, HUD, collisions, coins, and updates.</td>
+        <td>Section 1 explains how separate methods handle lasers, HUD, collisions, coins, and updates.</td>
         <td>Code review of method organization.</td>
       </tr>
       <tr>
         <td>Data-Driven Design</td>
-        <td>Use configuration objects, sprite data, arrays, and level settings to build gameplay.</td>
+        <td>Section 2 explains configuration objects, sprite data, arrays, and level settings.</td>
         <td>Review object literals and level setup.</td>
       </tr>
       <tr>
         <td>State Management</td>
-        <td>Track game mode, battle ending, health, score, coins, and level transitions.</td>
+        <td>Section 3 explains how the game tracks mode, battle ending, health, score, coins, and transitions.</td>
         <td>Review state variables and update-loop logic.</td>
       </tr>
       <tr>
         <td>Control Structures</td>
-        <td>Use conditionals and nested logic for multiplayer mode, collisions, and boundaries.</td>
+        <td>Section 4 explains conditionals and nested logic for multiplayer mode, collisions, and boundaries.</td>
         <td>Review <code>if</code>, <code>else if</code>, and compound checks.</td>
       </tr>
       <tr>
         <td>Input / Output</td>
-        <td>Use keyboard controls, HUD updates, localStorage, and code runner output.</td>
+        <td>Section 5 explains keyboard controls, HUD updates, localStorage, and code runner output.</td>
         <td>Gameplay demo and portfolio review.</td>
       </tr>
       <tr>
         <td>Software Development Lifecycle</td>
-        <td>Build, test, fix, integrate, deploy, and improve the game through multiple iterations.</td>
+        <td>Section 6 explains build, test, fix, integrate, deploy, and improvement steps.</td>
         <td>Review testing notes, deployed portfolio page, and project improvements.</td>
       </tr>
     </tbody>
@@ -476,6 +497,222 @@
       This code shows how the game stores important information at the start of the level. If no custom player health
       is provided, the game automatically uses <code>5</code>. If no player name is given, it defaults to
       <code>"Ishan"</code>. This makes the code more flexible and reusable.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="specific-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific Coding Practices Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="single-responsibility">1. Single Responsibility Principle</h3>
+    <span class="requirement-tag">Requirement: Separate jobs into focused methods</span>
+
+    <p>
+      The single responsibility principle means each method should have one main job. My project shows this because
+      the game separates lasers, collisions, coins, scoring, HUD updates, and level setup into different systems
+      instead of putting all of the logic into one huge method.
+    </p>
+
+    <ul class="evidence-list">
+      <li><code>spawnLaserStraight()</code> creates laser objects.</li>
+      <li><code>areColliding()</code> checks if two hitboxes overlap.</li>
+      <li><code>updateHud()</code> updates the player-facing message and stats.</li>
+      <li><code>saveScore()</code>, <code>loadLeaderboard()</code>, and <code>renderLeaderboard()</code> handle leaderboard behavior.</li>
+      <li>Coin generation, floor barriers, and character selection are separated from the main battle explanation.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="prop">spawnLaserStraight</span>(fromX, fromY, direction, isPlayerLaser) {
+    <span class="kw">const</span> [vx, vy] = <span class="prop">this</span>.directionToVelocity(direction);
+
+    <span class="prop">this</span>.lasers.push({
+        x: fromX,
+        y: fromY,
+        vx,
+        vy,
+        isPlayerLaser,
+        life: <span class="num">60</span>,
+        maxLife: <span class="num">60</span>
+    });
+}</pre>
+    </div>
+
+    <p>
+      This proves single responsibility because this method only creates a laser object. It does not also calculate
+      the final score, update the leaderboard, or control character selection.
+    </p>
+
+    <h3 id="data-driven-design">2. Data-Driven Design</h3>
+    <span class="requirement-tag">Requirement: Use configuration objects, arrays, and saved data</span>
+
+    <p>
+      Data-driven design means values in objects and arrays control how the game behaves. My project uses a
+      <code>config</code> object to set player health, cooldowns, laser speed, API base, player name, coin values,
+      and other level settings.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">constructor</span>(gameEnv, config) {
+    <span class="prop">this</span>.gameEnv = gameEnv;
+    <span class="prop">this</span>.config = config;
+
+    <span class="prop">this</span>.playerMaxHealth = config.playerHealth ?? <span class="num">5</span>;
+    <span class="prop">this</span>.playerDamageCooldownMs = config.playerDamageCooldownMs ?? <span class="num">650</span>;
+    <span class="prop">this</span>.attackCooldownMs = config.attackCooldownMs ?? <span class="num">450</span>;
+    <span class="prop">this</span>.laserSpeed = config.laserSpeed ?? <span class="num">14</span>;
+}</pre>
+    </div>
+
+    <p>
+      The project also uses data objects for character choices. Each selected character is stored as an object
+      with an image, name, and accent color.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">const</span> charData = {
+    image: char.image,
+    name: char.name,
+    accentColor: accentColor
+};</pre>
+    </div>
+
+    <p>
+      This proves data-driven design because the game changes based on configuration data, character data,
+      sprite data, and stored browser values instead of only using hard-coded behavior.
+    </p>
+
+    <h3 id="state-management">3. State Management</h3>
+    <span class="requirement-tag">Requirement: Track changing game values</span>
+
+    <p>
+      State management means tracking values that change while the game runs. My game stores and updates state
+      for the game mode, player health, Player 2 health, coin count, final score, leaderboard, battle ending,
+      selected characters, and active lasers.
+    </p>
+
+    <div class="code-block">
+<pre><span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>;
+<span class="prop">this</span>.playerHealth = <span class="prop">this</span>.playerMaxHealth;
+<span class="prop">this</span>.coinCount = <span class="num">0</span>;
+<span class="prop">this</span>.levelScore = <span class="num">0</span>;
+<span class="prop">this</span>.leaderboard = [];</pre>
+    </div>
+
+    <p>
+      Coins are a clear example of state changing during gameplay. When a coin is collected, the coin object changes,
+      the coin count increases, and the HUD updates.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (distance &lt;= collectRadius) {
+    coin.collected = <span class="kw">true</span>;
+    <span class="prop">this</span>.coinCount += <span class="num">1</span>;
+    <span class="prop">this</span>.updateHud(<span class="str">`Coin collected! +${this.coinValue} score`</span>);
+}</pre>
+    </div>
+
+    <p>
+      This proves state management because the game stores important values and updates them when the player
+      moves, attacks, collects coins, takes damage, or finishes the level.
+    </p>
+
+    <h3 id="control-structures">4. Control Structures</h3>
+    <span class="requirement-tag">Requirement: Use conditionals and logical checks</span>
+
+    <p>
+      Control structures are the <code>if</code>, <code>else</code>, and comparison checks that decide what the
+      program should do. My project uses control structures for multiplayer mode, collision checks, laser damage,
+      character loading, and keeping players inside the arena.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
+}</pre>
+    </div>
+
+    <p>
+      This logic changes the entire level depending on the game mode. In two-player mode, the game adds Player 2.
+      In single-player mode, the game adds the boss enemy.
+    </p>
+
+    <div class="code-block">
+<pre><span class="kw">if</span> (player &amp;&amp; player.height) {
+    <span class="kw">if</span> (player.position.y &lt; floorY) {
+        player.position.y = floorY;
+        player.velocity.y = <span class="num">0</span>;
+    }
+
+    <span class="kw">if</span> (player.position.y + player.height &gt; height) {
+        player.position.y = height - player.height;
+        player.velocity.y = <span class="num">0</span>;
+    }
+}</pre>
+    </div>
+
+    <p>
+      This proves control structures because the game uses conditions to make decisions about mode, movement,
+      collisions, boundaries, and damage.
+    </p>
+
+    <h3 id="input-output">5. Input / Output</h3>
+    <span class="requirement-tag">Requirement: Use controls, saved data, and visible feedback</span>
+
+    <p>
+      Input is how the player gives information to the game, and output is how the game gives information back.
+      My project uses keyboard input, character selection input, browser storage, HUD messages, laser colors,
+      score updates, and leaderboard output.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Player 1 uses <code>WASD</code> to move and <code>Space</code> to fire.</li>
+      <li>Player 2 uses the arrow keys to move and <code>Enter</code> to fire.</li>
+      <li><code>localStorage</code> saves character choices and the selected game mode.</li>
+      <li><code>updateHud()</code> outputs messages like coin collection and laser hits.</li>
+    </ul>
+
+    <div class="code-block">
+<pre>localStorage.setItem(<span class="str">'peppaPlayer1CharImage'</span>, char.image);
+localStorage.setItem(<span class="str">'peppaPlayer1CharName'</span>, char.name);
+
+<span class="prop">this</span>.updateHud(<span class="str">`Coin collected! +${this.coinValue} score`</span>);</pre>
+    </div>
+
+    <p>
+      This proves input/output because the game receives player actions and saved choices, then shows visible
+      feedback through the HUD, gameplay objects, score, and leaderboard.
+    </p>
+
+    <h3 id="software-development-lifecycle">6. Software Development Lifecycle</h3>
+    <span class="requirement-tag">Requirement: Build, test, fix, integrate, deploy, and improve</span>
+
+    <p>
+      The software development lifecycle is shown because the game was improved over multiple versions.
+      The project started with a boss battle structure, then added multiplayer mode, character selection,
+      coins, scoring, localStorage, laser hitboxes, and leaderboard behavior.
+    </p>
+
+    <ul class="evidence-list">
+      <li><strong>Planning:</strong> Decide the game theme, level structure, controls, and rubric goals.</li>
+      <li><strong>Building:</strong> Code movement, lasers, collisions, HUD, coins, and scoring.</li>
+      <li><strong>Testing:</strong> Test single-player mode, two-player mode, character selection, and score saving.</li>
+      <li><strong>Debugging:</strong> Fix problems with hit detection, localStorage values, UI display, and game transitions.</li>
+      <li><strong>Integration:</strong> Connect character selection, game mode, leaderboard, and battle levels together.</li>
+      <li><strong>Deployment:</strong> Add the page to the portfolio so it can be reviewed and demonstrated.</li>
+      <li><strong>Improvement:</strong> Add coins and final scoring so the game rewards survival and exploration.</li>
+    </ul>
+
+    <p>
+      This proves the SDLC requirement because the page shows the project as a complete development process,
+      not just a final code dump.
     </p>
   </section>
 
@@ -804,8 +1041,6 @@
       This makes the gameplay easier to understand visually.
     </p>
   </section>
-
- 
 
 <a class="back-bottom" href="/2026-03-25-college-ready-blog.html/">← Back to College Ready Blog</a>
 

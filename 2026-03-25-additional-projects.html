@@ -233,6 +233,28 @@
       margin: 18px 0 24px;
     }
 
+
+    .requirement-tag {
+      display: inline-block;
+      background: rgba(79, 196, 207, 0.12);
+      border: 1px solid rgba(79, 196, 207, 0.35);
+      color: #4fc4cf;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 8px 0 10px;
+    }
+
+    .evidence-list {
+      margin: 14px 0 24px;
+      line-height: 1.7;
+    }
+
+    .evidence-list li {
+      margin: 8px 0;
+    }
+
     .back-bottom {
       display: inline-block;
       margin: 35px 0 15px;
@@ -274,21 +296,155 @@
     <tbody>
       <tr>
         <td>Planning Changes</td>
-        <td>Describe how the game changed over time through new features and improvements.</td>
+        <td>Section 1 explains how the game changed over time through new features and improvements.</td>
         <td>Review blog evidence and project history.</td>
       </tr>
       <tr>
         <td>Checklists &amp; Burndown</td>
-        <td>Connect homework and milestones to the final game.</td>
+        <td>Section 2 explains how homework and milestones connect to the final game.</td>
         <td>Portfolio and sprint review.</td>
       </tr>
       <tr>
         <td>Mini-Lesson Documentation</td>
-        <td>Use blog-style explanations and code highlights to teach game features.</td>
+        <td>Section 3 explains blog-style explanations and code highlights used to teach game features.</td>
         <td>Portfolio review of explanations and examples.</td>
       </tr>
     </tbody>
   </table>
+
+
+  <hr class="section-divider">
+
+  <section id="specific-software-engineering-requirements">
+    <div class="section-heading">
+      <div class="icon">✅</div>
+      <h2>Specific Software Engineering Practices Requirements</h2>
+    </div>
+
+    <hr class="rule">
+
+    <h3 id="planning-changes-specific">1. Planning Changes</h3>
+    <span class="requirement-tag">Requirement: Describe how the game changed over time through new features and improvements</span>
+
+    <p>
+      Planning changes means showing how the project improved over time instead of appearing as one final version.
+      My Peppa Pig Fighting Game started as a smaller game idea and then grew into a more complete project with
+      extra gameplay systems, better organization, and more ways for the player to interact with the game.
+    </p>
+
+    <ul class="evidence-list">
+      <li>The game expanded from a basic battle idea into a multi-level boss fight.</li>
+      <li>Multiplayer mode was added so two players could fight using separate controls.</li>
+      <li>Character selection was added so players could choose names and sprites.</li>
+      <li>Coins and scoring were added to reward survival and exploration.</li>
+      <li>localStorage and leaderboard behavior were added so the game could remember scores and choices.</li>
+      <li>API integration was added for music and leaderboard-style data.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">// Example of a planned improvement: support either one-player or two-player gameplay</span>
+<span class="prop">this</span>.gameMode = config.gameMode ?? localStorage.getItem(<span class="str">'peppaGameMode'</span>) ?? <span class="str">'singlePlayer'</span>;
+
+<span class="kw">if</span> (<span class="prop">this</span>.gameMode === <span class="str">'twoPlayer'</span>) {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">Player</span>, data: sprite_data_player2 });
+} <span class="kw">else</span> {
+    <span class="prop">this</span>.classes.push({ <span class="kw">class</span>: <span class="cls">PeppaBossEnemy</span>, data: sprite_data_enemy });
+}</pre>
+    </div>
+
+    <p>
+      This proves the planning changes requirement because the page explains how the project gained new features
+      and became more advanced through multiple improvements.
+    </p>
+
+    <h3 id="checklists-burndown-specific">2. Checklists and Burndown</h3>
+    <span class="requirement-tag">Requirement: Connect homework and milestones to the final game</span>
+
+    <p>
+      Checklists and burndown show how the project was broken into smaller tasks. Instead of trying to finish the
+      whole game at once, I connected individual homework topics and milestones to final game features. Each item
+      helped complete part of the larger project.
+    </p>
+
+    <ul class="evidence-list">
+      <li>Variables homework connects to player health, score, cooldowns, coin count, player names, and positions.</li>
+      <li>Boolean homework connects to <code>battleEnded</code>, <code>isPlayerLaser</code>, and attack flags.</li>
+      <li>Classes and Variables homework connects to game objects and class properties.</li>
+      <li>Functions homework connects to reusable methods such as <code>initialize()</code>, <code>updateHud()</code>, and <code>spawnLaser()</code>.</li>
+      <li>Conditionals homework connects to win/loss checks, cooldown checks, collision checks, and mode checks.</li>
+      <li>Array homework connects to <code>this.lasers</code>, <code>this.classes</code>, <code>this.coins</code>, and <code>this.leaderboard</code>.</li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Checklist Item</th>
+          <th>Final Game Connection</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Variables</td>
+          <td>Health, score, cooldowns, coin count, player names, and positions.</td>
+        </tr>
+        <tr>
+          <td>Booleans</td>
+          <td>Battle-ended flags, player attack requests, and laser ownership checks.</td>
+        </tr>
+        <tr>
+          <td>Functions</td>
+          <td>Reusable gameplay methods like <code>initialize()</code>, <code>updateHud()</code>, and <code>saveScore()</code>.</td>
+        </tr>
+        <tr>
+          <td>Conditionals</td>
+          <td>Win/loss logic, mode checks, collision checks, and API/localStorage fallbacks.</td>
+        </tr>
+        <tr>
+          <td>Arrays</td>
+          <td>Lists of lasers, coins, classes, and leaderboard entries.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      This proves the checklists and burndown requirement because the portfolio connects class assignments and
+      smaller milestones directly to final game systems.
+    </p>
+
+    <h3 id="mini-lesson-documentation-specific">3. Mini-Lesson Documentation</h3>
+    <span class="requirement-tag">Requirement: Use blog-style explanations and code highlights to teach game features</span>
+
+    <p>
+      Mini-lesson documentation means explaining the code in a way that teaches another person how the feature works.
+      My project pages use headings, short explanations, code blocks, screenshots, and homework connections to explain
+      important CS111 concepts through the game.
+    </p>
+
+    <ul class="evidence-list">
+      <li>The calculator project teaches operators, input, and real-time output.</li>
+      <li>The word game teaches strings, typing accuracy, WPM, and dynamic feedback.</li>
+      <li>The Peppa Pig Fighting Game pages explain OOP, data types, control structures, API integration, and debugging.</li>
+      <li>Code blocks highlight the exact parts of the project being explained.</li>
+      <li>Blog sections connect each project feature to a CS111 concept.</li>
+    </ul>
+
+    <div class="code-block">
+<pre><span class="cmt">// Example mini-lesson idea: explain how a button/input changes output</span>
+button.addEventListener(<span class="str">'click'</span>, () =&gt; {
+    <span class="prop">this</span>.start();
+});
+
+<span class="cmt">// Example mini-lesson idea: explain how scores are displayed dynamically</span>
+item.textContent = <span class="str">`${entry.name}: ${entry.score}`</span>;
+leaderboardDiv.appendChild(item);</pre>
+    </div>
+
+    <p>
+      This proves the mini-lesson documentation requirement because the page does more than list projects. It explains
+      what each project demonstrates and how the code connects to programming concepts.
+    </p>
+  </section>
+
 
   <section id="otherprojects">
     <div class="section-heading">
