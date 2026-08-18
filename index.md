@@ -5,7 +5,7 @@ hide: true
 show_reading_time: false
 ---
 
-Hi! My name is Pranay Kamath
+Hi! My name is Pranay V. Kamath
 
 ### Development Environment
 
