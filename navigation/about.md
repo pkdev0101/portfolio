@@ -1,4 +1,3 @@
-```markdown
 ---
 layout: post
 title: About Me
@@ -108,4 +107,3 @@ Here are some of the things I enjoy:
 ### A Little More About Me
 
 In my free time, I enjoy watching Formula 1, learning about cars, playing cricket, practicing piano, and playing video games. I also enjoy working with computers and exploring new technology. San Diego has been my home my entire life, and many of my hobbies and interests have developed while growing up here.
-```
