@@ -94,11 +94,6 @@ Here are some of the things I enjoy:
         <p>🎮 Video Games</p>
     </div>
 
-    <div class="interest-card">
-        <img src="{{site.baseurl}}/images/about/sandiego.jpg" alt="San Diego">
-        <p>🌴 San Diego</p>
-    </div>
-
 </div>
 
 ### More About My Interests
