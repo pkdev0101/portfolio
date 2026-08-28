@@ -5,13 +5,13 @@ permalink: /about/
 comments: true
 ---
 
-## About Me
+#### - About Me
 
 Hi! My name is Pranay. I have lived in **San Diego, California** my whole life. Some of my biggest interests are Formula 1, cars, cricket, piano, video games, and technology.
 
 ## Where I'm From
 
-San Diego has always been home for me. I have grown up in the San Diego area and have lived here my whole life.
+San Diego has always been home for me. I have grown up in the San Diego area and have lived here my whole life. San Diego has the best weather.
 
 <style>
     .location-container {
