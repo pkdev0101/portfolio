@@ -416,7 +416,31 @@ class UiRunner:
         )
 
     def rendered_markup_lines(self) -> list[str]:
-        """Build the final HTML/script wrapper markup inserted into rendered markdown."""
+        """Build static markup or an interactive HTML/JavaScript preview."""
+        if self.options.get('interactive'):
+            render_mode = self.options.get('render_mode', 'html')
+            if render_mode not in ('html', 'javascript'):
+                render_mode = 'html'
+            runner_code = self.script if render_mode == 'javascript' else self.html
+            capture_id = re.sub(r'[^a-zA-Z0-9_]', '_', self.runner_id)
+            challenge_name = f'ui_challenge_{capture_id}'
+            code_name = f'ui_html_{capture_id}'
+            return [
+                '',
+                '{% capture ' + challenge_name + ' %}',
+                self.description,
+                '{% endcapture %}',
+                '{% capture ' + code_name + ' %}',
+                runner_code,
+                '{% endcapture %}',
+                '{% include runners/ui.html',
+                '   runner_id="' + self.runner_id + '"',
+                '   challenge=' + challenge_name,
+                '   code=' + code_name,
+                '   render_mode="' + render_mode + '"',
+                '%}',
+                '',
+            ]
         return [
             '<div class="ui-runner">',
             self.html,
@@ -1262,7 +1286,7 @@ def convert_notebook_to_markdown_with_front_matter(notebook_file):
     with open(notebook_file, "r", encoding="utf-8") as file:
         notebook = nbformat.read(file, as_version=nbformat.NO_CONVERT)
         front_matter = extract_front_matter(notebook_file, notebook.cells[0])
-
+        
         # Get permalink for runner_id generation
         permalink = front_matter.get('permalink', '')
         
@@ -1280,10 +1304,17 @@ def convert_notebook_to_markdown_with_front_matter(notebook_file):
         # Inject code-runner includes (and submit buttons if challenge_submit is enabled)
         markdown = inject_code_runners(markdown, notebook, front_matter)
         
+        yaml_content = yaml.safe_dump(
+            front_matter,
+            default_flow_style=False,
+            allow_unicode=True,
+            sort_keys=False,
+        )
+
         front_matter_content = (
             "---\n"
-            + "\n".join(f"{key}: {value}" for key, value in front_matter.items())
-            + "\n---\n\n"
+            + yaml_content
+            + "---\n\n"
         )
         markdown_with_front_matter = front_matter_content + markdown
         destination_path = get_relative_output_path(notebook_file)

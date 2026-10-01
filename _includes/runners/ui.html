@@ -35,6 +35,8 @@ import { BaseRunner, UiExecutor } from '{{ site.baseurl }}/assets/js/pages/runne
   
   const defaultCode = `{{ include.code }}`.trim();
   const autostart = "{{ include.autostart | default: 'false' }}" === "true";
+  const renderMode = "{{ include.render_mode | default: 'javascript' }}";
+  const fallbackCode = renderMode === "html" ? "<p>Write HTML here</p>" : "// Write your JavaScript code here";
   const editorHeight = "{{ include.height }}";
   const outputHeight = "{{ include.output_height }}";
   const storageKey = container.dataset.storageKey;
@@ -43,10 +45,10 @@ import { BaseRunner, UiExecutor } from '{{ site.baseurl }}/assets/js/pages/runne
   const editor = runner.initializeEditor({
     defaultCode,
     editorHeight,
-    fallbackCode: "// Write your JavaScript code here",
+    fallbackCode,
     codeMirrorOptions: {
       lineNumbers: true,
-      mode: "javascript",
+      mode: renderMode === "html" ? "htmlmixed" : "javascript",
       theme: "darcula",
       indentUnit: 2,
       tabSize: 4,
@@ -62,10 +64,11 @@ import { BaseRunner, UiExecutor } from '{{ site.baseurl }}/assets/js/pages/runne
   const uiExecutor = new UiExecutor({
     editor,
     outputElement: uiOutput,
+    renderMode,
   });
 
   runner.bindEditorButtons({
-    resetValue: defaultCode || "// Write your JavaScript code here",
+    resetValue: defaultCode || fallbackCode,
     onClear: () => {
       stopExecution();
     },
