@@ -1,3 +1,4 @@
+
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
@@ -15,8 +16,7 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -27,29 +27,32 @@ env:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1' # Set this to your desired Ruby version
+          ruby-version: '3.2.3'
           bundler-cache: true
+
       - name: Install Jekyll and dependencies
         run: |
           gem install bundler
           bundle install
+
       - name: Install Python dependencies
         run: |
-          python -m venv venv  # Create virtual environment
-          source venv/bin/activate  # Activate the virtual environment
-          pip install -r requirements.txt  # Install Python packages
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
       - name: Build registered projects
         run: |
-          make build-registered-projects  # Distribute all registered project files to Jekyll locations
-          make build-registered-docs  # Distribute all registered documentation files to Jekyll locations  
+          make build-registered-projects
+          make build-registered-docs
 
       - name: Verify registered docs output
         run: |
@@ -68,23 +71,24 @@ jobs:
 
       - name: Execute notebook conversion script
         run: |
-          source venv/bin/activate  # Activate virtual environment
-          python scripts/convert_notebooks.py  # Run notebook conversion
-          
+          source venv/bin/activate
+          python scripts/convert_notebooks.py
+
       - name: Execute DOCX conversion script
         run: |
-          source venv/bin/activate  # Activate virtual environment
+          source venv/bin/activate
           if [ -d "_docx" ] && [ "$(ls -A _docx 2>/dev/null)" ]; then
             echo "Converting DOCX files..."
-            python scripts/convert_docx.py  # Run DOCX conversion
+            python scripts/convert_docx.py
           else
             echo "No DOCX files found, skipping conversion"
           fi
 
       - name: Split multi-course files
         run: |
-          source venv/bin/activate  # Activate virtual environment
-          python scripts/split_multi_course_files.py  # Run course splitting
+          source venv/bin/activate
+          python scripts/split_multi_course_files.py
+
       - name: Compute and apply baseurl
         run: |
           REPO="${{ github.repository }}"
@@ -124,7 +128,7 @@ jobs:
     environment:
       name: github-pages-deployment
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     steps:
       - name: Deploy to GitHub Pages
